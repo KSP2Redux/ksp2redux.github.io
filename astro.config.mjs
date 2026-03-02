@@ -42,6 +42,10 @@ export default defineConfig({
 					label: 'Getting Started',
 					autogenerate: { directory: 'guides' },
 				},
+				{
+					label: 'Modding Documentation',
+					link: 'https://modding.ksp2redux.org',
+				}
 			],
 			expressiveCode: {
 				themes: ['starlight-dark']
