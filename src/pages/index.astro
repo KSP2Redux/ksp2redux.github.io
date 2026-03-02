@@ -1,5 +1,4 @@
 ---
-import PatchPicker from '../components/PatchPicker.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
@@ -161,20 +160,6 @@ const formattedDate = new Date(releaseDate).toLocaleDateString('en-US', {
 				</p>
 			</div>
 		</div>
-	</section>
-
-	<!-- Download Section with Patch Picker -->
-	<section id="download" class="section-container py-20">
-		<div class="text-center mb-16">
-			<h2 class="text-4xl md:text-5xl font-heading font-bold mb-4">
-				Get Started in <span class="text-ksp-red">3 Minutes</span>
-			</h2>
-			<p class="text-gray-400 text-lg max-w-2xl mx-auto">
-				Choose your platform below and we'll guide you through the installation process.
-			</p>
-		</div>
-
-		<PatchPicker />
 	</section>
 
 	<!-- Showcase Section -->
