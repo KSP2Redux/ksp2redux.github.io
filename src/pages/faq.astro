@@ -1,0 +1,268 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>FAQ - KSP2 Redux</title>
+	<meta name="description" content="Frequently asked questions about KSP2 Redux.">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+<body class="bg-space-black text-white min-h-screen">
+	<Header />
+
+	<!-- Page Header -->
+	<section class="pt-24 pb-12 bg-gradient-to-b from-ksp-blue to-space-black">
+		<div class="section-container text-center">
+			<h1 class="text-5xl md:text-6xl font-heading font-extrabold mb-4 text-glow">
+				Frequently Asked <span class="text-ksp-red">Questions</span>
+			</h1>
+			<p class="text-xl text-gray-300 max-w-2xl mx-auto">
+				Find answers to common questions about KSP2 Redux.
+			</p>
+		</div>
+	</section>
+
+	<!-- FAQ Section -->
+	<section class="section-container py-20">
+		<div class="max-w-3xl mx-auto space-y-4">
+			<details class="card-glass group">
+				<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
+					What is KSP2 Redux?
+					<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+					</svg>
+				</summary>
+				<p class="text-gray-400 mt-4">
+					KSP2 Redux is a free, community-made mod for Kerbal Space Program 2 that aims to implement 
+					most of the features promised by the original developers. We're focused on performance improvements, 
+					bug fixes, and bringing features like colonies, interstellar travel, and multiplayer to life.
+				</p>
+			</details>
+
+			<details class="card-glass group">
+				<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
+					Does Redux replace the base game?
+					<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+					</svg>
+				</summary>
+				<p class="text-gray-400 mt-4">
+					No. Redux is installed in a separate folder from your original KSP2 installation. This means 
+					you can keep both vanilla KSP2 and Redux installed simultaneously, and your original game remains untouched.
+				</p>
+			</details>
+
+			<details class="card-glass group">
+				<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
+					Will my saves work with Redux?
+					<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+					</svg>
+				</summary>
+				<p class="text-gray-400 mt-4">
+					Yes! Redux works seamlessly with your existing KSP2 saves. You don't need to start over. 
+					Just copy your saves to the Redux installation folder.
+				</p>
+			</details>
+
+			<details class="card-glass group">
+				<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
+					How much better is the performance?
+					<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+					</svg>
+				</summary>
+				<p class="text-gray-400 mt-4">
+					Performance improvements vary by scenario, but typical improvements range from 30-56% better FPS. 
+					Small vessels see 50 FPS → 78 FPS, and complex vessels with 1500 parts see frame times reduced 
+					from 638ms to 347ms (46% improvement). Results vary based on your hardware.
+				</p>
+			</details>
+
+			<details class="card-glass group">
+				<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
+					Is Redux safe to use?
+					<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+					</svg>
+				</summary>
+				<div class="text-gray-400 mt-4 space-y-2">
+					<p>
+						Yes! Redux is distributed as binary patches containing only our modifications to the game files. 
+						The source code is reviewed by the community, and Redux doesn't collect any data or require 
+						internet connectivity. It only modifies game files on your computer.
+					</p>
+					<p>
+						<strong>Note:</strong> Redux is based on KSP2's proprietary source code, so we cannot distribute it as traditional open-source. 
+						Instead, we distribute only our changes as binary patches to ensure compliance with copyright law.
+					</p>
+					<p>
+						<strong>Important:</strong> Redux is fan-made software developed by volunteers. While we test 
+						thoroughly, new bugs may be introduced. Always report issues you encounter so we can fix them!
+					</p>
+				</div>
+			</details>
+
+			<details class="card-glass group">
+				<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
+					Is Redux affiliated with the original KSP2 developers?
+					<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+					</svg>
+				</summary>
+				<p class="text-gray-400 mt-4">
+					No. Redux is an independent fan project with no affiliation to the former KSP2 developers 
+					or Private Division. Please do not interpret this project as an official continuation of KSP2's development.
+				</p>
+			</details>
+
+			<details class="card-glass group">
+				<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
+					Can I use Redux with other mods?
+					<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+					</svg>
+				</summary>
+				<div class="text-gray-400 mt-4 space-y-2">
+					<p>
+						Most existing mods will need to be updated to work with Redux due to the transition from 
+						BepInEx to an integrated mod loader and improvements to the modding API.
+					</p>
+					<p>
+						Some asset-only mods (like part mods) may work out of the box. We're actively working with 
+						modders to help them update their mods and providing comprehensive documentation.
+					</p>
+				</div>
+			</details>
+
+			<details class="card-glass group">
+				<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
+					How do I install Redux?
+					<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+					</svg>
+				</summary>
+				<p class="text-gray-400 mt-4">
+					Download the latest release from our GitHub, run the installer, point it to your KSP2 installation, 
+					and select where you want Redux installed. The process takes a few minutes depending on your disk speed. 
+					Check our <a href="/guides/installation" class="text-ksp-red hover:underline">detailed installation guide</a> for step-by-step instructions.
+				</p>
+			</details>
+
+			<details class="card-glass group">
+				<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
+					How do I uninstall Redux?
+					<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+					</svg>
+				</summary>
+				<p class="text-gray-400 mt-4">
+					Simply delete the Redux installation folder. Your original KSP2 installation and saves 
+					remain completely untouched since Redux is installed separately.
+				</p>
+			</details>
+
+			<details class="card-glass group">
+				<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
+					What features are included in Redux?
+					<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+					</svg>
+				</summary>
+				<div class="text-gray-400 mt-4 space-y-2">
+					<p>
+						<strong>Current (Stage 0 - Foundation):</strong> Performance improvements, bug fixes, debug tools, 
+						heat management, vessel ISRU, tech tree updates, and improved modding SDK.
+					</p>
+					<p>
+						<strong>Planned:</strong> Colonies (planetary and orbital), full resource system, new game modes 
+						(Frontier & enhanced Exploration), supply routes, interstellar travel with the Debdeb system, 
+						and multiplayer. See our <a href="/guides/roadmap" class="text-ksp-red hover:underline">full roadmap</a> for details.
+					</p>
+				</div>
+			</details>
+
+			<details class="card-glass group">
+				<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
+					How do I report bugs?
+					<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+					</svg>
+				</summary>
+				<div class="text-gray-400 mt-4 space-y-2">
+					<p>
+						Use the in-game bug report feature by pressing <strong>Ctrl+B</strong> or going to 
+						<strong>Escape → Report Redux Bug</strong>. This automatically attaches screenshots, logs, 
+						and save files to help us reproduce the issue.
+					</p>
+					<p>
+						Alternatively, report bugs in the <strong>#🟡redux-bugs</strong> channel on the 
+						<a href="https://discord.gg/8yq8d5VGQR" class="text-ksp-red hover:underline">KSP2 Modding Society Discord</a>.
+					</p>
+				</div>
+			</details>
+
+			<details class="card-glass group">
+				<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
+					Can I update from beta to beta?
+					<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+					</svg>
+				</summary>
+				<p class="text-gray-400 mt-4">
+					No, you cannot update an existing beta build when a new beta or stable release comes out. 
+					A fresh install of Redux will be required. This limitation will be removed with the first stable release.
+				</p>
+			</details>
+
+			<details class="card-glass group">
+				<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
+					How can I contribute to the project?
+					<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+					</svg>
+				</summary>
+				<div class="text-gray-400 mt-4 space-y-2">
+					<p>
+						<strong>Players:</strong> Test beta builds and report bugs<br>
+						<strong>Artists:</strong> Contribute 3D models, textures, and assets<br>
+						<strong>Developers:</strong> Help with code (experience with C#, Unity, or KSP modding preferred)<br>
+						<strong>Translators:</strong> Translate game content into other languages<br>
+						<strong>Modders:</strong> Update your mods for Redux compatibility
+					</p>
+					<p>
+						Check our <a href="/guides/contributing" class="text-ksp-red hover:underline">detailed contribution guide</a> 
+						for more information!
+					</p>
+				</div>
+			</details>
+		</div>
+	</section>
+
+	<!-- CTA Section -->
+	<section class="section-container py-20">
+		<div class="card-glass text-center py-12">
+			<h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">
+				Didn't find your answer?
+			</h2>
+			<p class="text-gray-400 mb-6 max-w-xl mx-auto">
+				Head to our <a href="/contact" class="text-ksp-red hover:underline">Contact</a> page to reach out to the community!
+			</p>
+			<a href="https://discord.gg/ksp2redux" target="_blank" class="btn-primary text-lg">
+				<svg class="w-5 h-5 inline-block mr-2" fill="currentColor" viewBox="0 0 24 24">
+					<path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+				</svg>
+				Ask on Discord
+			</a>
+		</div>
+	</section>
+
+	<Footer />
+</body>
+</html>

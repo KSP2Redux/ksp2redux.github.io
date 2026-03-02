@@ -1,0 +1,336 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+// Sample gallery data - in production, this could come from a CMS or JSON file
+const galleryItems = [
+	{
+		type: 'image',
+		url: 'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=800',
+		thumbnail: 'https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?w=400',
+		title: 'Mun Landing Mission',
+		description: 'Successful landing with Redux performance improvements',
+		category: 'missions'
+	},
+	{
+		type: 'youtube',
+		videoId: 'dQw4w9WgXcQ',
+		thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+		title: 'Redux Performance Showcase',
+		description: '60 FPS gameplay comparison',
+		category: 'performance'
+	},
+	{
+		type: 'image',
+		url: 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=800',
+		thumbnail: 'https://images.unsplash.com/photo-1446776653964-20c1d3a81b06?w=400',
+		title: 'Orbital Rendezvous',
+		description: 'Smooth docking with improved physics',
+		category: 'missions'
+	},
+	{
+		type: 'image',
+		url: 'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=800',
+		thumbnail: 'https://images.unsplash.com/photo-1516339901601-2e1b62dc0c45?w=400',
+		title: 'Space Station Assembly',
+		description: 'Large construction with zero lag',
+		category: 'builds'
+	},
+	{
+		type: 'youtube',
+		videoId: 'dQw4w9WgXcQ',
+		thumbnail: 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg',
+		title: 'Redux Feature Deep Dive',
+		description: 'Complete guide to new features',
+		category: 'tutorials'
+	},
+	{
+		type: 'image',
+		url: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800',
+		thumbnail: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=400',
+		title: 'Interplanetary Transfer',
+		description: 'Journey to Duna with enhanced visuals',
+		category: 'missions'
+	},
+];
+
+const categories = ['all', 'missions', 'builds', 'performance', 'tutorials'];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Gallery - KSP2 Redux</title>
+	<meta name="description" content="Explore screenshots and videos showcasing KSP2 Redux in action.">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+<body class="bg-space-black text-white min-h-screen">
+	<Header />
+
+	<!-- Page Header -->
+	<section class="pt-24 pb-12 bg-gradient-to-b from-ksp-blue to-space-black">
+		<div class="section-container text-center">
+			<h1 class="text-5xl md:text-6xl font-heading font-extrabold mb-4 text-glow">
+				<span class="text-ksp-red">Redux</span> Gallery
+			</h1>
+			<p class="text-xl text-gray-300 max-w-2xl mx-auto">
+				See the transformative power of KSP2 Redux through community screenshots, 
+				gameplay videos, and performance comparisons.
+			</p>
+		</div>
+	</section>
+
+	<!-- Filter Tabs -->
+	<section class="section-container py-8">
+		<div class="flex flex-wrap justify-center gap-3" id="filter-tabs">
+			{categories.map((category) => (
+				<button
+					class="filter-tab px-6 py-2 rounded-full font-medium transition-all duration-300 bg-white/5 border border-white/10 text-gray-400 hover:bg-white/10 hover:text-white hover:border-white/20"
+					data-category={category}
+					class:list={category === 'all' ? ['bg-ksp-red', 'text-white', 'border-ksp-red', 'active'] : []}
+				>
+					{category.charAt(0).toUpperCase() + category.slice(1)}
+				</button>
+			))}
+		</div>
+	</section>
+
+	<!-- Gallery Grid -->
+	<section class="section-container py-12">
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-grid">
+			{galleryItems.map((item, index) => (
+				<div 
+					class="gallery-item card-glass overflow-hidden cursor-pointer group"
+					data-category={item.category}
+					data-index={index}
+				>
+					<div class="relative aspect-video overflow-hidden">
+						<img 
+							src={item.thumbnail} 
+							alt={item.title}
+							class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+							loading="lazy"
+						/>
+						{item.type === 'youtube' && (
+							<div class="absolute inset-0 flex items-center justify-center bg-black/60 group-hover:bg-black/40 transition-colors">
+								<svg class="w-16 h-16 text-white opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all" fill="currentColor" viewBox="0 0 24 24">
+									<path d="M8 5v14l11-7z"/>
+								</svg>
+							</div>
+						)}
+						<div class="absolute top-3 right-3">
+							<span class="badge-stable text-xs px-2 py-1">
+								{item.type === 'youtube' ? '▶ VIDEO' : '🖼 IMAGE'}
+							</span>
+						</div>
+					</div>
+					<div class="p-4">
+						<h3 class="font-heading font-semibold text-lg mb-1">{item.title}</h3>
+						<p class="text-gray-400 text-sm">{item.description}</p>
+					</div>
+				</div>
+			))}
+		</div>
+
+		<!-- Empty State -->
+		<div id="empty-state" class="hidden text-center py-16">
+			<div class="text-gray-500 text-6xl mb-4">🔍</div>
+			<p class="text-gray-400 text-lg">No items found in this category.</p>
+			<button 
+				class="btn-secondary mt-6"
+				onclick="document.querySelector('[data-category=all]').click()"
+			>
+				View All
+			</button>
+		</div>
+	</section>
+
+	<!-- Call to Action -->
+	<section class="section-container py-20">
+		<div class="card-glass text-center py-12">
+			<h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">
+				Share Your <span class="text-ksp-red">Redux</span> Experience
+			</h2>
+			<p class="text-gray-400 mb-6 max-w-xl mx-auto">
+				Got amazing screenshots or gameplay footage? Share them with the community!
+			</p>
+			<div class="flex flex-col sm:flex-row gap-4 justify-center">
+				<a href="https://discord.gg/ksp2redux" target="_blank" class="btn-primary">
+					Submit to Gallery
+				</a>
+				<a href="https://reddit.com/r/KSP2Redux" target="_blank" class="btn-secondary">
+					Reddit Community
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<Footer />
+
+	<!-- Lightbox Modal -->
+	<div id="lightbox" class="fixed inset-0 bg-black/95 z-50 hidden flex items-center justify-center p-4">
+		<button 
+			id="lightbox-close" 
+			class="absolute top-6 right-6 text-white hover:text-ksp-red text-4xl font-bold z-10 transition-colors"
+			aria-label="Close"
+		>
+			×
+		</button>
+
+		<button 
+			id="lightbox-prev" 
+			class="absolute left-6 text-white hover:text-ksp-red text-6xl font-bold transition-colors"
+			aria-label="Previous"
+		>
+			‹
+		</button>
+
+		<button 
+			id="lightbox-next" 
+			class="absolute right-6 text-white hover:text-ksp-red text-6xl font-bold transition-colors"
+			aria-label="Next"
+		>
+			›
+		</button>
+
+		<div id="lightbox-content" class="max-w-6xl w-full">
+			<!-- Content will be injected here -->
+		</div>
+	</div>
+
+	<script define:vars={{ galleryItems }}>
+		// Filter functionality
+		const filterTabs = document.querySelectorAll('.filter-tab');
+		const galleryGrid = document.getElementById('gallery-grid');
+		const emptyState = document.getElementById('empty-state');
+		const galleryItemElements = document.querySelectorAll('.gallery-item');
+
+		filterTabs.forEach(tab => {
+			tab.addEventListener('click', () => {
+				const category = tab.getAttribute('data-category');
+				
+				// Update active state
+				filterTabs.forEach(t => t.classList.remove('active'));
+				tab.classList.add('active');
+
+				// Filter items
+				let visibleCount = 0;
+				galleryItemElements.forEach(item => {
+					const itemCategory = item.getAttribute('data-category');
+					if (category === 'all' || itemCategory === category) {
+						item.classList.remove('hidden');
+						visibleCount++;
+					} else {
+						item.classList.add('hidden');
+					}
+				});
+
+				// Show/hide empty state
+				if (visibleCount === 0) {
+					emptyState?.classList.remove('hidden');
+					galleryGrid?.classList.add('hidden');
+				} else {
+					emptyState?.classList.add('hidden');
+					galleryGrid?.classList.remove('hidden');
+				}
+			});
+		});
+
+		// Lightbox functionality
+		const lightbox = document.getElementById('lightbox');
+		const lightboxContent = document.getElementById('lightbox-content');
+		const lightboxClose = document.getElementById('lightbox-close');
+		const lightboxPrev = document.getElementById('lightbox-prev');
+		const lightboxNext = document.getElementById('lightbox-next');
+		let currentIndex = 0;
+
+		function openLightbox(index) {
+			currentIndex = index;
+			showLightboxContent();
+			lightbox?.classList.remove('hidden');
+			document.body.style.overflow = 'hidden';
+		}
+
+		function closeLightbox() {
+			lightbox?.classList.add('hidden');
+			document.body.style.overflow = '';
+		}
+
+		function showLightboxContent() {
+			const item = galleryItems[currentIndex];
+			if (!item || !lightboxContent) return;
+
+			if (item.type === 'youtube') {
+				lightboxContent.innerHTML = `
+					<div class="relative aspect-video bg-black rounded-lg overflow-hidden">
+						<iframe 
+							src="https://www.youtube.com/embed/${item.videoId}?autoplay=1" 
+							class="w-full h-full"
+							frameborder="0" 
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+							allowfullscreen
+						></iframe>
+					</div>
+					<div class="mt-4 text-center">
+						<h3 class="text-2xl font-heading font-bold mb-2">${item.title}</h3>
+						<p class="text-gray-400">${item.description}</p>
+					</div>
+				`;
+			} else {
+				lightboxContent.innerHTML = `
+					<div class="text-center">
+						<img 
+							src="${item.url}" 
+							alt="${item.title}"
+							class="max-w-full max-h-[80vh] mx-auto rounded-lg"
+						/>
+						<div class="mt-4">
+							<h3 class="text-2xl font-heading font-bold mb-2">${item.title}</h3>
+							<p class="text-gray-400">${item.description}</p>
+						</div>
+					</div>
+				`;
+			}
+		}
+
+		function navigateLightbox(direction) {
+			currentIndex += direction;
+			if (currentIndex < 0) currentIndex = galleryItems.length - 1;
+			if (currentIndex >= galleryItems.length) currentIndex = 0;
+			showLightboxContent();
+		}
+
+		// Event listeners
+		galleryItemElements.forEach((item, index) => {
+			item.addEventListener('click', () => openLightbox(index));
+		});
+
+		lightboxClose?.addEventListener('click', closeLightbox);
+		lightboxPrev?.addEventListener('click', () => navigateLightbox(-1));
+		lightboxNext?.addEventListener('click', () => navigateLightbox(1));
+
+		// Keyboard navigation
+		document.addEventListener('keydown', (e) => {
+			if (!lightbox?.classList.contains('hidden')) {
+				if (e.key === 'Escape') closeLightbox();
+				if (e.key === 'ArrowLeft') navigateLightbox(-1);
+				if (e.key === 'ArrowRight') navigateLightbox(1);
+			}
+		});
+
+		// Close on backdrop click
+		lightbox?.addEventListener('click', (e) => {
+			if (e.target === lightbox) closeLightbox();
+		});
+	</script>
+
+	<style>
+		#lightbox {
+			backdrop-filter: blur(10px);
+		}
+	</style>
+</body>
+</html>

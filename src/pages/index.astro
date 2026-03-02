@@ -1,0 +1,250 @@
+---
+import PatchPicker from '../components/PatchPicker.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+import { latestVersion, releaseDate } from '../assets/version.json';
+
+// Format the release date
+const formattedDate = new Date(releaseDate).toLocaleDateString('en-US', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric'
+});
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>KSP2 Redux</title>
+	<meta name="description" content="Transform your Kerbal Space Program 2 experience with performance improvements, bug fixes, and quality of life enhancements.">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+<body class="bg-space-black text-white">
+	<Header />
+
+	<!-- Hero Section -->
+	<section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+		<!-- Animated Background -->
+		<div class="absolute inset-0 z-0">
+			<div class="absolute inset-0 bg-gradient-to-b from-ksp-blue via-space-black to-space-black"></div>
+			<div class="absolute inset-0 opacity-20" style="background-image: url('/background.png'); background-size: cover; background-position: center;"></div>
+		</div>
+
+		<!-- Hero Content -->
+		<div class="section-container relative z-10 text-center py-20">
+			<!-- Latest Release Badge -->
+			<div class="mb-6 flex justify-center">
+				<span class="badge-latest">
+					🚀 Latest Release: {latestVersion} • {formattedDate}
+				</span>
+			</div>
+
+			<!-- Main Headline -->
+			<h1 class="text-5xl md:text-7xl font-heading font-extrabold mb-6 text-glow">
+				Welcome to <span class="text-ksp-red font-logo">KSP2 Redux</span>
+			</h1>
+
+			<!-- Subheadline -->
+			<p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed">
+                KSP2 Redux is a free, community-made mod for the game <strong class="text-white">Kerbal Space Program 2</strong>,
+                aiming to implement most of the features promised by the original developers.
+			</p>
+
+			<!-- Call-to-Action Buttons -->
+			<div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+				<a href="#download" class="btn-primary text-lg">
+					<svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+					</svg>
+					Download Now
+				</a>
+				<a href="/guides" class="btn-secondary text-lg">
+					<svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+					</svg>
+					Read the Docs
+				</a>
+			</div>
+
+			<!-- Stats -->
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+				<div class="card-glass text-center py-6">
+					<div class="text-4xl font-heading font-bold text-ksp-red mb-2">56%</div>
+					<div class="text-gray-400 text-sm">FPS Improvement</div>
+				</div>
+				<div class="card-glass text-center py-6">
+					<div class="text-4xl font-heading font-bold text-ksp-red mb-2">180+</div>
+					<div class="text-gray-400 text-sm">Bug Fixes</div>
+				</div>
+				<div class="card-glass text-center py-6">
+					<div class="text-4xl font-heading font-bold text-ksp-red mb-2">Stage 0</div>
+					<div class="text-gray-400 text-sm">Foundation Beta</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Scroll Indicator -->
+		<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+			<svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+			</svg>
+		</div>
+	</section>
+
+	<!-- Features Section -->
+	<section class="section-container py-20">
+		<div class="text-center mb-16">
+			<h2 class="text-4xl md:text-5xl font-heading font-bold mb-4">
+				Why Choose <span class="text-ksp-red">Redux</span>?
+			</h2>
+			<p class="text-gray-400 text-lg max-w-2xl mx-auto">
+				We've rebuilt KSP2 from the ground up to deliver the experience you deserve.
+			</p>
+		</div>
+
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+			<!-- Feature 1 -->
+			<div class="card-glass">
+				<div class="text-ksp-red text-4xl mb-4">⚡</div>
+				<h3 class="text-xl font-heading font-semibold mb-3">Performance Boost</h3>
+				<p class="text-gray-400">
+					Experience 30-56% better frame rates with optimized rendering, ECS/Burst systems, and improved memory management.
+				</p>
+			</div>
+
+			<!-- Feature 2 -->
+			<div class="card-glass">
+				<div class="text-ksp-red text-4xl mb-4">🐛</div>
+				<h3 class="text-xl font-heading font-semibold mb-3">Bug Annihilation</h3>
+				<p class="text-gray-400">
+					Hundreds of bugs fixed, including physics glitches, UI errors, and various game-breaking issues.
+				</p>
+			</div>
+
+			<!-- Feature 3 -->
+			<div class="card-glass">
+				<div class="text-ksp-red text-4xl mb-4">🏗️</div>
+				<h3 class="text-xl font-heading font-semibold mb-3">New Features</h3>
+				<p class="text-gray-400">
+					Colonies, resource management, interstellar travel, and multiplayer coming through our multi-stage roadmap.
+				</p>
+			</div>
+
+			<!-- Feature 4 -->
+			<div class="card-glass">
+				<div class="text-ksp-red text-4xl mb-4">🛠️</div>
+				<h3 class="text-xl font-heading font-semibold mb-3">Modding Support</h3>
+				<p class="text-gray-400">
+					Revolutionary Unity Editor integration for mod development. Test mods in seconds instead of minutes!
+				</p>
+			</div>
+
+			<!-- Feature 5 -->
+			<div class="card-glass">
+				<div class="text-ksp-red text-4xl mb-4">🌍</div>
+				<h3 class="text-xl font-heading font-semibold mb-3">Community-Driven</h3>
+				<p class="text-gray-400">
+					Developed by passionate volunteer KSP2 modders with regular updates based on community feedback.
+				</p>
+			</div>
+
+			<!-- Feature 6 -->
+			<div class="card-glass">
+				<div class="text-ksp-red text-4xl mb-4">🔧</div>
+				<h3 class="text-xl font-heading font-semibold mb-3">Debug Tools</h3>
+				<p class="text-gray-400">
+					Comprehensive debug windows for vessel info, science, teleportation, and Kerbal management.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<!-- Download Section with Patch Picker -->
+	<section id="download" class="section-container py-20">
+		<div class="text-center mb-16">
+			<h2 class="text-4xl md:text-5xl font-heading font-bold mb-4">
+				Get Started in <span class="text-ksp-red">3 Minutes</span>
+			</h2>
+			<p class="text-gray-400 text-lg max-w-2xl mx-auto">
+				Choose your platform below and we'll guide you through the installation process.
+			</p>
+		</div>
+
+		<PatchPicker />
+	</section>
+
+	<!-- Showcase Section -->
+	<section class="bg-gradient-to-b from-space-black to-ksp-blue py-20">
+		<div class="section-container">
+			<div class="text-center mb-16">
+				<h2 class="text-4xl md:text-5xl font-heading font-bold mb-4">
+					See It in <span class="text-ksp-red">Action</span>
+				</h2>
+				<p class="text-gray-400 text-lg max-w-2xl mx-auto">
+					Watch how Redux transforms your Kerbal experience.
+				</p>
+			</div>
+
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+				<!-- Before/After Comparison -->
+				<div class="card-glass">
+					<div class="aspect-video bg-gray-800 rounded-lg mb-4 flex items-center justify-center">
+						<span class="text-gray-500 text-lg">Before Redux</span>
+					</div>
+					<h3 class="text-lg font-semibold mb-2">Vanilla KSP2</h3>
+					<p class="text-gray-400 text-sm">Average 35 FPS with frequent stuttering</p>
+				</div>
+
+				<div class="card-glass">
+					<div class="aspect-video bg-gray-800 rounded-lg mb-4 flex items-center justify-center">
+						<span class="text-ksp-red text-lg font-semibold">After Redux</span>
+					</div>
+					<h3 class="text-lg font-semibold mb-2">KSP2 Redux</h3>
+					<p class="text-gray-400 text-sm">Consistent 60+ FPS with smooth gameplay</p>
+				</div>
+			</div>
+
+			<div class="text-center">
+				<a href="/gallery" class="btn-primary">
+					View Full Gallery
+					<svg class="w-5 h-5 inline-block ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+					</svg>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- Community CTA -->
+	<section class="section-container py-20">
+		<div class="card-glass text-center py-16">
+			<h2 class="text-4xl md:text-5xl font-heading font-bold mb-6">
+				Join the <span class="text-ksp-red">Community</span>
+			</h2>
+			<p class="text-gray-400 text-lg max-w-2xl mx-auto mb-8">
+				Connect with thousands of players, share your creations, and help shape the future of KSP2 Redux.
+			</p>
+			<div class="flex flex-col sm:flex-row gap-4 justify-center">
+				<a href="https://discord.gg/8yq8d5VGQR" target="_blank" class="btn-primary">
+					<svg class="w-5 h-5 inline-block mr-2" fill="currentColor" viewBox="0 0 24 24">
+						<path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+					</svg>
+					Join Discord
+				</a>
+				<a href="https://github.com/KSP2Redux/Redux" target="_blank" class="btn-secondary">
+					<svg class="w-5 h-5 inline-block mr-2" fill="currentColor" viewBox="0 0 24 24">
+						<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+					</svg>
+					View on GitHub
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<Footer />
+</body>
+</html>

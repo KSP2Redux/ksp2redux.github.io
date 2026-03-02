@@ -1,0 +1,108 @@
+---
+title: Mod Compatibility
+description: Information about using mods with KSP2 Redux and mod migration.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## Current Status
+
+<Aside type="caution" title="Mods Require Updates">
+Due to the transition from BepInEx to an integrated mod loader, as well as improvements to the modding API, current mods will need to be updated to work with Redux.
+</Aside>
+
+## Asset-Only Mods
+
+Some asset-only mods (particularly part mods) may work out of the box with Redux, but we do not guarantee compatibility at this time.
+
+**What are asset-only mods?**
+- Part mods that only add models, textures, and configs
+- Visual mods that replace textures or models
+- Mods without code/plugins
+
+## Code Mods
+
+Most code-based mods will require updates to work with Redux:
+
+### What Changed?
+1. **Mod Loader:** Transition from BepInEx to integrated mod loader
+2. **Modding API:** Improvements and changes to the modding API
+3. **Core Systems:** Some game systems have been rewritten (e.g., TransformFrame)
+
+### For Mod Users
+
+Be patient as mod developers update their mods for Redux compatibility. Check the mod's page or contact the developer for Redux compatibility status.
+
+### For Mod Developers
+
+We are actively working on:
+- **Modding Documentation:** Comprehensive guides for Redux modding
+- **Migration Assistance:** Helping modders update their mods
+- **Unmaintained Mods:** Updating popular unmaintained mods ourselves
+
+<Aside type="tip">
+If you're a modder interested in migrating your mods to Redux, reach out in the  **#🟡redux-chat** channel on the [KSP2 Modding Society Discord](https://discord.gg/8yq8d5VGQR) or DM @safarte.
+</Aside>
+
+## Redux Modding SDK
+
+Redux introduces a revolutionary modding experience:
+
+### Unity Editor Integration
+- Test mods by running KSP2 directly in Unity Editor
+- Iterate in seconds instead of minutes
+- Access Unity's full debugging and development tools
+- Use custom inspectors and Unity package libraries
+
+### Benefits for Modders
+1. **Rapid Iteration:** Changes can be tested immediately
+2. **Better Debugging:** Full Unity debugging tools at your disposal
+3. **Easier Development:** No compile-test-restart cycle
+4. **Better APIs:** Improved and more comprehensive modding endpoints
+
+See our [blog post on Unity Editor integration](/blog/modding-tools-unity-editor) for more details.
+
+## Checking Mod Compatibility
+
+### Before Installing a Mod
+
+1. Check if the mod page mentions Redux compatibility
+2. Look for "Redux" or "v0.2.2.0+" in the supported versions
+3. Check the mod's discussion page or Discord for Redux compatibility info
+4. Test in a separate Redux install if possible
+
+### After Installing a Mod
+
+- Watch for errors in the logs
+- Test functionality thoroughly
+- Report issues to the mod developer (not the Redux team unless you're sure it's a Redux issue)
+
+## Contributing to Mod Compatibility
+
+Mod developers can help by:
+- Updating mods for Redux compatibility
+- Clearly marking compatibility status on mod pages
+- Joining our Discord to stay informed about API changes
+- Providing feedback on the modding API
+
+## Popular Mods Status
+
+We're working on updating popular unmaintained mods ourselves. Check the Discord for the latest compatibility list.
+
+## Future Plans
+
+- CKAN integration for easy mod management
+- Comprehensive modding documentation
+- Example mods demonstrating best practices
+- Modding API reference documentation
+
+## Getting Help
+
+**For Players:**
+- #🟡redux-chat on [Discord](https://discord.gg/8yq8d5VGQR)
+- Check mod pages for Redux compatibility status
+
+**For Mod Developers:**
+- #🟡redux-chat for general discussion
+- DM @safarte or @.munix for migration help
+- Check the upcoming modding documentation (in progress)

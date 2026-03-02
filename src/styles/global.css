@@ -1,0 +1,832 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Exo+2:wght@600;700;800&family=Noto+Color+Emoji&display=swap');
+
+/* Import and configure Tailwind CSS v4 */
+@import "tailwindcss";
+@source "../**/*.{astro,html,js,jsx,md,mdx,ts,tsx}";
+@reference "tailwindcss";
+
+/* Nasalization Font (NASA Worm style) */
+@font-face {
+	font-family: 'Nasalization';
+	src: url('/fonts/nasalization-rg.woff2') format('woff2'),
+	     url('/fonts/nasalization-rg.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* Tailwind 4 Theme Configuration */
+@theme {
+	/* Custom Colors */
+	--color-ksp-red: #df1601;
+	--color-orange-600: #c41301;
+	--color-ksp-blue: #1a1a1a;
+	--color-ksp-dark: #0a0a0a;
+	--color-success-green: #10B981;
+	--color-space-black: #0a0a0a;
+	
+	/* Font Families */
+	--font-family-sans: Inter, system-ui, "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+	--font-family-heading: "Exo 2", system-ui, sans-serif;
+	--font-family-logo: Nasalization, "Exo 2", system-ui, sans-serif;
+	
+	/* Custom Animations */
+	--animate-pulse-slow: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-slow {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.75; }
+}
+
+@keyframes glow {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.5; }
+}
+
+/* Starlight Theme Customization - Using explicit overrides */
+:root {
+	/* Accent color - red/orange for KSP Redux */
+	--sl-color-accent-low: #7a0f00;
+	--sl-color-accent: #df1601;
+	--sl-color-accent-high: #ff4d38;
+	
+	/* Dark mode colors - reversed for dark theme */
+	--sl-color-white: #ffffff;
+	--sl-color-gray-1: #f3f4f6;
+	--sl-color-gray-2: #e5e7eb;
+	--sl-color-gray-3: #d1d5db;
+	--sl-color-gray-4: #6b7280;
+	--sl-color-gray-5: #4b5563;
+	--sl-color-gray-6: #2d3748;
+	--sl-color-gray-7: #1a1a1a;
+	--sl-color-black: #0a0a0a;
+	
+	/* Typography */
+	--sl-font-sans: Inter, system-ui, "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+	--sl-font-mono: 'Courier New', monospace;
+	
+	/* Content width - match custom pages */
+	--sl-content-width: 80rem;
+	
+	/* Sidebar background */
+	--sl-color-bg-sidebar: #0a0a0a;
+	--sl-color-text-accent: #df1601;
+}
+
+@layer starlight, theme, components, utilities;
+
+/* Explicit overrides for Starlight components */
+@layer components {
+	/* Right sidebar (TOC) wrapper */
+	aside[aria-label*='Table'] {
+		background-color: #1a1a1a !important;
+		color: #d1d5db !important;
+	}
+
+	/* Buttons */
+	.button {
+		color: #ffffff !important;
+		font-weight: 700 !important;
+	}
+
+	a.button {
+		color: #ffffff !important;
+		font-weight: 700 !important;
+	}
+
+	button {
+		color: #ffffff !important;
+		font-weight: 700 !important;
+	}
+
+	/* Starlight button styling */
+	.sl-button,
+	[class*='button'][class*='primary'],
+	.sl-button-primary {
+		color: #ffffff !important;
+		font-weight: 700 !important;
+	}
+
+	/* Page navigation buttons */
+	a[data-button] {
+		color: #ffffff !important;
+		font-weight: 700 !important;
+	}
+
+	/* Links that look like buttons */
+	.sl-markdown-content > a[class*='button'],
+	.sl-markdown-content > a:has(svg) {
+		color: #ffffff !important;
+		font-weight: 700 !important;
+	}
+
+	/* Blog post styling */
+	.blog-post-header {
+		margin-bottom: 3rem;
+		border-bottom: 2px solid rgba(223, 22, 1, 0.3);
+		padding-bottom: 2rem;
+	}
+
+	.blog-post-title {
+		color: #ffffff !important;
+		font-size: 2.5rem !important;
+		font-family: "Exo 2", system-ui, sans-serif !important;
+		margin-bottom: 1.5rem !important;
+		line-height: 1.2;
+	}
+
+	.blog-post-meta {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		color: #9ca3af;
+		font-size: 0.95rem;
+	}
+
+	.blog-post-meta-author {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.blog-post-meta-date {
+		color: #9ca3af;
+	}
+
+	.blog-post-author-avatar {
+		width: 2rem;
+		height: 2rem;
+		border-radius: 50%;
+		border: 2px solid #df1601;
+	}
+
+	.blog-post-author-info {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.blog-post-author-name {
+		font-weight: 600;
+		color: #d1d5db;
+	}
+
+	.blog-post-author-title {
+		font-size: 0.875rem;
+		color: #9ca3af;
+	}
+
+	/* Blog post content improvements */
+	.blog-content,
+	.sl-blog-content {
+		margin-top: 2rem;
+	}
+
+	.blog-content p,
+	.sl-blog-content p {
+		margin-bottom: 1.5rem;
+		line-height: 1.8;
+		color: #d1d5db;
+	}
+
+	.blog-content h2,
+	.sl-blog-content h2 {
+		margin-top: 2.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.blog-content h3,
+	.sl-blog-content h3 {
+		margin-top: 2rem;
+		margin-bottom: 0.75rem;
+	}
+
+	/* Blog listing improvements */
+	.blog-entry,
+	.blog-post-entry {
+		background-color: #1a1a1a;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 0.5rem;
+		padding: 1.5rem;
+		transition: all 0.3s;
+	}
+
+	.blog-entry:hover,
+	.blog-post-entry:hover {
+		background-color: rgba(223, 22, 1, 0.05);
+		border-color: rgba(223, 22, 1, 0.3);
+	}
+
+	.blog-entry a,
+	.blog-post-entry a {
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.blog-entry-title,
+	.blog-post-entry-title {
+		color: #ffffff;
+		font-size: 1.5rem;
+		font-family: "Exo 2", system-ui, sans-serif;
+		margin-bottom: 0.5rem;
+		transition: color 0.2s;
+	}
+
+	.blog-entry:hover .blog-entry-title,
+	.blog-post-entry:hover .blog-post-entry-title {
+		color: #df1601;
+	}
+
+	.blog-entry-date,
+	.blog-post-entry-date {
+		color: #9ca3af;
+		font-size: 0.875rem;
+		margin-bottom: 1rem;
+	}
+
+	.blog-entry-excerpt,
+	.blog-post-entry-excerpt {
+		color: #d1d5db;
+		line-height: 1.6;
+	}
+
+	/* Starlight blog list spacing fixes */
+	.sl-markdown-content .posts {
+		display: flex !important;
+		flex-direction: column !important;
+		gap: 1rem !important;
+	}
+
+	.sl-markdown-content .posts > .preview {
+		margin: 0 !important;
+		padding: 1.25rem 1.5rem !important;
+		gap: 0.75rem !important;
+	}
+
+	.sl-markdown-content .posts > .preview > header {
+		margin: 0 !important;
+	}
+
+	.sl-markdown-content .posts > .preview > header h2 {
+		margin-bottom: 0.5rem !important;
+	}
+
+	.sl-markdown-content .posts > .preview > .sl-markdown-content {
+		margin: 0 !important;
+	}
+
+	.sl-markdown-content .posts > .preview > footer {
+		display: none !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		min-height: 0 !important;
+	}
+
+	.sl-markdown-content .posts > .preview > footer:empty {
+		display: none;
+	}
+
+}
+
+/* Smooth scrolling */
+html {
+	scroll-behavior: smooth;
+}
+
+/* Font utility classes */
+.font-logo {
+	font-family: Nasalization, "Exo 2", system-ui, sans-serif;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+}
+
+/* Custom component styles */
+.btn-primary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #df1601;
+	color: white;
+	font-weight: 600;
+	padding: 0.75rem 1.5rem;
+	border-radius: 0.5rem;
+	transition: all 0.3s;
+	transform-origin: center;
+}
+
+.btn-primary:hover {
+	background-color: #c41301;
+	transform: scale(1.05);
+	box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.btn-secondary {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background-color: transparent;
+	border: 2px solid white;
+	color: white;
+	font-weight: 600;
+	padding: 0.75rem 1.5rem;
+	border-radius: 0.5rem;
+	transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+	background-color: white;
+	color: #0a0a0a;
+}
+
+/* Fix icon alignment in buttons */
+svg.inline-block {
+	vertical-align: middle;
+}
+
+.section-container {
+	max-width: 80rem;
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+/* Header spacing fix for Starlight pages only */
+.starlight-header .space-x-8 > * + * {
+	margin-left: 2rem !important;
+}
+
+.starlight-header .space-x-3 > * + * {
+	margin-left: 0.75rem !important;
+}
+
+/* Footer styling overrides for Starlight compatibility */
+.site-footer {
+	margin-top: 4rem;
+	width: 100%;
+	background-color: #0a0a0a;
+}
+
+.site-footer .grid {
+	display: grid !important;
+	grid-template-columns: 1fr !important;
+	gap: 2rem !important;
+}
+
+@media (min-width: 768px) {
+	.site-footer .grid {
+		grid-template-columns: 2fr 1fr 1fr !important;
+	}
+}
+
+.site-footer .col-span-1 {
+	grid-column: span 1 !important;
+}
+
+.site-footer .col-span-2 {
+	grid-column: span 1 !important;
+}
+
+@media (min-width: 768px) {
+	.site-footer .col-span-2 {
+		grid-column: span 2 !important;
+	}
+}
+
+.site-footer > div > div > div > div {
+	gap: 2rem;
+}
+
+.site-footer h3 {
+	margin-bottom: 1rem;
+	font-weight: 600;
+}
+
+.site-footer ul {
+	list-style: none;
+	padding: 0;
+}
+
+.site-footer li {
+	margin-bottom: 0.5rem;
+}
+
+.site-footer a {
+	color: #9ca3af;
+	text-decoration: none;
+	transition: color 0.2s;
+}
+
+.site-footer a:hover {
+	color: #df1601;
+}
+
+.site-footer .flex {
+	display: flex !important;
+}
+
+.site-footer .space-x-4 > * + * {
+	margin-left: 1rem;
+}
+
+.site-footer .space-y-2 > * + * {
+	margin-top: 0.5rem;
+}
+
+.site-footer .mb-4 {
+	margin-bottom: 1rem;
+}
+
+.site-footer .mt-8 {
+	margin-top: 2rem;
+}
+
+.site-footer .pt-8 {
+	padding-top: 2rem;
+}
+
+@media (min-width: 640px) {
+	.section-container {
+		padding-left: 1.5rem;
+		padding-right: 1.5rem;
+	}
+}
+
+@media (min-width: 1024px) {
+	.section-container {
+		padding-left: 2rem;
+		padding-right: 2rem;
+	}
+}
+
+.card-glass {
+	background-color: rgba(255, 255, 255, 0.05);
+	backdrop-filter: blur(12px);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 0.75rem;
+	padding: 1.5rem;
+	transition: all 0.3s;
+}
+
+/* Remove padding from card-glass when it's a details element */
+details.card-glass {
+	padding: 0;
+}
+
+/* Make summary fully clickable with padding */
+details.card-glass summary {
+	padding: 1.5rem;
+	border-radius: 0.75rem;
+}
+
+details.card-glass p {
+	padding: 0 1.5rem 1.5rem 1.5rem;
+}
+
+.card-glass:hover {
+	background-color: rgba(255, 255, 255, 0.1);
+	border-color: rgba(255, 255, 255, 0.2);
+}
+
+.text-glow {
+	text-shadow: 0 0 20px rgba(223, 22, 1, 0.5);
+}
+
+/* Starlight Header */
+.sl-header {
+	background-color: #0a0a0a !important;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Starlight main container */
+.sl-container {
+	background-color: #0a0a0a !important;
+}
+
+/* Sidebar styling - left navigation */
+.sl-sidebar {
+	background-color: #0a0a0a !important;
+	border-right: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.sl-sidebar-content {
+	background-color: #0a0a0a !important;
+}
+
+/* Sidebar text/links */
+.sl-sidebar-item > a,
+.sl-sidebar-item-tree > a {
+	color: #d1d5db !important;
+	background-color: transparent;
+	border-radius: 0.5rem;
+	transition: all 0.2s;
+}
+
+.sl-sidebar-item > a:hover,
+.sl-sidebar-item-tree > a:hover {
+	color: #ffffff !important;
+	background-color: rgba(223, 22, 1, 0.15) !important;
+}
+
+.sl-sidebar-item.current > a,
+.sl-sidebar-item-tree.current > a {
+	color: #ffffff !important;
+	background-color: #df1601 !important;
+	font-weight: 600;
+}
+
+/* Sidebar group labels */
+.sl-sidebar-item--group-label {
+	color: #9ca3af !important;
+	font-weight: 600;
+	text-transform: uppercase;
+	font-size: 0.75rem;
+	letter-spacing: 0.05em;
+}
+
+/* Right sidebar (Table of Contents) */
+.sl-toc {
+	background-color: #1a1a1a !important;
+	border-left: 2px solid rgba(223, 22, 1, 0.3) !important;
+	color: #d1d5db !important;
+}
+
+.sl-toc a {
+	color: #d1d5db !important;
+	text-decoration: none !important;
+	border: none !important;
+	transition: color 0.2s;
+}
+
+.sl-toc a:hover {
+	color: #df1601 !important;
+}
+
+.sl-toc .current {
+	color: #df1601 !important;
+	font-weight: 600;
+}
+
+/* Starlight main content area */
+main {
+	background: #0a0a0a !important;
+}
+
+/* Remove/fix borders between blocks */
+.sl-markdown-content > * + * {
+	border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Fix all borders to be subtle */
+[class*='border'] {
+	border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Markdown content text */
+.sl-markdown-content {
+	color: #d1d5db !important;
+	line-height: 1.75;
+}
+
+.sl-markdown-content h1 {
+	font-family: "Exo 2", system-ui, sans-serif;
+	color: #ffffff !important;
+	font-size: 2.5rem;
+	margin-top: 2rem;
+	margin-bottom: 1rem;
+}
+
+.sl-markdown-content h2 {
+	font-family: "Exo 2", system-ui, sans-serif;
+	color: #ffffff !important;
+	font-size: 2rem;
+	margin-top: 1.5rem;
+	margin-bottom: 0.75rem;
+}
+
+.sl-markdown-content h3 {
+	font-family: "Exo 2", system-ui, sans-serif;
+	color: #ffffff !important;
+	font-size: 1.5rem;
+	margin-top: 1.25rem;
+	margin-bottom: 0.5rem;
+}
+
+.sl-markdown-content h4,
+.sl-markdown-content h5,
+.sl-markdown-content h6 {
+	font-family: "Exo 2", system-ui, sans-serif;
+	color: #ffffff !important;
+}
+
+.sl-markdown-content p {
+	margin-bottom: 1rem;
+	color: #d1d5db !important;
+}
+
+/* Links - KSP Redux red */
+.sl-markdown-content a {
+	color: #df1601 !important;
+	text-decoration: none !important;
+	border-bottom: 1px solid rgba(223, 22, 1, 0.3);
+	transition: all 0.2s;
+}
+
+.sl-markdown-content a:hover {
+	color: #ff7f6b !important;
+	border-bottom-color: #ff7f6b;
+}
+
+/* Code blocks */
+.expressive-code {
+	background-color: #1a1a1a !important;
+	border: 1px solid rgba(255, 255, 255, 0.1) !important;
+	border-radius: 0.5rem;
+	margin: 1.5rem 0;
+}
+
+.expressive-code code {
+	color: #e2e8f0 !important;
+}
+
+/* Inline code */
+.sl-markdown-content code:not(.language-*) {
+	background-color: rgba(223, 22, 1, 0.15) !important;
+	color: #ff7f6b !important;
+	padding: 0.25rem 0.5rem;
+	border-radius: 0.375rem;
+	font-family: 'Courier New', monospace;
+	font-size: 0.9em;
+}
+
+pre {
+	background-color: #0a0a0a !important;
+	border: 1px solid rgba(255, 255, 255, 0.1) !important;
+	border-radius: 0.5rem;
+	padding: 1rem;
+	overflow-x: auto;
+}
+
+/* Blockquotes */
+.sl-markdown-content blockquote {
+	border-left: 4px solid #df1601;
+	background-color: rgba(223, 22, 1, 0.05);
+	padding: 1rem;
+	border-radius: 0.5rem;
+	color: #d1d5db;
+	margin: 1.5rem 0;
+	font-style: italic;
+}
+
+.sl-markdown-content blockquote p {
+	margin: 0;
+	color: #d1d5db !important;
+}
+
+/* Asides (Starlight callouts) */
+.sl-markdown-content :is(aside, .starlight-aside) {
+	background-color: #111111 !important;
+	border: 1px solid rgba(255, 255, 255, 0.14) !important;
+	border-left: 4px solid #df1601 !important;
+	color: #f3f4f6 !important;
+}
+
+.sl-markdown-content :is(aside, .starlight-aside) :is(p, li, span, div) {
+	color: #f3f4f6 !important;
+}
+
+.sl-markdown-content :is(aside, .starlight-aside) :is(h1, h2, h3, h4, h5, h6, strong, .starlight-aside__title) {
+	color: #ffffff !important;
+}
+
+.sl-markdown-content :is(aside, .starlight-aside) code {
+	background-color: rgba(223, 22, 1, 0.2) !important;
+	color: #ffffff !important;
+}
+
+/* Tables */
+.sl-markdown-content table {
+	border-collapse: collapse;
+	width: 100%;
+	background-color: #1a1a1a;
+	border-radius: 0.5rem;
+	overflow: hidden;
+	margin: 1.5rem 0;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sl-markdown-content table thead {
+	background-color: #0a0a0a;
+	border-bottom: 2px solid #df1601;
+}
+
+.sl-markdown-content table th {
+	padding: 1rem;
+	text-align: left;
+	color: #df1601;
+	font-weight: 600;
+	font-family: "Exo 2", system-ui, sans-serif;
+}
+
+.sl-markdown-content table td {
+	padding: 0.75rem 1rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	color: #d1d5db;
+}
+
+.sl-markdown-content table tbody tr:hover {
+	background-color: rgba(223, 22, 1, 0.05);
+}
+
+/* Lists */
+.sl-markdown-content ul,
+.sl-markdown-content ol {
+	margin: 1rem 0 1rem 1.5rem;
+}
+
+.sl-markdown-content li {
+	margin: 0.5rem 0;
+	color: #d1d5db !important;
+    list-style-type: square;
+}
+
+.sl-markdown-content li::marker {
+	color: #9ca3af !important;
+}
+
+.sl-markdown-content .flag-unicode {
+	font-family: "Noto Color Emoji", sans-serif;
+	font-size: 1.05em;
+	line-height: 1;
+	margin-right: 0.3em;
+	vertical-align: -0.05em;
+	font-variant-emoji: emoji;
+	font-feature-settings: "colr" 1;
+}
+
+/* Card icon contrast fix */
+.card svg.icon {
+	color: #2d3748 !important;
+	fill: #2d3748 !important;
+	stroke: #2d3748 !important;
+}
+
+.sl-card svg.icon {
+	color: #2d3748 !important;
+	fill: #2d3748 !important;
+	stroke: #2d3748 !important;
+}
+
+.card {
+	background-color: rgba(30, 30, 30, 0.5) !important;
+	border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Starlight navigation/pagination */
+nav[aria-label='Pagination'] {
+	border-top: 1px solid rgba(255, 255, 255, 0.1);
+	padding-top: 2rem;
+	margin-top: 2rem;
+}
+
+.pagination-links a {
+	color: #df1601 !important;
+	border: 1px solid #df1601 !important;
+	border-radius: 0.5rem;
+	padding: 0.75rem 1.5rem;
+	transition: all 0.2s;
+	text-decoration: none !important;
+}
+
+.pagination-links a:hover {
+	background-color: #df1601 !important;
+	color: #ffffff !important;
+}
+
+/* Custom badge styles */
+.badge-latest {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.25rem 0.75rem;
+	border-radius: 9999px;
+	font-size: 0.875rem;
+	font-weight: 500;
+	background-color: rgba(223, 22, 1, 0.2);
+	color: #df1601;
+	border: 1px solid rgba(223, 22, 1, 0.5);
+	animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.badge-stable {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.25rem 0.75rem;
+	border-radius: 9999px;
+	font-size: 0.875rem;
+	font-weight: 500;
+	background-color: rgba(16, 185, 129, 0.2);
+	color: #10B981;
+	border: 1px solid rgba(16, 185, 129, 0.5);
+}

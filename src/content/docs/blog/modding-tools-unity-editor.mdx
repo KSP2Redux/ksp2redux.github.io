@@ -1,0 +1,18 @@
+---
+title: "Modding SDK: Unity Editor Integration"
+date: 2025-05-14
+author: Redux Team
+description: Breakthrough in modding tools - run and test KSP2 Redux mods directly in Unity Editor!
+---
+
+Recently efforts have been made in the "modding support" side of Redux, today I want to share with you a breakthrough that will make modding the game a much smoother process.
+
+Using Redux's modding SDK, which will be partly based on the KSP2 Unity Tools package, in conjunction with PassivePicasso's ThunderKit you will be able to test your mods by running KSP2 Redux directly in the Unity editor!
+
+This allows you to:
+- Very quickly iterate, with changes being able to be tested in a matter of seconds, not minutes.
+- View what's happening in-game in real time using the Scene view.
+- Access the full suite of Unity Editor tools, including for example custom inspectors for Unity and KSP2 components.
+- Use built-in Unity C# debugging tools and any other Unity package library.
+
+On a technical note, we are still figuring out stuff like Harmony which does not really work in the editor (but will work fine in the compiled mods), we'll keep you updated if we make progress on this front. For simplicity, we will also want the modding API to provide as many endpoints as possible that allow you to mod the game without the use of Harmony.

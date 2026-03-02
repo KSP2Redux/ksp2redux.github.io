@@ -1,0 +1,389 @@
+---
+// PatchPicker - Interactive platform selection and installation guide
+const latestVersion = 'v1.2.3';
+---
+
+<div class="max-w-5xl mx-auto">
+	<!-- Platform Selection -->
+	<div class="mb-12">
+		<h3 class="text-2xl font-heading font-bold text-center mb-6">Choose Your Platform</h3>
+		
+		<div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="platform-selector">
+			<!-- Steam -->
+			<button 
+				class="platform-card card-glass text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:border-ksp-red"
+				data-platform="steam"
+			>
+				<div class="text-5xl mb-4">🎮</div>
+				<h4 class="text-xl font-heading font-semibold mb-2">Steam</h4>
+				<p class="text-gray-400 text-sm">Most common version</p>
+			</button>
+
+			<!-- Epic Games -->
+			<button 
+				class="platform-card card-glass text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:border-ksp-red"
+				data-platform="epic"
+			>
+				<div class="text-5xl mb-4">🎯</div>
+				<h4 class="text-xl font-heading font-semibold mb-2">Epic Games</h4>
+				<p class="text-gray-400 text-sm">Epic Games Store</p>
+			</button>
+
+			<!-- Website/Other -->
+			<button 
+				class="platform-card card-glass text-center cursor-pointer transition-all duration-300 hover:scale-105 hover:border-ksp-red"
+				data-platform="website"
+			>
+				<div class="text-5xl mb-4">🌐</div>
+				<h4 class="text-xl font-heading font-semibold mb-2">Website</h4>
+				<p class="text-gray-400 text-sm">Direct purchase</p>
+			</button>
+		</div>
+	</div>
+
+	<!-- Installation Instructions (Hidden by default) -->
+	<div id="installation-guide" class="hidden">
+		<!-- Steam Instructions -->
+		<div id="steam-instructions" class="instructions-panel hidden">
+			<div class="card-glass">
+				<div class="flex items-center justify-between mb-6">
+					<h3 class="text-2xl font-heading font-bold">
+						<span class="text-ksp-red">Steam</span> Installation
+					</h3>
+					<span class="badge-stable">
+						Version {latestVersion}
+					</span>
+				</div>
+
+				<!-- Download Button -->
+				<div class="mb-8">
+					<a 
+						href="https://github.com/KSP2Redux/Redux/releases/latest/download/KSP2Redux-Steam.zip" 
+						class="btn-primary w-full text-center block text-lg py-4"
+						download
+					>
+						<svg class="w-6 h-6 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+						</svg>
+						Download Redux for Steam
+					</a>
+					<p class="text-gray-500 text-sm text-center mt-2">
+						File size: ~45 MB • Compatible with KSP2 v0.2.0+
+					</p>
+				</div>
+
+				<!-- Installation Steps -->
+				<div class="space-y-6">
+					<div class="flex gap-4">
+						<div class="flex-shrink-0">
+							<div class="w-10 h-10 rounded-full bg-ksp-red flex items-center justify-center font-bold">
+								1
+							</div>
+						</div>
+						<div class="flex-1">
+							<h4 class="font-semibold mb-2">Locate Your KSP2 Installation</h4>
+							<p class="text-gray-400 text-sm mb-2">
+								Right-click Kerbal Space Program 2 in Steam → Properties → Local Files → Browse
+							</p>
+							<div class="bg-gray-900/50 rounded p-3 font-mono text-xs text-gray-300">
+								C:\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program 2
+							</div>
+						</div>
+					</div>
+
+					<div class="flex gap-4">
+						<div class="flex-shrink-0">
+							<div class="w-10 h-10 rounded-full bg-ksp-red flex items-center justify-center font-bold">
+								2
+							</div>
+						</div>
+						<div class="flex-1">
+							<h4 class="font-semibold mb-2">Extract the Archive</h4>
+							<p class="text-gray-400 text-sm">
+								Extract the downloaded ZIP file and copy all contents to your KSP2 installation folder. 
+								When prompted, choose to merge/overwrite existing files.
+							</p>
+						</div>
+					</div>
+
+					<div class="flex gap-4">
+						<div class="flex-shrink-0">
+							<div class="w-10 h-10 rounded-full bg-ksp-red flex items-center justify-center font-bold">
+								3
+							</div>
+						</div>
+						<div class="flex-1">
+							<h4 class="font-semibold mb-2">Launch and Verify</h4>
+							<p class="text-gray-400 text-sm mb-2">
+								Start KSP2 through Steam. You should see "Redux {latestVersion}" in the bottom-right corner of the main menu.
+							</p>
+							<div class="bg-green-900/20 border border-green-500/50 rounded p-3 text-sm">
+								<span class="text-success-green font-semibold">✓ Pro Tip:</span>
+								<span class="text-gray-300"> First launch may take slightly longer as Redux optimizes your game files.</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Troubleshooting Link -->
+				<div class="mt-8 pt-6 border-t border-white/10">
+					<p class="text-gray-400 text-sm">
+						Having issues? Check our 
+						<a href="/guides/troubleshooting" class="text-ksp-red hover:underline">troubleshooting guide</a> 
+						or ask for help on 
+						<a href="https://discord.gg/ksp2redux" target="_blank" class="text-ksp-red hover:underline">Discord</a>.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Epic Instructions -->
+		<div id="epic-instructions" class="instructions-panel hidden">
+			<div class="card-glass">
+				<div class="flex items-center justify-between mb-6">
+					<h3 class="text-2xl font-heading font-bold">
+						<span class="text-ksp-red">Epic Games</span> Installation
+					</h3>
+					<span class="badge-stable">
+						Version {latestVersion}
+					</span>
+				</div>
+
+				<div class="mb-8">
+					<a 
+						href="https://github.com/KSP2Redux/Redux/releases/latest/download/KSP2Redux-Epic.zip" 
+						class="btn-primary w-full text-center block text-lg py-4"
+						download
+					>
+						<svg class="w-6 h-6 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+						</svg>
+						Download Redux for Epic Games
+					</a>
+					<p class="text-gray-500 text-sm text-center mt-2">
+						File size: ~45 MB • Compatible with KSP2 v0.2.0+
+					</p>
+				</div>
+
+				<div class="space-y-6">
+					<div class="flex gap-4">
+						<div class="flex-shrink-0">
+							<div class="w-10 h-10 rounded-full bg-ksp-red flex items-center justify-center font-bold">
+								1
+							</div>
+						</div>
+						<div class="flex-1">
+							<h4 class="font-semibold mb-2">Find Your KSP2 Directory</h4>
+							<p class="text-gray-400 text-sm mb-2">
+								Open Epic Games Launcher → Library → Click ••• next to KSP2 → Manage → Browse Local Files
+							</p>
+							<div class="bg-gray-900/50 rounded p-3 font-mono text-xs text-gray-300">
+								C:\Program Files\Epic Games\KerbalSpaceProgram2
+							</div>
+						</div>
+					</div>
+
+					<div class="flex gap-4">
+						<div class="flex-shrink-0">
+							<div class="w-10 h-10 rounded-full bg-ksp-red flex items-center justify-center font-bold">
+								2
+							</div>
+						</div>
+						<div class="flex-1">
+							<h4 class="font-semibold mb-2">Install Redux Files</h4>
+							<p class="text-gray-400 text-sm">
+								Extract the ZIP archive and copy all files to your KSP2 folder. Overwrite when prompted.
+							</p>
+						</div>
+					</div>
+
+					<div class="flex gap-4">
+						<div class="flex-shrink-0">
+							<div class="w-10 h-10 rounded-full bg-ksp-red flex items-center justify-center font-bold">
+								3
+							</div>
+						</div>
+						<div class="flex-1">
+							<h4 class="font-semibold mb-2">Verify Installation</h4>
+							<p class="text-gray-400 text-sm">
+								Launch through Epic Games Launcher. Check for "Redux {latestVersion}" on the main menu.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="mt-8 pt-6 border-t border-white/10">
+					<p class="text-gray-400 text-sm">
+						Need help? Visit our 
+						<a href="/guides/troubleshooting" class="text-ksp-red hover:underline">troubleshooting page</a> 
+						or join our 
+						<a href="https://discord.gg/ksp2redux" target="_blank" class="text-ksp-red hover:underline">Discord server</a>.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Website/Manual Instructions -->
+		<div id="website-instructions" class="instructions-panel hidden">
+			<div class="card-glass">
+				<div class="flex items-center justify-between mb-6">
+					<h3 class="text-2xl font-heading font-bold">
+						<span class="text-ksp-red">Manual</span> Installation
+					</h3>
+					<span class="badge-stable">
+						Version {latestVersion}
+					</span>
+				</div>
+
+				<div class="mb-8">
+					<a 
+						href="https://github.com/KSP2Redux/Redux/releases/latest/download/KSP2Redux-Universal.zip" 
+						class="btn-primary w-full text-center block text-lg py-4"
+						download
+					>
+						<svg class="w-6 h-6 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+						</svg>
+						Download Redux (Universal)
+					</a>
+					<p class="text-gray-500 text-sm text-center mt-2">
+						File size: ~45 MB • Works with any KSP2 installation
+					</p>
+				</div>
+
+				<div class="space-y-6">
+					<div class="flex gap-4">
+						<div class="flex-shrink-0">
+							<div class="w-10 h-10 rounded-full bg-ksp-red flex items-center justify-center font-bold">
+								1
+							</div>
+						</div>
+						<div class="flex-1">
+							<h4 class="font-semibold mb-2">Locate Your KSP2 Installation</h4>
+							<p class="text-gray-400 text-sm mb-2">
+								Find where you installed Kerbal Space Program 2. Common locations:
+							</p>
+							<div class="space-y-2 text-xs">
+								<div class="bg-gray-900/50 rounded p-2 font-mono text-gray-300">
+									C:\Games\Kerbal Space Program 2
+								</div>
+								<div class="bg-gray-900/50 rounded p-2 font-mono text-gray-300">
+									D:\KSP2
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="flex gap-4">
+						<div class="flex-shrink-0">
+							<div class="w-10 h-10 rounded-full bg-ksp-red flex items-center justify-center font-bold">
+								2
+							</div>
+						</div>
+						<div class="flex-1">
+							<h4 class="font-semibold mb-2">Backup Your Saves (Optional)</h4>
+							<p class="text-gray-400 text-sm">
+								While Redux is save-compatible, we recommend backing up your saves folder located in:
+							</p>
+							<div class="bg-gray-900/50 rounded p-2 font-mono text-xs text-gray-300 mt-2">
+								%APPDATA%\..\LocalLow\Intercept Games\Kerbal Space Program 2\Saves
+							</div>
+						</div>
+					</div>
+
+					<div class="flex gap-4">
+						<div class="flex-shrink-0">
+							<div class="w-10 h-10 rounded-full bg-ksp-red flex items-center justify-center font-bold">
+								3
+							</div>
+						</div>
+						<div class="flex-1">
+							<h4 class="font-semibold mb-2">Install and Launch</h4>
+							<p class="text-gray-400 text-sm">
+								Extract the download and copy all files to your KSP2 folder. Launch KSP2 using your normal method.
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="mt-8 pt-6 border-t border-white/10">
+					<p class="text-gray-400 text-sm">
+						Having trouble? Check our 
+						<a href="/guides/troubleshooting" class="text-ksp-red hover:underline">troubleshooting guide</a> 
+						or get support on 
+						<a href="https://discord.gg/ksp2redux" target="_blank" class="text-ksp-red hover:underline">Discord</a>.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<!-- Back Button -->
+		<div class="text-center mt-8">
+			<button id="back-button" class="text-gray-400 hover:text-white transition-colors">
+				← Choose a different platform
+			</button>
+		</div>
+	</div>
+</div>
+
+<script>
+	// Platform selection logic
+	const platformCards = document.querySelectorAll('.platform-card');
+	const installationGuide = document.getElementById('installation-guide');
+	const platformSelector = document.getElementById('platform-selector');
+	const backButton = document.getElementById('back-button');
+
+	platformCards.forEach(card => {
+		card.addEventListener('click', () => {
+			const platform = card.getAttribute('data-platform');
+			if (platform) {
+				showInstructions(platform);
+			}
+		});
+	});
+
+	backButton?.addEventListener('click', () => {
+		hideInstructions();
+	});
+
+	function showInstructions(platform: string) {
+		// Hide all instruction panels
+		document.querySelectorAll('.instructions-panel').forEach(panel => {
+			panel.classList.add('hidden');
+		});
+
+		// Show selected platform instructions
+		const selectedPanel = document.getElementById(`${platform}-instructions`);
+		if (selectedPanel) {
+			selectedPanel.classList.remove('hidden');
+		}
+
+		// Show guide, hide selector
+		installationGuide?.classList.remove('hidden');
+		platformSelector?.classList.add('hidden');
+
+		// Smooth scroll to instructions
+		installationGuide?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+	}
+
+	function hideInstructions() {
+		installationGuide?.classList.add('hidden');
+		platformSelector?.classList.remove('hidden');
+		platformSelector?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+	}
+</script>
+
+<style>
+	.platform-card {
+		border: 2px solid transparent;
+	}
+
+	.platform-card:hover {
+		border-color: var(--ksp-red);
+	}
+
+	.platform-card.selected {
+		border-color: var(--ksp-red);
+		background: rgba(240, 90, 40, 0.1);
+	}
+</style>

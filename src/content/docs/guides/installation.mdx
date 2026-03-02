@@ -1,0 +1,130 @@
+---
+title: Installation Guide
+description: Step-by-step instructions for installing KSP2 Redux on Steam, Epic Games Store, or Portable versions.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+This guide will walk you through installing KSP2 Redux on your system.
+
+<Aside type="caution" title="Beta Software">
+We are currently in the beta testing phase. Please keep in mind that some things may be broken. You will not be able to update an existing beta build when the next beta build or stable release comes out - a fresh install of Redux will be required.
+</Aside>
+
+## Requirements
+
+- **KSP2 Version:** You must have stock KSP2 v0.2.2.0 installed (the latest official version)
+- **Disk Space:** At least 32 GB of free space (the entire game will be copied)
+- **Operating System:** Windows (currently)
+
+<Aside type="tip">
+Installing Redux on the same drive as your original KSP2 installation will result in faster installation times.
+</Aside>
+
+## Installation Steps
+
+### 1. Download Redux
+
+Download the latest prerelease build archive from the [GitHub Releases page](https://github.com/KSP2Redux/Redux/releases).
+
+### 2. Extract Files
+
+Extract the contents of the downloaded archive to a temporary folder on your computer.
+
+### 3. Create Installation Folder
+
+Create an empty folder where you want to install Redux. This will be your Redux installation directory.
+
+**Important:** 
+- Ensure you have at least 32 GB of free space
+- Avoid installing Redux inside the original Kerbal Space Program 2 folder
+- Using the same drive as your original KSP2 installation is recommended for faster installation
+
+### 4. Run the Installer
+
+1. Run `Ksp2Redux.Tools.Installer.exe` from the extracted files
+   <Aside type="note">
+   This is an internal dev tool, so it's very barebones. The actual Installer/Updater will come with the first stable release.
+   </Aside>
+
+2. Click **Browse** next to "KSP2 Install Folder" and select your stock KSP2 v0.2.2.0 installation folder
+
+3. Click **Browse** next to "Target Folder" and select the empty folder you created in step 3
+
+### 5. Select Patch File
+
+Click **Browse** next to "Patch File" and select the appropriate patch file based on your KSP2 version:
+
+#### Steam Version
+Use the `Ksp2Redux-steam-release-vX-Y-Z-xxxxxxxx.patch` file.
+
+To verify you have a Steam install, check for the file:
+```
+Kerbal Space Program 2/KSP2_x64_Data/Plugins/Steamworks.NET.txt
+```
+
+#### Epic Games Store Version
+Use the `Ksp2Redux-epic-release-vX-Y-Z-xxxxxxxx.patch` file.
+
+To verify you have an EGS install, check for the folder:
+```
+Kerbal Space Program 2/.egstore
+```
+
+#### Portable Version
+Use the `Ksp2Redux-portable-release-vX-Y-Z-xxxxxxxx.patch` file.
+
+This is for versions downloaded from the Private Division website.
+
+### 6. Install
+
+1. Click **Update/Install**
+2. Wait for a dialog window to appear confirming that patching is finished
+   <Aside>
+   Depending on the speed of your disk, this may take a while. Be patient!
+   </Aside>
+
+### 7. Launch the Game
+
+1. Open the folder you specified as "Target Folder"
+2. Run `KSP2_x64.exe` to start KSP2 Redux
+
+## Verifying Installation
+
+Once the game launches, you should see Redux-specific features and UI elements. Check the main menu for Redux version information.
+
+## Troubleshooting
+
+### Installation Takes Too Long
+- Ensure you're installing to the same drive as your original KSP2 installation
+- Check that your antivirus isn't scanning files during installation
+- Make sure you have sufficient disk space
+
+### Game Won't Launch
+- Verify you selected the correct patch file for your KSP2 version
+- Ensure your original KSP2 installation is v0.2.2.0
+- Check that DirectX and Visual C++ redistributables are installed
+
+### Missing Files Error
+- Re-download the Redux archive
+- Verify the integrity of your stock KSP2 installation through Steam/Epic
+
+## Uninstalling
+
+To uninstall KSP2 Redux, simply delete the folder you specified as "Target Folder" during installation. Your original KSP2 installation will remain untouched.
+
+## Reporting Issues
+
+If you encounter bugs, please use the in-game bug report feature:
+- Press **Ctrl+B**, or
+- Press **Escape** → **Report Redux Bug**
+
+This automatically attaches useful information like screenshots, logs, and save files to help us reproduce the issue.
+
+Alternatively, report issues in the **#🟡redux-bugs** channel on the [KSP2 Modding Society Discord server](https://discord.gg/8yq8d5VGQR).
+
+## Next Steps
+
+- Read about [current limitations and known issues](/guides/known-issues)
+- Learn about [mod compatibility](/guides/mod-compatibility)
+- Check out the [changelog](https://github.com/KSP2Redux/Redux/releases)
