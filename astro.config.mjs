@@ -3,8 +3,6 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import starlightBlog from 'starlight-blog';
 import tailwindcss from '@tailwindcss/vite';
-import rewriteLfsVideos from './src/integrations/rewrite-lfs-videos.mjs';
-import rewriteYouTubeInRss from './src/integrations/rewrite-youtube-in-rss.mjs';
 
 // https://astro.build/config
 export default defineConfig({
@@ -53,7 +51,5 @@ export default defineConfig({
 				themes: ['starlight-dark']
 			}
 		}),
-		rewriteLfsVideos(),
-		rewriteYouTubeInRss(),
 	],
 });
