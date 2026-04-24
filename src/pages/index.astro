@@ -19,144 +19,89 @@ const formattedDate = new Date(releaseDate).toLocaleDateString('en-US', {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>KSP2 Redux</title>
-	<meta name="description" content="Transform your Kerbal Space Program 2 experience with performance improvements, bug fixes, and quality of life enhancements.">
+	<meta name="description" content="KSP2 Redux is a free, community-made mod for the game Kerbal Space Program 2, aiming to implement most of the features promised by the original developers.">
 	<link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
 <body class="bg-space-black text-white">
 	<Header />
 
-	<!-- Hero Section -->
-	<section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
-		<!-- Animated Background -->
-		<div class="absolute inset-0 z-0">
-			<div class="absolute inset-0 bg-gradient-to-b from-ksp-blue via-space-black to-space-black"></div>
-			<div class="absolute inset-0 opacity-20" style="background-image: url('/background.png'); background-size: cover; background-position: center;"></div>
-		</div>
+	<!-- Masthead -->
+	<section class="relative pt-32 pb-16 overflow-hidden">
+		<div class="absolute inset-0 z-0 opacity-15" style="background-image: url('/background.png'); background-size: cover; background-position: center;"></div>
+		<div class="absolute inset-0 z-0 bg-gradient-to-b from-ksp-blue/50 via-space-black/80 to-space-black"></div>
 
-		<!-- Hero Content -->
-		<div class="section-container relative z-10 text-center py-20">
-			<!-- Latest Release Badge -->
-			<div class="mb-6 flex justify-center">
-				<span class="badge-latest">
-					Latest Release: {latestVersion} • {formattedDate}
-				</span>
-			</div>
+		<div class="section-container relative z-10">
+			<div class="max-w-3xl">
+				<h1 class="text-5xl md:text-7xl font-heading font-extrabold mb-6 text-glow">
+					<span class="text-ksp-red font-logo">KSP2 Redux</span>
+				</h1>
 
-			<!-- Main Headline -->
-			<h1 class="text-5xl md:text-7xl font-heading font-extrabold mb-6 text-glow">
-				Welcome to <span class="text-ksp-red font-logo">KSP2 Redux</span>
-			</h1>
+				<p class="text-lg md:text-xl text-gray-300 mb-6 leading-relaxed">
+					KSP2 Redux is a free, community-made mod for the game <strong class="text-white">Kerbal Space Program 2</strong>,
+					aiming to implement most of the features promised by the original developers.
+				</p>
 
-			<!-- Subheadline -->
-			<p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed">
-                KSP2 Redux is a free, community-made mod for the game <strong class="text-white">Kerbal Space Program 2</strong>,
-                aiming to implement most of the features promised by the original developers.
-			</p>
+				<p class="text-sm text-gray-500 mb-8">
+					Current Version <span class="text-gray-300 font-semibold">{latestVersion}</span>
+					<span class="text-gray-600 mx-2">·</span>
+					<span>{formattedDate}</span>
+				</p>
 
-			<!-- Call-to-Action Buttons -->
-			<div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-				<a href="https://github.com/KSP2Redux/Updater/releases/latest" target="_blank" rel="noopener noreferrer" class="btn-primary text-lg">
-					<svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-					</svg>
-					Download Now
-				</a>
-				<a href="/guides" class="btn-secondary text-lg">
-					<svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-					</svg>
-					Read the Docs
-				</a>
-			</div>
-
-			<!-- Stats -->
-			<!-- Remove stats for now
-			<div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-				<div class="card-glass text-center py-6">
-					<div class="text-4xl font-heading font-bold text-ksp-red mb-2">56%</div>
-					<div class="text-gray-400 text-sm">FPS Improvement</div>
-				</div>
-				<div class="card-glass text-center py-6">
-					<div class="text-4xl font-heading font-bold text-ksp-red mb-2">180+</div>
-					<div class="text-gray-400 text-sm">Bug Fixes</div>
-				</div>
-				<div class="card-glass text-center py-6">
-					<div class="text-4xl font-heading font-bold text-ksp-red mb-2">Stage 0</div>
-					<div class="text-gray-400 text-sm">Foundation Beta</div>
+				<div class="flex flex-wrap gap-3">
+					<a href="https://github.com/KSP2Redux/Updater/releases/latest" target="_blank" rel="noopener noreferrer" class="btn-primary">
+						<svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+						</svg>
+						Download
+					</a>
+					<a href="/guides" class="btn-secondary">
+						<svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+						</svg>
+						Read the Docs
+					</a>
 				</div>
 			</div>
-			-->
-		</div>
-
-		<!-- Scroll Indicator -->
-		<div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-			<svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-			</svg>
 		</div>
 	</section>
 
 	<!-- Features Section -->
-	<section class="section-container py-20">
-		<div class="text-center mb-16">
-			<h2 class="text-4xl md:text-5xl font-heading font-bold mb-4">
-				Why Install <span class="text-ksp-red">Redux</span>?
-			</h2>
-			<!-- We don't need this pitchy ass bullshit
-			<p class="text-gray-400 text-lg max-w-2xl mx-auto">
-				We've rebuilt KSP2 from the ground up to deliver the experience you deserve.
-			</p>
-			-->
-		</div>
+	<section class="section-container py-16">
+		<div class="max-w-5xl">
+			<h2 class="text-sm font-heading font-semibold uppercase tracking-[0.2em] text-gray-400 mb-3">Redux Features</h2>
+			<div class="h-px bg-gradient-to-r from-ksp-red via-ksp-red/30 to-transparent mb-12"></div>
 
-		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-			<!-- Feature 1 -->
-			<div class="card-glass">
-				<h3 class="text-xl font-heading font-semibold mb-3">Performance Improvements</h3>
-				<p class="text-gray-400">
-					Experience 30-56% better frame rates with optimized rendering, ECS/Burst systems, and improved memory management.
-				</p>
-			</div>
+			<dl class="grid grid-cols-1 md:grid-cols-[14rem_1fr] gap-x-10 gap-y-10">
+				<dt class="text-xl font-heading font-semibold text-white md:text-right">Performance Improvements</dt>
+				<dd class="text-gray-400 md:border-l md:border-white/10 md:pl-10">
+					Reworked rendering, ECS/Burst, and memory handling push frame rates 30-56% above stock.
+				</dd>
 
-			<!-- Feature 2 -->
-			<div class="card-glass">
-				<h3 class="text-xl font-heading font-semibold mb-3">Bug Fixes</h3>
-				<p class="text-gray-400">
-					Hundreds of bugs fixed, including physics glitches, UI errors, and various game-breaking issues.
-				</p>
-			</div>
+				<dt class="text-xl font-heading font-semibold text-white md:text-right">Bug Fixes</dt>
+				<dd class="text-gray-400 md:border-l md:border-white/10 md:pl-10">
+					Hundreds of stock bugs patched, covering physics glitches, UI errors, and the game-breakers.
+				</dd>
 
-			<!-- Feature 3 -->
-			<div class="card-glass">
-				<h3 class="text-xl font-heading font-semibold mb-3">Planned Features</h3>
-				<p class="text-gray-400">
-					Colonies, resource management, interstellar travel, and multiplayer are all in our roadmap.
-				</p>
-			</div>
+				<dt class="text-xl font-heading font-semibold text-white md:text-right">Planned Features</dt>
+				<dd class="text-gray-400 md:border-l md:border-white/10 md:pl-10">
+					Colonies, resource management, interstellar travel, and multiplayer are all planned. These are the features KSP2 was originally meant to ship with.
+				</dd>
 
-			<!-- Feature 4 -->
-			<div class="card-glass">
-				<h3 class="text-xl font-heading font-semibold mb-3">Modding Support</h3>
-				<p class="text-gray-400">
-					Unity Editor based SDK for modding, allowing for quicker testing loops.
-				</p>
-			</div>
+				<dt class="text-xl font-heading font-semibold text-white md:text-right">Modding Support</dt>
+				<dd class="text-gray-400 md:border-l md:border-white/10 md:pl-10">
+					A Unity Editor-based SDK, so mods can be built and iterated inside the engine instead of reloading the game.
+				</dd>
 
-			<!-- Feature 5 -->
-			<div class="card-glass">
-				<h3 class="text-xl font-heading font-semibold mb-3">Community Driven</h3>
-				<p class="text-gray-400">
-					Developed by passionate volunteer KSP2 modders with regular updates based on community feedback.
-				</p>
-			</div>
+				<dt class="text-xl font-heading font-semibold text-white md:text-right">The Team</dt>
+				<dd class="text-gray-400 md:border-l md:border-white/10 md:pl-10">
+					Built by volunteer KSP2 modders on their own time, shaped by what the community actually asks for.
+				</dd>
 
-			<!-- Feature 6 -->
-			<div class="card-glass">
-				<h3 class="text-xl font-heading font-semibold mb-3">Debug Tools</h3>
-				<p class="text-gray-400">
-					Comprehensive debug windows for vessel info, science, teleportation, and Kerbal management.
-				</p>
-			</div>
+				<dt class="text-xl font-heading font-semibold text-white md:text-right">Debug Tools</dt>
+				<dd class="text-gray-400 md:border-l md:border-white/10 md:pl-10">
+					In-game debug windows for vessel info, science, teleportation, and Kerbal management.
+				</dd>
+			</dl>
 		</div>
 	</section>
 
