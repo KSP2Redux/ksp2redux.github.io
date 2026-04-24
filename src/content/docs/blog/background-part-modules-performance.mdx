@@ -1,0 +1,35 @@
+---
+title: "Improving Performance of Background Part Modules"
+date: 2025-09-21
+author: "foonix"
+description: "**Improving performance of background part modules.** Some of you may remember the infamous \"2500 background parts\" test thread from the forum. If you're not..."
+---
+
+**Improving performance of background part modules.**
+
+Some of you may remember the infamous "2500 background parts" test thread from the forum.
+
+If you're not familiar, it was a test using 10x250 part vessels in the background, and a single capsule in the foreground.
+
+https://forum.kerbalspaceprogram.com/topic/219210-ksp2-is-calculating-the-physics-of-all-parts-of-all-crafts-whether-they-are-rendered-or-not-reducing-performance-of-all-scenes-at-all-times/
+
+So far, Redux has incidentally made some small improvements on that test. The development branch is about %15-20 faster than stock, mostly due to general improvements in spatial calculations and flow request processing.
+
+However, I hadn't really tried to tackle the elephant in the room, which is just the shear amount of parts. Even tiny amounts of overhead for each part really adds up when we're talking about multiple thousands of them. One save a player shared with me had organically hit 560 parts even while keeping per-vessel part count low, so it's not really far fetched that real players could hit 1000+ parts.
+
+So I took a look back at the 2500 parts test, and was able get another ~%10 more fps with a couple of relatively simple changes. (51.4ms -> 46.2ms)
+
+- Reworked the part module update code to make modules have to subscribe to get updates. Skip ones that don't subscribe, and implement subscription for ones that do.
+- Moved some engine status display updates from background to foreground only.
+- Moved Module_LitPart checking if the lights should be on/off to foreground only. (Note, this is different from `Module_Light`. It just checks if the vessel should look like it's had a power failure or not.)
+- Simplified some getter logic commonly used by modules.
+
+All in, Redux runs the test about %30 faster on my machine. Stock KSP2 vs this branch: 16fps -> 21fps
+
+Left/Blue is Redux development branch. Right/orange is this change set. Comparison over 384 frames.
+
+## Media
+
+![Background part modules 1](/blog/redux-news/background-part-modules-performance/background-part-modules-1.png)
+
+![Background part modules 2](/blog/redux-news/background-part-modules-performance/background-part-modules-2.png)

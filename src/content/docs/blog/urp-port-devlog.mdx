@@ -1,0 +1,20 @@
+---
+title: "Early URP Port Devlog"
+date: 2026-04-15
+author: "munix"
+description: "I thought I'd make a short devlog to show off what I've been working on the past couple of days. To give a bit of context, KSP2 uses the Built-in Render Pipe..."
+---
+
+I thought I'd make a short devlog to show off what I've been working on the past couple of days.
+
+To give a bit of context, KSP2 uses the Built-in Render Pipeline. In Unity, a render pipeline is the sequence of GPU steps (culling, batching, lighting, shading, post-processing, ...) that turns scene data into pixels each frame. The original, old Built-in Render Pipeline is a hardcoded implementation of that sequence, where you can tweak the parameters, but not really the logic itself. Meanwhile, the newer Scriptable Render Pipeline (which is an umbrella term for both the Universal Render Pipeline and the High Definition Render Pipeline) exposes that logic in C#, so that you can define exactly how objects are drawn, how lighting is evaluated, how render passes are structured, etc.
+
+Now, the issue is that the BRP is going to be deprecated in Unity 6.5, and completely removed possibly as early as Unity 6.8, which coincidentally is also the stable release of CoreCLR support (which we *really, really, really* want for the potential [crazy performance boost](https://discussions.unity.com/t/expected-performance-of-new-coreclr-vs-mono-vs-il2cpp/910032/2) and the access to modern C#). Generally, we also want to be able to keep upgrading the game and not be hard stuck on a specific Unity version.
+
+So, in order to solve this issue, we'll need to eventually port the game from BRP to URP or HDRP. While HDRP would make the most sense with its current feature set compared to URP, Unity just recently announced that it will no longer be developed, and that URP will eventually receive all of its features and become the single recommended pipeline to use. That means that for future use, it makes more sense to start with URP right away, rather than have to go through *another* port in a couple of months/years.
+
+In our case, porting from BRP to SRP is not an easy task though, arguably much more difficult than our big upgrade from Unity 2022.3 to Unity 6.3 (and now 6.4 in development). That's because we don't have access to the source code of the game's shaders, and shaders are often very particular about which render pipeline they work on. That said, there are some ways (dark magic) to "hack" around this and get stuff to render using these normally incompatible shaders, and the video in this post is a look at the first "playable" version of the very early and experimental URP port of the game. Many things are still missing, but it's honestly been going much better than I expected, so I'm feeling positive about this little side-quest that I'm on!
+
+## Media
+
+<video controls preload="metadata" src="/blog/redux-news/urp-port-devlog/urp-port.mp4"></video>

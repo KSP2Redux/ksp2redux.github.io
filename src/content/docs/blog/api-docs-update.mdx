@@ -1,0 +1,18 @@
+---
+title: "API Documentation Pipeline Update"
+date: 2026-04-21
+author: "cheese_queen"
+description: "A short dev update from what ive been doing for today: I have been working on our workflow to automatically generate API documentation from the doc comments..."
+---
+
+A short dev update from what ive been doing for today:
+
+I have been working on our workflow to automatically generate API documentation from the doc comments we write in the code.
+
+This is not as simple as it may seem because unity does not have any way to export the xml documentation like msbuild would normally have, so instead I had to force unity in the CI pipeline to generate the project files as it would with rider, then have a modern dotnet sdk build the files to generate the documentation files, which took a lot of fanangling as you might imagine (i even had to write a script to selectively fix an error for this step that only occurs when using the dotnet sdk).
+
+Then later on in the CI/CD pipeline, I invoke docfx to build all the documentation, and push to a github repo (for ease of hosting it on our own domain).
+
+You can see current documentation here: http://api.ksp2redux.org/
+
+This is for the develop branch so it wont accurately reflect whats in the beta, however once the next beta is out it will redirect for that beta.

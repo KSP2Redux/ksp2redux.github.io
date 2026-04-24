@@ -1,38 +1,51 @@
 ---
 title: "Performance Improvements Overview"
 date: 2025-02-25
-author: Redux Team
-description: A detailed look at the FPS improvements and optimizations in KSP2 Redux.
+author: "foonix"
+description: "Basic rundown of Redux FPS improvements: **Leverage newer unity features** - Enable unity \"Graphics Jobs\" setting. Cuts 3-5ms off the frame on my computer. -..."
 ---
 
-One of our primary goals for KSP2 Redux is to dramatically improve game performance. Here's a rundown of the major improvements we've made:
+Basic rundown of Redux FPS improvements:
 
 **Leverage newer unity features**
-- Enable unity "Graphics Jobs" setting.  Cuts 3-5ms off the frame on my computer.
-https://docs.unity3d.com/2022.3/Documentation/Manual/playersettings-windows.html
-- Disable Unity `Physics.autoSyncTransforms` option.  This required rewriting a lot of code to avoid depending on the autosync behavior.
+
+- Enable unity "Graphics Jobs" setting. Cuts 3-5ms off the frame on my computer.
+- Disable Unity `Physics.autoSyncTransforms` option. This required rewriting a lot of code to avoid depending on the autosync behavior.
 
 **Overhaul widely used systems for better performance**
-`TransformFrame` is how the game deals with multiple moving reference frames, and is used extensively through the code base.  Redux replaces this with an ECS/Burst based system that is significantly faster.
+
+`TransformFrame` is how the game deals with multiple moving reference frames, and is used extensively through the code base. Redux replaces this with an ECS/Burst based system that is significantly faster.
 
 **Lots of individually minor "depessimizations" that add up to significant improvements.**
 
-Too many to list in a discord comment.  Many, many code systems have been tweaked to remove unnecessary steps, fix unnecessary garbage allocations, and accomplish the same task with fewer resources.
+Too many to list in a discord comment. Many, many code systems have been tweaked to remove unnecessary steps, fix unnecessary garbage allocations, and accomplish the same task with fewer resources.
 
 **Performance test results compilation**
 
 All tests are on my system: i7-4790K @ 4GHz, 32GB DDR3 @1333MHz, RTX2080
 
 **Small vessel test:**
+
 50 fps -> 78 fps
-https://cdn.discordapp.com/attachments/1282671742514495559/1336378173251911790/image.png?ex=67be9d69&is=67bd4be9&hm=51600660406d19fc64404955ee8c0ae07bbf727c3cde848134dfc5c32f645de5&
-https://cdn.discordapp.com/attachments/1282671742514495559/1336376068269019206/image.png?ex=67be9b73&is=67bd49f3&hm=57822051694cf5cc303145e0c0630fcc5e208ba42ba40f39e6798b1153aa6904&
 
 **200 part test:**
+
 18 fps, 55.95ms/frame -> 24fps, 41.49ms/frame
-(screenshots attached)
 
 **1500 part test**
+
 638 ms/frame -> 347 ms/frame
-https://cdn.discordapp.com/attachments/1039965578754007060/1337328441917444096/image.png?ex=67bec6aa&is=67bd752a&hm=0e8e56610c55d3f5d24087be70db12d0633ee0ffddb827e13c7c01a51080ae06&
-https://cdn.discordapp.com/attachments/1039965578754007060/1337332794132533248/image.png?ex=67becab8&is=67bd7938&hm=800a3d25e9fc26ac1838922701fa22c95337dea01ebb49850e4aa36d6aa773d7&
+
+## Media
+
+*Unable to recover `small-vessel-redux.png` from Discord: HTTP Error 404: Not Found*
+
+*Unable to recover `small-vessel-stock.png` from Discord: HTTP Error 404: Not Found*
+
+![200 part test 1](/blog/redux-news/performance-improvements/200-part-test-1.png)
+
+![200 part test 2](/blog/redux-news/performance-improvements/200-part-test-2.png)
+
+*Unable to recover `1500-part-test-1.png` from Discord: HTTP Error 404: Not Found*
+
+*Unable to recover `1500-part-test-2.png` from Discord: HTTP Error 404: Not Found*

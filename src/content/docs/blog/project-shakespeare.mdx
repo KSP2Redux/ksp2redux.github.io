@@ -1,0 +1,24 @@
+---
+title: "Project Shakespeare"
+date: 2026-04-20
+author: "munix"
+description: "Everyone, meet The Secret Feature™, or as we like to call it, Project Shakespeare (to honor the never-implemented, never-explained mod type called Shakespear..."
+---
+
+Everyone, meet The Secret Feature™, or as we like to call it, Project Shakespeare (to honor the never-implemented, never-explained mod type called Shakespeare that can be found in the stock game's code).
+
+This is a very basic KSP1 **part-only** mod loader with currently *mostly* functional command modules, deployables and animations, decouplers, fuel tanks, engines, gimbals, plumes, engine mode switching, variant switching, and more. It includes support for some popular modded part modules as well, such as B9 part switching and animated decouplers.
+
+There's a *lot* that doesn't work properly yet, such as WIP control surfaces (that's why I didn't put on the grid fins yet, as they result in a funny, although very motion sickness-inducing death spin), or RCS thrusters. Engine plumes are also just using the default KSP2 methalox plume attached in place of where the KSP1/Waterfall plume would be, and for some parts (e.g. the booster fuel tank in the video) the textures don't look right, either.
+
+**IMPORTANT**: this is **NOT** going to be a "plug-and-play" feature where you just copy all 300 of your KSP1 mods into the Redux folder and can play without any issues. It is extremely limited with a small selection of part modules and types that it can handle, it's only able to do handle basic Module Manager patching logic in order to support things like engine plumes defined in MM patches instead of the base .cfg file (which is a pattern often used in KSP1 mods), and also, it's *EXTREMELY* slow. I've seen loading times of like 2-3 minutes with 3 part mods, and that will possibly get even slower as I iterate on it more and introduce more module translations and other functionality (though it can be somewhat mitigated by the caching of translated parts and modules).
+
+The purpose of this feature is to be a proof-of-concept, technical demo that lets your imagination run wild with what could be possible if your favorite KSP1 mod authors ported their mods for KSP2 for real, and it also serves as a technical showcase of what sorts of authoring and conversion tools we can and will provide to KSP1 mod developers to help them with the process of converting their mods over to KSP2 Redux.
+
+Note: this will not be a part of beta 5, you'll need to wait a bit longer for us to polish this more.
+
+Mods used in the showcase are [Tundra Exploration](https://forum.kerbalspaceprogram.com/topic/166915-112x-tundra-exploration-v72-april-6th-2026-restockalike-spacex-falcon-9-crew-dragon-xl-haven-1/) and [Kerbal Reusability Expansion](https://forum.kerbalspaceprogram.com/topic/195546-112x-kre-kerbal-reusability-expansion/), some of my favorite KSP1 mods.
+
+## Media
+
+<video controls preload="metadata" src="/blog/redux-news/project-shakespeare/project-shakespeare.mp4"></video>

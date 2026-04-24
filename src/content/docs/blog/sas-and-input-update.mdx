@@ -1,0 +1,34 @@
+---
+title: "SAS, Flight Input, and Precision Mode"
+date: 2026-04-17
+author: "munix"
+description: "Decided to take a short break from Redux (working on the rendering pipeline) and, for a change, work a bit on Redux. This time, I looked at a few flight-cont..."
+---
+
+Decided to take a short break from Redux (working on the rendering pipeline) and, for a change, work a bit on Redux. This time, I looked at a few flight-control related things:
+
+1. SAS oscillations
+2. Flight input
+3. Precision mode
+
+The main one is SAS. In stock KSP2, SAS has a tendency to oscillate a lot more than it did in KSP1, especially on vessels with a lot of control authority, meaning that rockets and planes can sometimes wobble back and forth instead of smoothly settling in the target direction. This gets especially noticeable under physics warp.
+
+After comparing the KSP1 and KSP2 implementations, the PID controller used for SAS is basically the same, and not really an issue. The bigger differences are in the surrounding logic: how SAS estimates when it should stop pushing, when the flight control state gets updated, and how often the telemetry system updates data that SAS needs.
+
+The first fix was related to the "coasting" logic. Basically, SAS needs to predict when the vessel is already rotating fast enough that it should stop applying torque and let itself coast into the target direction. KSP2 had a small difference from KSP1 here that made it worse at predicting overshoot, so it would often push for too long, overshoot, correct back, overshoot again, and so on. Fixing the formula here to match KSP1 helped with making vessels settle down instead of wobbling forever.
+
+The second fix was about timing. Gimbals, control surfaces, reaction wheels, RCS, etc. all consume the flight control state during FixedUpdate, and with this change, SAS now updates that control state earlier in the fixed update order. That means parts are working with fresher SAS commands, instead of commands that are slightly behind what the vessel is currently doing.
+
+There was also a fun little physics warp rabbit hole. SAS depends on telemetry data, but that was normally refreshed through the regular Update path (there's always 1 Update per frame, so the frequency changes with FPS). Under physics warp, especially at lower FPS, you can get multiple FixedUpdate ticks between regular Updates (FixedUpdate is, as the name suggests, fixed - by default at 50 per second - and it scales with time warp speed), meaning SAS ends up acting on stale telemetry data. This was fixed by updating the necessary telemetry data on FixedUpdate instead of Update.
+
+Outside of SAS, I also tweaked the manual flight inputs. Stock KSP2 input is very instant, which can feel a bit twitchy with keyboard controls. The updated version is closer to KSP1, where pitch/yaw/roll ramp up and decay back down instead of snapping immediately to full input or zero.
+
+Precision mode is completely reworked. In stock KSP2, it simply limited the control authority of user inputs to 10% of the maximum. Now it also acts closer to the KSP1 version, where you can still go from -100% to 100% of the input, but the buildup and decay are much slower, meaning it's now much easier to make finer inputs, while still letting you go all the way to the max if you keep holding the key.
+
+All in all, these changes should make vessel controls and SAS feel a lot better, though it's obviously not an all-powerful fix that will get rid of all issues.
+
+In the attached video, you can see all of these changes: SAS on a rocket with very high control authority at 1x, 2x, and 4x physics warp, SAS on a plane, and then the updated normal and precision input behavior (with SAS disabled).
+
+## Media
+
+<video controls preload="metadata" src="/blog/redux-news/sas-and-input-update/sas-and-input.mp4"></video>

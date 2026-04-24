@@ -1,0 +1,24 @@
+---
+title: "KSP2 Redux Dev Blog 16 (?): Unity 6.3"
+date: 2026-01-06
+author: "munix"
+description: "Hello everyone! It's been a minute since the last dev update, as we've been busy with our beta releases, fixing bugs, adding more features, etc. However, thi..."
+---
+
+## KSP2 Redux Dev Blog 16 (?): Unity 6.3
+
+> When did we stop numbering these dev posts?
+
+Hello everyone! It's been a minute since the last dev update, as we've been busy with our beta releases, fixing bugs, adding more features, etc. However, this new development is a pretty big deal for us, so I thought we might share a bit of info.
+
+We've just managed to upgrade KSP2 from Unity 2022.3.5 all the way to the lastest stable Unity 6.3 version (6000.3.2). This means we will have access to all the latest editor tools, Unity bug fixes, new APIs, etc. It will be a huge help to us in continuing to rewrite and update the game's UI using the newer UI Toolkit library (like you could see in the Color Manager and orbital info panel), as well as in converting the game's simulation code to [Unity's DOTS](https://unity.com/dots).
+
+I first started working on this experiment a couple of weeks ago, but hit a wall that I wasn't sure we could overcome. We previously thought that this would be a massive undertaking that would require us to rewrite many of the game's shaders from scratch, as we don't have access to their sources and the binary serialization layout for the files which (usually) contain the built shaders changes between every version, meaning we couldn't just take the existing built assets files and reuse them in a new Unity version.
+
+However, thanks to the amazing work that [PassivePicasso](https://github.com/PassivePicasso) and Foonix had done on the [BundleKit](https://github.com/foonix/BundleKit) package, we were able to convert those .assets/.assets.resS files into regular asset bundles, which Unity 6.3 can load, and after some work in the Unity internals to redirect shader and other asset loading from those files into our new bundle, as well as modifications to the core TextMeshPro package in order to fix many font bugs that we were faced with (shoutout to cheese_queen for the work on that and more), we now have a 99% functioning build of KSP2 Redux in Unity 6.3! This also means that we will be able to continuously upgrade to new Unity versions as they come out and leverage all the new improvements and technologies that come with them (such as the massive move from Mono to the incomparably faster and more stable .NET that will possibly arrive with Unity 6.7 later this year), which is a huge win for Redux.
+
+This also means that modders will be able to take advantage of all the new Unity improvements when building their mods. The modding SDK and template will be updated soon to bring support for it, and you can expect a new beta build in the near future to help us test this experimental version of the game.
+
+## Media
+
+![Unity 6.3 upgrade](/blog/redux-news/unity-6-3-upgrade/unity-6-3.png)

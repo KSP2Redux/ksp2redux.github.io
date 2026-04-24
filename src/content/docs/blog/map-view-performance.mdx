@@ -1,0 +1,34 @@
+---
+title: "Chipping Away at Map View Performance Issues"
+date: 2026-03-30
+author: "foonix"
+description: "**Chipping away at map view performance issues** Most of the speedups in Redux focus on the simulation and main UI. We haven't really done much to try to imp..."
+---
+
+**Chipping away at map view performance issues**
+
+Most of the speedups in Redux focus on the simulation and main UI. We haven't really done much to try to improve the map situation. After all, the simulation has to run at time as the map being open, so any improvement in the simulation *should* imply a performance improvement in the map. However, with the sim performance getting better, the FPS drop when opening the map is getting increasingly noticeable. One piece of code in particular, called `RelativeOrbitSolver` jumped out at me as actually getting worse due to some changes in the way transforms are handled. The current version in redux takes up a whopping 4ms on my test setup.
+
+`RelativeOrbitSolver` is used for predicting future locations in a hypothetical future orbit, and calculate where those points would be with respect to some given viewer. It's used by the map to do things like draw projected intercept lines.
+
+For example, let's say a vessel in orbit of Kerbol is not currently intercepting Moho. The player adds a maneuver plan that would cause it to intercept Moho's SOI but transit through it. So, the map has to draw a bunch of different lines.
+
+- The current orbit line.
+- The line starting at where the maneuver node is showing the change in Kerbol orbit as a result of the planned impulse. Ends at the predicted Moho SOI intercept.
+- A line near wherever Moho currently is that shows the vessel's predicted transit through Moho's SOI (relative to Moho). This is technically a hyperbolic trajectory ("orbit") of Moho.
+- Another line relative to Kerbol that shows what the previous line actually like from Kerbol's perspective. **This is the one that uses `RelativeOrbitSolver`.**
+- A line after the projected SOI ejection that shows yet another orbit of Kerbol, but this one having been modified by Moho's gravitational pull.
+
+The code uses several strategies depending on what kind of line it's drawing, but the 2nd to last one here is the one that uses `RelativeOrbitSolver`. It's also used for some other tasks, such as trying to find SOI transition points.
+
+The code for `RelativeOrbitSolver` is one of the few things got somewhat slower after switching to ECS frames. It created a bunch of temporary `TransformModel`s, would move them around, and then use them for doing relative position calculations. The individual point calculations were probably faster, however the setup/teardown of the temporary frames were quite expensive. Unfortunately, a few spots in the code (such as maneuver nodes) would create a `RelativeOrbitSolver` to solve for exactly one point and throw it away.
+
+So, I rewrote the code to avoid using `TransformModel`. While I was in there, I noticed a bug where it would ignore a celestial body's axialTilt, which caused some issues with the line related to Moho. Now the code just scrapes the spatial relationships into a simple temporary list, and runs a simple loop to do the same calculations the more complicated transform system would do.
+
+## Media
+
+![Map view performance 1](/blog/redux-news/map-view-performance/map-view-performance-1.webp)
+
+![Map view performance 2](/blog/redux-news/map-view-performance/map-view-performance-2.webp)
+
+![Map view performance 3](/blog/redux-news/map-view-performance/map-view-performance-3.webp)
