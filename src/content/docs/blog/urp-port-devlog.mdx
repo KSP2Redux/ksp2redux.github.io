@@ -5,6 +5,8 @@ author: "munix"
 description: "I thought I'd make a short devlog to show off what I've been working on the past couple of days. To give a bit of context, KSP2 uses the Built-in Render Pipe..."
 ---
 
+import YouTube from '../../../components/YouTube.astro';
+
 I thought I'd make a short devlog to show off what I've been working on the past couple of days.
 
 To give a bit of context, KSP2 uses the Built-in Render Pipeline. In Unity, a render pipeline is the sequence of GPU steps (culling, batching, lighting, shading, post-processing, ...) that turns scene data into pixels each frame. The original, old Built-in Render Pipeline is a hardcoded implementation of that sequence, where you can tweak the parameters, but not really the logic itself. Meanwhile, the newer Scriptable Render Pipeline (which is an umbrella term for both the Universal Render Pipeline and the High Definition Render Pipeline) exposes that logic in C#, so that you can define exactly how objects are drawn, how lighting is evaluated, how render passes are structured, etc.
@@ -17,4 +19,4 @@ In our case, porting from BRP to SRP is not an easy task though, arguably much m
 
 ## Media
 
-<video controls preload="metadata" src="/blog/redux-news/urp-port-devlog/urp-port.mp4"></video>
+<YouTube id="kVZ4nv5IGCA" title="Early URP Port Devlog" />
