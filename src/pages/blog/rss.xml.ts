@@ -8,12 +8,15 @@ const container = await AstroContainer.create();
 container.addServerRenderer({ name: '@astrojs/mdx', renderer: mdxRenderer });
 
 const YOUTUBE_EMBED = /<div class="youtube-embed"[\s\S]*?data-youtube-id="([^"]+)"[\s\S]*?<\/div>/g;
+const HEADING_ANCHOR = /<a class="sl-anchor-link"[\s\S]*?<\/a>/g;
 
-function youtubeEmbedsToLinks(html: string): string {
-	return html.replace(YOUTUBE_EMBED, (_m, id) => {
-		const url = `https://www.youtube.com/watch?v=${id}`;
-		return `<p><a href="${url}">${url}</a></p>`;
-	});
+function transformForRss(html: string): string {
+	return html
+		.replace(YOUTUBE_EMBED, (_m, id) => {
+			const url = `https://www.youtube.com/watch?v=${id}`;
+			return `<p><a href="${url}">${url}</a></p>`;
+		})
+		.replace(HEADING_ANCHOR, '');
 }
 
 export async function GET(context: APIContext) {
@@ -33,7 +36,7 @@ export async function GET(context: APIContext) {
 		try {
 			const { Content } = await render(entry);
 			const rendered = await container.renderToString(Content);
-			const content = youtubeEmbedsToLinks(rendered);
+			const content = transformForRss(rendered);
 			const slug = entry.id.replace(/^blog\//, '');
 			items.push({
 				title: entry.data.title,
