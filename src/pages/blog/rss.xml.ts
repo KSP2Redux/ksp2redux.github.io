@@ -9,17 +9,33 @@ container.addServerRenderer({ name: '@astrojs/mdx', renderer: mdxRenderer });
 
 const YOUTUBE_EMBED = /<div class="youtube-embed"[\s\S]*?data-youtube-id="([^"]+)"[\s\S]*?<\/div>/g;
 const HEADING_ANCHOR = /<a class="sl-anchor-link"[\s\S]*?<\/a>/g;
+const ROOT_ATTR = /(src|href|poster)="\/(?!\/)([^"]*)"/g;
+const SRCSET_ATTR = /srcset="([^"]+)"/g;
 
-function transformForRss(html: string): string {
+function absolutizeSrcset(value: string, base: string): string {
+	return value.split(',').map((part) => {
+		const trimmed = part.trim();
+		const spaceIdx = trimmed.indexOf(' ');
+		const url = spaceIdx === -1 ? trimmed : trimmed.slice(0, spaceIdx);
+		const descriptor = spaceIdx === -1 ? '' : trimmed.slice(spaceIdx);
+		const absolute = url.startsWith('/') && !url.startsWith('//') ? `${base}${url}` : url;
+		return `${absolute}${descriptor}`;
+	}).join(', ');
+}
+
+function transformForRss(html: string, base: string): string {
 	return html
 		.replace(YOUTUBE_EMBED, (_m, id) => {
 			const url = `https://www.youtube.com/watch?v=${id}`;
 			return `<p><a href="${url}">${url}</a></p>`;
 		})
-		.replace(HEADING_ANCHOR, '');
+		.replace(HEADING_ANCHOR, '')
+		.replace(ROOT_ATTR, (_m, attr, path) => `${attr}="${base}/${path}"`)
+		.replace(SRCSET_ATTR, (_m, value) => `srcset="${absolutizeSrcset(value, base)}"`);
 }
 
 export async function GET(context: APIContext) {
+	const base = context.site!.href.replace(/\/$/, '');
 	const all = await getCollection('docs');
 	const entries = all.filter((entry: any) =>
 		(entry.id?.startsWith('blog/') || entry.filePath?.includes('/blog/')) && entry.data.draft !== true
@@ -36,7 +52,7 @@ export async function GET(context: APIContext) {
 		try {
 			const { Content } = await render(entry);
 			const rendered = await container.renderToString(Content);
-			const content = transformForRss(rendered);
+			const content = transformForRss(rendered, base);
 			const slug = entry.id.replace(/^blog\//, '');
 			items.push({
 				title: entry.data.title,
