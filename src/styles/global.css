@@ -51,6 +51,10 @@
 	--sl-color-accent-low: #7a0f00;
 	--sl-color-accent: #df1601;
 	--sl-color-accent-high: #ff4d38;
+	--scrollbar-track: rgba(255, 255, 255, 0.05);
+	--scrollbar-thumb: rgba(255, 255, 255, 0.28);
+	--scrollbar-thumb-hover: rgba(223, 22, 1, 0.72);
+	--scrollbar-thumb-active: rgba(255, 77, 56, 0.9);
 	
 	/* Dark mode colors - reversed for dark theme */
 	--sl-color-white: #ffffff;
@@ -73,6 +77,53 @@
 	/* Sidebar background */
 	--sl-color-bg-sidebar: #0a0a0a;
 	--sl-color-text-accent: #df1601;
+}
+
+@media (forced-colors: none) and (prefers-contrast: no-preference) {
+	html {
+		scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+	}
+
+	* {
+		scrollbar-width: thin;
+		scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+	}
+
+	*::-webkit-scrollbar {
+		width: 0.8rem;
+		height: 0.8rem;
+	}
+
+	*::-webkit-scrollbar-track {
+		background: var(--scrollbar-track);
+	}
+
+	*::-webkit-scrollbar-thumb {
+		border: 3px solid transparent;
+		border-radius: 999px;
+		background: var(--scrollbar-thumb);
+		background-clip: padding-box;
+	}
+
+	*::-webkit-scrollbar-thumb:hover {
+		background: var(--scrollbar-thumb-hover);
+		background-clip: padding-box;
+	}
+
+	*::-webkit-scrollbar-thumb:active {
+		background: var(--scrollbar-thumb-active);
+		background-clip: padding-box;
+	}
+
+	*::-webkit-scrollbar-corner {
+		background: transparent;
+	}
+
+	.sidebar-pane,
+	.right-sidebar-panel,
+	mobile-starlight-toc {
+		scrollbar-gutter: stable;
+	}
 }
 
 @layer starlight, theme, components, utilities;
@@ -479,31 +530,177 @@ svg.inline-block {
 	line-height: 1.75;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .main-pane > main > .content-panel:first-of-type {
-	display: block;
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .main-pane > main > .content-panel:first-of-type {
 	border-top: none;
-}
-
-body:has(#starlight__sidebar a[href="/blog/"]) .main-pane > main > .content-panel:first-of-type .sl-container {
 	position: relative;
 	overflow: hidden;
-	margin-top: 0.5rem;
-	padding: 2rem;
-	border: 1px solid rgba(255, 255, 255, 0.08);
-	border-radius: 1.5rem;
+	padding-bottom: 4rem;
+	isolation: isolate;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .main-pane > main > .content-panel:first-of-type::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	height: min(38rem, 80vh);
+	z-index: 0;
+	background:
+		linear-gradient(90deg, rgba(10, 10, 10, 0.92) 0%, rgba(10, 10, 10, 0.82) 58%, rgba(10, 10, 10, 0.68) 100%),
+		linear-gradient(180deg, rgba(223, 22, 1, 0.08) 0%, rgba(10, 10, 10, 0) 55%),
+		url('/background.png') center / cover no-repeat,
+		radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.12) 0 1px, transparent 1px) 0 0 / 170px 170px,
+		radial-gradient(circle at 75% 45%, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px) 0 0 / 220px 220px;
+	-webkit-mask-image: linear-gradient(180deg, #000 0%, #000 calc(100% - 8rem), transparent 100%);
+	mask-image: linear-gradient(180deg, #000 0%, #000 calc(100% - 8rem), transparent 100%);
+	pointer-events: none;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .main-pane > main > .content-panel:first-of-type::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 8rem;
+	background: linear-gradient(180deg, rgba(10, 10, 10, 0) 0%, #0a0a0a 100%);
+	pointer-events: none;
+	z-index: 2;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .main-pane > main > .content-panel:first-of-type .sl-container {
+	position: relative;
+	z-index: 3;
+	max-width: 80rem;
+	background: transparent !important;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .main-pane > main > .content-panel:first-of-type .redux-hero {
+	margin: 0;
+	padding: 5rem 0 3rem;
+	border: none;
+	border-radius: 0;
+	background: transparent;
+	box-shadow: none;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .main-pane > main > .content-panel:first-of-type .redux-hero::before {
+	display: none;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .main-pane > main > .content-panel:first-of-type .redux-hero > * {
+	position: relative;
+	z-index: 1;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .main-pane > main > .content-panel:first-of-type .redux-hero__title {
+	font-size: clamp(3rem, 8vw, 5.8rem);
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href="/guides/"]) .main-pane > main > .content-panel:first-of-type .redux-hero__title {
+	position: relative;
+	display: inline-block;
+	min-width: min-content;
+	font-size: 0 !important;
+	line-height: 0;
+	color: transparent !important;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href="/guides/"]) .main-pane > main > .content-panel:first-of-type .redux-hero__title::before,
+body:has(#starlight__sidebar a[aria-current="page"][href="/guides/"]) .main-pane > main > .content-panel:first-of-type .redux-hero__title::after {
+	display: block;
+	font-family: var(--font-family-logo);
+	font-size: clamp(3rem, 8vw, 5.8rem);
+	font-weight: 800;
+	line-height: 0.98;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href="/guides/"]) .main-pane > main > .content-panel:first-of-type .redux-hero__title::before {
+	content: 'Docs &';
+	color: #ffffff;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href="/guides/"]) .main-pane > main > .content-panel:first-of-type .redux-hero__title::after {
+	content: 'Guides';
+	color: #df1601;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .main-pane > main > .content-panel:nth-of-type(2) {
+	border-top: none;
+	position: relative;
+	z-index: 3;
+	margin-top: -3rem;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .card-grid .card,
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .sl-link-card {
+	position: relative;
+	overflow: hidden;
+	border: 1px solid rgba(255, 255, 255, 0.08) !important;
+	border-radius: 1.25rem !important;
+	background:
+		linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.015) 100%),
+		rgba(10, 10, 10, 0.72) !important;
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+	transition:
+		transform 0.2s ease,
+		border-color 0.2s ease,
+		background-color 0.2s ease;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .card-grid .card:hover,
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .sl-link-card:hover {
+	transform: translateY(-2px);
+	border-color: rgba(223, 22, 1, 0.28) !important;
+	background:
+		linear-gradient(180deg, rgba(223, 22, 1, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%),
+		rgba(10, 10, 10, 0.78) !important;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .card-grid .card .title,
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .sl-link-card .title {
+	font-family: var(--font-family-heading);
+	font-size: clamp(1.55rem, 2.4vw, 1.95rem);
+	line-height: 1.15;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .card-grid .card .icon,
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .sl-link-card .icon {
+	display: none !important;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .card-grid .card a,
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .sl-link-card a {
+	color: #ff7f6b !important;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .card-grid .card a:hover,
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) .sl-link-card a:hover {
+	color: #ff9b8c !important;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .main-pane > main > .content-panel:first-of-type {
+	position: relative;
+	display: block;
+	overflow: hidden;
+	border-top: none;
+	padding-top: 5rem;
+	padding-bottom: 6rem;
 	background:
 		linear-gradient(90deg, rgba(10, 10, 10, 0.92) 0%, rgba(10, 10, 10, 0.82) 58%, rgba(10, 10, 10, 0.68) 100%),
 		linear-gradient(180deg, rgba(223, 22, 1, 0.08) 0%, rgba(10, 10, 10, 0) 55%),
 		url('/background.png') center / cover no-repeat;
-	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 	isolation: isolate;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .main-pane > main > .content-panel:first-of-type .sl-container::before {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .main-pane > main > .content-panel:first-of-type::before {
 	content: '';
 	position: absolute;
 	inset: 0;
-	z-index: -1;
+	z-index: 0;
 	background:
 		radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.12) 0 1px, transparent 1px) 0 0 / 170px 170px,
 		radial-gradient(circle at 75% 45%, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px) 0 0 / 220px 220px;
@@ -511,7 +708,26 @@ body:has(#starlight__sidebar a[href="/blog/"]) .main-pane > main > .content-pane
 	pointer-events: none;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .main-pane > main > .content-panel:first-of-type h1 {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .main-pane > main > .content-panel:first-of-type::after {
+	content: '';
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 8rem;
+	background: linear-gradient(180deg, rgba(10, 10, 10, 0) 0%, #0a0a0a 100%);
+	pointer-events: none;
+	z-index: 2;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .main-pane > main > .content-panel:first-of-type .sl-container {
+	position: relative;
+	z-index: 3;
+	max-width: 80rem;
+	background: transparent !important;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .main-pane > main > .content-panel:first-of-type h1 {
 	margin: 0;
 	font-family: var(--font-family-logo);
 	font-size: clamp(3rem, 8vw, 5.2rem);
@@ -522,17 +738,50 @@ body:has(#starlight__sidebar a[href="/blog/"]) .main-pane > main > .content-pane
 	color: #ffffff !important;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .main-pane > main > .content-panel:nth-of-type(2) {
-	border-top: none;
+body:has(#starlight__sidebar a[aria-current="page"][href="/blog/"]) .main-pane > main > .content-panel:first-of-type h1 {
+	position: relative;
+	display: inline-block;
+	min-width: min-content;
+	font-size: 0 !important;
+	line-height: 0;
+	color: transparent !important;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .posts {
+body:has(#starlight__sidebar a[aria-current="page"][href="/blog/"]) .main-pane > main > .content-panel:first-of-type h1::before,
+body:has(#starlight__sidebar a[aria-current="page"][href="/blog/"]) .main-pane > main > .content-panel:first-of-type h1::after {
+	display: block;
+	font-family: var(--font-family-logo);
+	font-size: clamp(3rem, 8vw, 5.2rem);
+	font-weight: 800;
+	line-height: 0.98;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href="/blog/"]) .main-pane > main > .content-panel:first-of-type h1::before {
+	content: 'DEV';
+	color: #ffffff;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href="/blog/"]) .main-pane > main > .content-panel:first-of-type h1::after {
+	content: 'BLOG';
+	color: #df1601;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .main-pane > main > .content-panel:nth-of-type(2) {
+	border-top: none;
+	position: relative;
+	z-index: 4;
+	margin-top: -3rem;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .posts {
 	display: flex !important;
 	flex-direction: column !important;
 	gap: 1.25rem !important;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .posts > .preview {
 	position: relative;
 	padding: 1.5rem 1.6rem !important;
 	border: 1px solid rgba(255, 255, 255, 0.08);
@@ -547,7 +796,7 @@ body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview {
 		background-color 0.2s ease;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview:hover {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .posts > .preview:hover {
 	transform: translateY(-2px);
 	border-color: rgba(223, 22, 1, 0.28);
 	background:
@@ -555,26 +804,26 @@ body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview:hover {
 		rgba(10, 10, 10, 0.78);
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview > header {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .posts > .preview > header {
 	display: grid;
 	gap: 0.75rem;
 	margin: 0 !important;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview > header h2 {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .posts > .preview > header h2 {
 	margin: 0 !important;
 	font-family: var(--font-family-heading);
 	font-size: clamp(1.55rem, 2.4vw, 1.95rem);
 	line-height: 1.15;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview > header h2 a {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .posts > .preview > header h2 a {
 	color: #ffffff !important;
 	text-decoration: none !important;
 	border: none !important;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview:hover > header h2 a {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .posts > .preview:hover > header h2 a {
 	color: #ff7f6b !important;
 }
 
@@ -628,8 +877,8 @@ body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview:hover > header 
 	font-weight: 600 !important;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview .metadata.not-content,
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .metadata.not-content {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .posts > .preview .metadata.not-content,
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .metadata.not-content {
 	display: flex !important;
 	flex-direction: row !important;
 	flex-wrap: wrap !important;
@@ -640,8 +889,8 @@ body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .metadat
 	font-size: 0.92rem;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview .dates,
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .dates {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .posts > .preview .dates,
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .dates {
 	display: inline-flex !important;
 	align-items: center !important;
 	padding: 0.35rem 0.7rem;
@@ -650,83 +899,93 @@ body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .dates {
 	background: rgba(255, 255, 255, 0.03);
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview .author,
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .author {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .posts > .preview .author,
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .author {
 	display: inline-flex !important;
 	align-items: center !important;
 	gap: 0.7rem !important;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview .author img,
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .author img {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .posts > .preview .author img,
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .author img {
 	width: 2rem;
 	height: 2rem;
 	border-radius: 999px;
 	border: 1px solid rgba(223, 22, 1, 0.45);
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview .author .text,
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .author .text {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .posts > .preview .author .text,
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .author .text {
 	display: flex !important;
 	flex-direction: column !important;
 	gap: 0.15rem !important;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview .author .name,
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .author .name {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .posts > .preview .author .name,
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .author .name {
 	color: #ffffff;
 	font-weight: 600;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview .author .title,
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .author .title {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .posts > .preview .author .title,
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .author .title {
 	color: #9ca3af;
 	font-size: 0.82rem;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview > .sl-markdown-content {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .posts > .preview > .sl-markdown-content {
 	margin: 0 !important;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview > .sl-markdown-content > .sl-heading-wrapper.level-h1:first-child,
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .sl-markdown-content > .sl-heading-wrapper.level-h1:first-child {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .posts > .preview > .sl-markdown-content > .sl-heading-wrapper.level-h1:first-child,
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .sl-markdown-content > .sl-heading-wrapper.level-h1:first-child {
 	display: none;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview > .sl-markdown-content > p:first-of-type {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .posts > .preview > .sl-markdown-content > p:first-of-type {
 	margin-top: 0;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview > footer {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .posts > .preview > footer {
 	display: none !important;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .not-content .pagination .sl-link-card {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .not-content .pagination .sl-link-card {
 	border-radius: 1rem;
 	border-color: rgba(255, 255, 255, 0.1) !important;
 	background: rgba(255, 255, 255, 0.03);
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) .not-content .pagination .sl-link-card:hover {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .not-content .pagination .sl-link-card:hover {
 	border-color: rgba(223, 22, 1, 0.3) !important;
 	background: rgba(223, 22, 1, 0.06);
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .content-panel:nth-of-type(2) .sl-container {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .content-panel:nth-of-type(2) .sl-container {
 	padding: 0;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .content-panel:nth-of-type(2) .sl-markdown-content {
-	padding: 1.75rem;
-	border: 1px solid rgba(255, 255, 255, 0.08);
-	border-radius: 1.25rem;
-	background:
-		linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%),
-		rgba(10, 10, 10, 0.78);
-	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) main[data-pagefind-body] .content-panel:nth-of-type(2) .sl-container,
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .content-panel:nth-of-type(2) .sl-container {
+	max-width: 80rem;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .content-panel:nth-of-type(2) > .sl-container > .sl-markdown-content > .metadata.not-content {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) main[data-pagefind-body] .content-panel:nth-of-type(2) .sl-markdown-content,
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .content-panel:nth-of-type(2) .sl-markdown-content {
+	padding: 0;
+	border: none;
+	border-radius: 0;
+	background: none;
+	box-shadow: none;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) main[data-pagefind-body] .content-panel:nth-of-type(2),
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) main[data-pagefind-body] .content-panel:nth-of-type(2) .sl-container,
+body:has(#starlight__sidebar a[aria-current="page"][href^="/guides/"]) main[data-pagefind-body] .content-panel:nth-of-type(2) .sl-markdown-content {
+	background: #0a0a0a !important;
+}
+
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .content-panel:nth-of-type(2) > .sl-container > .sl-markdown-content > .metadata.not-content {
 	display: flex !important;
 	flex-direction: row !important;
 	align-items: center !important;
@@ -735,7 +994,7 @@ body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .content
 	gap: 0.5rem 0.75rem !important;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .content-panel:nth-of-type(2) > .sl-container > .sl-markdown-content > .metadata.not-content > .dates {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .content-panel:nth-of-type(2) > .sl-container > .sl-markdown-content > .metadata.not-content > .dates {
 	padding: 0 !important;
 	border: 0 !important;
 	border-radius: 0 !important;
@@ -743,12 +1002,12 @@ body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .content
 	color: #9ca3af !important;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .content-panel:nth-of-type(2) > .sl-container > .sl-markdown-content > .metadata.not-content > .authors {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .content-panel:nth-of-type(2) > .sl-container > .sl-markdown-content > .metadata.not-content > .authors {
 	display: inline-flex !important;
 	align-items: center !important;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .content-panel:nth-of-type(2) > .sl-container > .sl-markdown-content > .metadata.not-content > .authors::before {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .content-panel:nth-of-type(2) > .sl-container > .sl-markdown-content > .metadata.not-content > .authors::before {
 	content: '/';
 	margin-right: 0.1rem;
 	color: rgba(255, 255, 255, 0.24);
@@ -814,23 +1073,23 @@ main[data-pagefind-body] > .content-panel:nth-of-type(2) > .sl-container > .sl-m
 	display: none !important;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .metadata.not-content {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .metadata.not-content {
 	justify-content: flex-start;
 	padding-bottom: 1.25rem;
 	margin-bottom: 1.5rem;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .authors {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .authors {
 	display: inline-flex !important;
 	align-items: center !important;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .author img {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .author img {
 	display: none !important;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .author .text {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .author .text {
 	display: inline-flex !important;
 	flex-direction: row !important;
 	align-items: baseline !important;
@@ -838,24 +1097,24 @@ body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .author 
 	gap: 0.2rem 0.45rem !important;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .author .title {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .author .title {
 	display: none !important;
 }
 
-body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .post-footer {
+body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .post-footer {
 	margin-top: 2rem;
 	padding-top: 1.5rem;
 	border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 @media (max-width: 50rem) {
-	body:has(#starlight__sidebar a[href="/blog/"]) .main-pane > main > .content-panel:first-of-type .sl-container,
-	body:has(#starlight__sidebar a[href="/blog/"]) main[data-pagefind-body] .content-panel:nth-of-type(2) .sl-markdown-content {
-		padding: 1.4rem;
-		border-radius: 1.1rem;
+	body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .main-pane > main > .content-panel:first-of-type .sl-container,
+	body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-pagefind-body] .content-panel:nth-of-type(2) .sl-markdown-content {
+		padding: 0;
+		border-radius: 0;
 	}
 
-	body:has(#starlight__sidebar a[href="/blog/"]) .posts > .preview {
+	body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) .posts > .preview {
 		padding: 1.25rem !important;
 		border-radius: 1rem;
 	}
@@ -1195,10 +1454,36 @@ pre {
 
 /* Asides (Starlight callouts) */
 .sl-markdown-content :is(aside, .starlight-aside) {
-	background-color: #111111 !important;
-	border: 1px solid rgba(255, 255, 255, 0.14) !important;
-	border-left: 4px solid #df1601 !important;
+	position: relative;
+	margin: 1.75rem 0;
+	padding: 1rem 1.1rem 1.05rem;
+	border: 1px solid rgba(255, 255, 255, 0.1) !important;
+	border-radius: 1rem;
+	background:
+		linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.015) 100%),
+		rgba(10, 10, 10, 0.88) !important;
+	box-shadow:
+		inset 0 1px 0 rgba(255, 255, 255, 0.03),
+		0 10px 30px rgba(0, 0, 0, 0.18);
 	color: #f3f4f6 !important;
+	overflow: hidden;
+}
+
+.sl-markdown-content :is(aside, .starlight-aside)::before {
+	content: '';
+	position: absolute;
+	inset: 0 auto 0 0;
+	width: 0.32rem;
+	background: #7ec2ff;
+	opacity: 0.95;
+}
+
+.sl-markdown-content :is(aside, .starlight-aside).starlight-aside--caution::before {
+	background: #df1601;
+}
+
+.sl-markdown-content :is(aside, .starlight-aside).starlight-aside--tip::before {
+	background: #10b981;
 }
 
 .sl-markdown-content :is(aside, .starlight-aside) :is(p, li, span, div) {
@@ -1207,6 +1492,47 @@ pre {
 
 .sl-markdown-content :is(aside, .starlight-aside) :is(h1, h2, h3, h4, h5, h6, strong, .starlight-aside__title) {
 	color: #ffffff !important;
+}
+
+.sl-markdown-content .starlight-aside__title {
+	display: flex;
+	align-items: center;
+	gap: 0.65rem;
+	margin: 0;
+	padding-right: 0.25rem;
+	font-family: var(--font-family-heading);
+	font-size: 0.95rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+.sl-markdown-content .starlight-aside__icon {
+	flex: none;
+	width: 1.1rem;
+	height: 1.1rem;
+	color: #7ec2ff !important;
+}
+
+.sl-markdown-content .starlight-aside--caution .starlight-aside__icon {
+	color: #ff8a78 !important;
+}
+
+.sl-markdown-content .starlight-aside--tip .starlight-aside__icon {
+	color: #3dd6a0 !important;
+}
+
+.sl-markdown-content .starlight-aside__content {
+	margin-top: 0.75rem;
+	padding-left: 0.05rem;
+}
+
+.sl-markdown-content .starlight-aside__content > :first-child {
+	margin-top: 0;
+}
+
+.sl-markdown-content .starlight-aside__content > :last-child {
+	margin-bottom: 0;
 }
 
 .sl-markdown-content :is(aside, .starlight-aside) code {

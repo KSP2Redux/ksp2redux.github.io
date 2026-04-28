@@ -586,12 +586,17 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 	.implemented-card ul {
 		margin: 1rem 0 0;
 		padding-left: 1.2rem;
+		list-style: square;
 	}
 
 	.implemented-card li {
 		margin: 0.6rem 0;
 		color: #f3f4f6;
 		line-height: 1.65;
+	}
+
+	.implemented-card li::marker {
+		color: #9ca3af;
 	}
 
 	.milestone-stack {
@@ -643,7 +648,7 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 		width: 9rem;
 		height: 5.2rem;
 		transform: translateX(-50%);
-		background: #05070b;
+		background: #0a0a0a;
 		border-radius: 999px;
 	}
 

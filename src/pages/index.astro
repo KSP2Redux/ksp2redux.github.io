@@ -2,17 +2,8 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import { latestVersion } from '../data/data';
 
-import { latestVersion, releaseDate, roadmapCurrentMilestoneId, roadmapMilestones, roadmapStats } from '../data/data';
-
-// Format the release date
-const formattedDate = new Date(releaseDate).toLocaleDateString('en-US', {
-	year: 'numeric',
-	month: 'long',
-	day: 'numeric'
-});
-
-const currentMilestone = roadmapMilestones.find((milestone) => milestone.id === roadmapCurrentMilestoneId);
 ---
 
 <!DOCTYPE html>
@@ -27,141 +18,116 @@ const currentMilestone = roadmapMilestones.find((milestone) => milestone.id === 
 <body class="bg-space-black text-white">
 	<Header />
 
-	<section class="page-hero pt-32 pb-16">
+	<section class="page-hero page-hero--simple pt-24 pb-10">
 		<div class="absolute inset-0 z-0" style="background-image: url('/background.png'); background-size: cover; background-position: center;"></div>
-		<div class="absolute inset-0 z-0 bg-gradient-to-r from-space-black via-space-black/70 to-space-black/10"></div>
+		<div class="absolute inset-0 z-0 bg-gradient-to-r from-space-black via-space-black/80 to-space-black/30"></div>
 		<div class="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-transparent to-space-black"></div>
 
 		<div class="section-container relative z-10">
-			<div class="max-w-4xl">
+			<div class="home-hero-copy">
 				<h1 class="page-title">
 					KSP2
 					<span>Redux</span>
 				</h1>
 
+				<p class="home-version">{latestVersion}</p>
+
 				<p class="page-intro">
-					KSP2 Redux is a free, community-made mod for the game <strong class="text-white">Kerbal Space Program 2</strong>,
-					aiming to implement most of the features promised by the original developers.
+					KSP2 Redux is a community project focused on fixing Kerbal Space Program 2, improving performance,
+					and finishing systems that were left incomplete.
 				</p>
 
-				<div class="page-facts">
-					<div class="page-fact">
-						<span class="page-fact__label">Current build</span>
-						<strong>{latestVersion}</strong>
-					</div>
-					<div class="page-fact">
-						<span class="page-fact__label">Current phase</span>
-						<strong>{currentMilestone?.title ?? 'Foundation'}</strong>
-					</div>
-					<div class="page-fact">
-						<span class="page-fact__label">Bug fixes</span>
-						<strong>{roadmapStats.bugFixCount}</strong>
-					</div>
-					<div class="page-fact">
-						<span class="page-fact__label">Performance changes</span>
-						<strong>{roadmapStats.performanceCount}</strong>
-					</div>
-				</div>
-
-				<p class="text-sm text-gray-500 mt-6 mb-8">
-					Latest public build from <span class="text-gray-300 font-semibold">{formattedDate}</span>
+				<p class="home-context">
+					This site is for downloads, installation docs, release notes, roadmap progress, and contributor-facing
+					documentation.
 				</p>
 
 				<div class="home-action-row">
 					<a href="https://github.com/KSP2Redux/Updater/releases/latest" target="_blank" rel="noopener noreferrer" class="btn-primary">
-						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-						</svg>
-						Download
+						Download latest build
 					</a>
-					<a href="/roadmap" class="btn-secondary">
-						Roadmap
+					<a href="/guides/installation" class="btn-secondary">
+						Installation guide
 					</a>
-					<a href="/guides" class="btn-secondary">
-						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-						</svg>
-						Read the Docs
+					<a href="/blog" class="btn-secondary">
+						Release notes and blog
 					</a>
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<section class="section-container py-16">
+	<section class="section-container py-12">
 		<div class="page-section-heading">
-			<h2>What Redux is currently working on</h2>
+			<h2>Start here</h2>
 			<p>
-				The project is still in the Foundation stage, so most of the current work is practical: fewer broken missions,
-				better FPS, more user-friendly UI, and systems that other features can build on later.
+				If you are new to Redux, these are the pages that matter first.
 			</p>
 		</div>
 
-		<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-			<article class="card-glass">
-				<h3 class="text-2xl font-heading font-bold mb-3">Performance</h3>
-				<p class="text-gray-300 leading-7">
-					A lot of the work so far has gone into rendering, simulation, and memory use. The exact gain depends on the scene and hardware, but this is one of the main priorities.
-				</p>
-			</article>
-			<article class="card-glass">
-				<h3 class="text-2xl font-heading font-bold mb-3">Bug fixing</h3>
-				<p class="text-gray-300 leading-7">
-					Redux has already accumulated {roadmapStats.bugFixCount} bug fixes across flight behavior, map view, missions, save handling, UI problems, and other stock issues.
-				</p>
-			</article>
-			<article class="card-glass">
-				<h3 class="text-2xl font-heading font-bold mb-3">Roadmap systems</h3>
-				<p class="text-gray-300 leading-7">
-					Some Foundation work is directly tied to later roadmap stages, including heat, vessel ISRU, tech tree work, and the colony-related systems that depend on them.
-				</p>
-			</article>
-			<article class="card-glass">
-				<h3 class="text-2xl font-heading font-bold mb-3">Modding support</h3>
-				<p class="text-gray-300 leading-7">
-					The modding side is moving toward a Unity Editor workflow so Redux-native mods can be built and iterated without relying on the older, slower setup.
-				</p>
-			</article>
-			<article class="card-glass">
-				<h3 class="text-2xl font-heading font-bold mb-3">Debugging tools</h3>
-				<p class="text-gray-300 leading-7">
-					We have added in-game tools for things like missions, vessel state, science, teleportation, and Kerbal management, which helps both development and bug reporting.
-				</p>
-			</article>
-			<article class="card-glass">
-				<h3 class="text-2xl font-heading font-bold mb-3">Volunteer project</h3>
-				<p class="text-gray-300 leading-7">
-					This project is being built by modders in their spare time. If you want to help, the best way is to join the Discord and ask how you can contribute!
-				</p>
-			</article>
+		<div class="home-entry-grid">
+			<a href="/guides/installation" class="card-glass home-entry-card">
+				<h3>Installation guide</h3>
+				<p>How to install Redux, which builds are supported, and where to start troubleshooting.</p>
+			</a>
+			<a href="/roadmap" class="card-glass home-entry-card">
+				<h3>Roadmap</h3>
+				<p>Current priorities, already added content, and larger systems still planned for later.</p>
+			</a>
+			<a href="/blog" class="card-glass home-entry-card">
+				<h3>Development blog</h3>
+				<p>Release posts, technical writeups, previews, and progress notes from ongoing work.</p>
+			</a>
 		</div>
 	</section>
 
-	<section class="section-container py-20">
-		<div class="card-glass text-center py-16">
-			<h2 class="text-4xl md:text-5xl font-heading font-bold mb-6">
-				Where discussion happens
-			</h2>
-			<p class="text-gray-400 text-lg max-w-2xl mx-auto mb-8">
-				Most testing coordination, bug reports, and day-to-day discussion happen on Discord. GitHub is the better place if you want releases, changelogs, or the issue tracker.
-			</p>
-			<div class="home-action-row home-action-row--centered">
-				<a href="https://discord.gg/8yq8d5VGQR" target="_blank" class="btn-primary">
-					<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-						<path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
-					</svg>
-					Join Discord
-				</a>
-				<a href="https://github.com/KSP2Redux/Redux" target="_blank" rel="noopener noreferrer" class="btn-secondary">
-					<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-						<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-					</svg>
-					GitHub
-				</a>
-				<a href="https://forum.kerbalspaceprogram.com/topic/226985-ksp2-redux" target="_blank" rel="noopener noreferrer" class="btn-secondary">
-					KSP Forums
-				</a>
+	<section class="section-container py-12">
+		<div class="home-summary">
+			<div class="page-section-heading">
+				<h2>What Redux is for</h2>
 			</div>
+			<div class="home-summary__body">
+				<p>
+					In the Foundation stage, Redux is mainly about practical repair work: performance, bug fixing, UI cleanup, and getting
+					core game systems into a state that people can actually play and build on.
+				</p>
+				<p>
+					It is also used to improve the game as a modding base, with better tooling, better debugging,
+					and more predictable workflows for Redux mods.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="section-container py-12">
+		<div class="page-section-heading">
+			<h2>Links</h2>
+			<p>
+				Discord is where most support and testing discussion happens. GitHub is for releases, source, and issue tracking. Reddit and the forum are useful for broader public discussion.
+			</p>
+		</div>
+
+		<div class="home-community-grid">
+			<a href="https://discord.gg/8yq8d5VGQR" target="_blank" rel="noopener noreferrer" class="card-glass home-community-card">
+				<h3>Discord</h3>
+				<p>Testing coordination, support questions, and most day-to-day discussion.</p>
+				<span class="home-community-card__textlink">Join Discord</span>
+			</a>
+			<a href="https://github.com/KSP2Redux/Redux" target="_blank" rel="noopener noreferrer" class="card-glass home-community-card">
+				<h3>GitHub</h3>
+				<p>Release builds, changelogs, and the public issue tracker.</p>
+				<span class="home-community-card__textlink">Open GitHub</span>
+			</a>
+			<a href="https://forum.kerbalspaceprogram.com/topic/226985-ksp2-redux" target="_blank" rel="noopener noreferrer" class="card-glass home-community-card">
+				<h3>KSP Forums</h3>
+				<p>The KSP forums thread for announcements and discussion.</p>
+				<span class="home-community-card__textlink">Open forum thread</span>
+			</a>
+			<a href="https://reddit.com/r/KSP2Redux" target="_blank" rel="noopener noreferrer" class="card-glass home-community-card">
+				<h3>Reddit</h3>
+				<p>Community posts, screenshots, and general discussion outside of Discord.</p>
+				<span class="home-community-card__textlink">Open subreddit</span>
+			</a>
 		</div>
 	</section>
 
@@ -174,10 +140,92 @@ const currentMilestone = roadmapMilestones.find((milestone) => milestone.id === 
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.85rem;
+		margin-top: 1.75rem;
 	}
 
-	.home-action-row--centered {
-		justify-content: center;
+	.home-hero-copy {
+		max-width: 46rem;
+	}
+
+	.home-version {
+		margin: 0.85rem 0 0;
+		color: #9ca3af;
+		font-family: var(--font-family-heading);
+		font-size: 1rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+	}
+
+	.home-context {
+		max-width: 40rem;
+		margin: 1.2rem 0 0;
+		color: #9ca3af;
+		line-height: 1.75;
+	}
+
+	.home-entry-grid,
+	.home-community-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+
+	.home-entry-card,
+	.home-community-card {
+		display: block;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.home-entry-card h3,
+	.home-community-card h3 {
+		margin: 0;
+		font-family: var(--font-family-heading);
+		font-size: 1.5rem;
+		line-height: 1.15;
+	}
+
+	.home-entry-card p:last-child,
+	.home-community-card p {
+		margin: 0.85rem 0 0;
+		color: #d1d5db;
+		line-height: 1.75;
+	}
+
+	.home-summary {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.home-summary__body {
+		max-width: 48rem;
+		color: #d1d5db;
+		line-height: 1.75;
+	}
+
+	.home-summary__body p {
+		margin: 0;
+	}
+
+	.home-summary__body p + p {
+		margin-top: 1rem;
+	}
+
+	.home-community-card__textlink {
+		display: inline-block;
+		margin-top: 1rem;
+		color: #ff7f6b;
+		font-weight: 700;
+	}
+
+	@media (min-width: 900px) {
+		.home-entry-grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+
+		.home-community-grid {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+		}
 	}
 
 	@media (max-width: 639px) {

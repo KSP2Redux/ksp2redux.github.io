@@ -1,6 +1,84 @@
 ---
 title: Linux Support
-description: Tips on running KSP2 Redux on Linux.
+description: Tips for running KSP2 Redux on Linux.
 ---
 
-This page will contain tips and instructions for running KSP2 Redux on Linux. We will cover both running the installer and the game itself.
+import { Aside } from '@astrojs/starlight/components';
+
+KSP2 Redux can run on Linux through Proton. This page focuses on launching and troubleshooting the game itself.
+
+<Aside type="tip" title="Steam Launch Required">
+If you are using the Linux version of the Updater, open **Settings** and enable **Launch through Steam** if you want to be able to launch the game from the Updater.
+</Aside>
+
+## Recommended Setup
+
+- Add or launch Redux through Steam.
+- Force a Proton compatibility setup for the game.
+- If the game is unstable at startup, start with windowed launch options first.
+
+Reported working Proton versions include:
+
+- `GE-Proton`
+- `GE-Proton 10-27`
+- `Proton Experimental`
+- `Proton 10`
+
+If one Proton version gives video or startup issues, try `GE-Proton` first.
+
+## Launch Options That Help
+
+Some Linux users reported better stability when forcing windowed startup.
+
+Recommended launch arguments to try:
+
+```text
+-popupwindow
+```
+
+Other reported working options:
+
+```text
+-window-mode exclusive -screen-fullscreen 0
+```
+
+Notes:
+
+- `-popupwindow` was reported to reduce startup crashes on some systems.
+- Some users needed the game to start windowed first, even if it later switched into fullscreen successfully.
+- If the game crashes immediately or opens to a black screen, test one of the options above before changing anything else.
+
+## Known Working Reports
+
+The following Linux environments were reported to work by community members:
+
+- Arch Linux with Hyprland using GE-Proton
+- Nobara using GE-Proton
+- Bazzite / Fedora Atomic using Proton
+- Linux Mint 22.3 using GE-Proton 10-27
+- Pop!_OS 24 using Proton 10
+
+## Troubleshooting
+
+### Startup Crashes
+
+Try these steps in order:
+
+1. Force `GE-Proton`, for example `GE-Proton 10-27`.
+2. Add `-popupwindow` to launch options.
+3. If that does not help, try `-window-mode exclusive -screen-fullscreen 0`.
+
+### Videos or Intro Playback Issues
+
+Some Linux users reported that default Proton builds had trouble with videos, while `GE-Proton` worked correctly. If the game launches poorly or hangs early, switch Proton versions before deeper troubleshooting.
+
+## Reporting Linux Issues
+
+When reporting a Linux-specific problem, include:
+
+- your distro
+- desktop environment or window manager
+- kernel version
+- GPU and driver version
+- Proton version
+- launch options used

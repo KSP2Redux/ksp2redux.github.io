@@ -13,6 +13,8 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			plugins: [starlightBlog({
+				title: 'DEV BLOG',
+				recentPostCount: Infinity,
 				authors: {
 					redux: {
 						name: 'Redux Team',
