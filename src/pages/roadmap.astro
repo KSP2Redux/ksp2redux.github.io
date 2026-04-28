@@ -1,0 +1,791 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ProgressBar from '../components/ProgressBar.astro';
+import '../styles/global.css';
+
+import {
+	roadmapCurrentMilestoneId,
+	roadmapFeatureGroups,
+	roadmapMilestones,
+	roadmapStats,
+} from '../data/roadmap';
+
+const currentMilestoneIndex = roadmapMilestones.findIndex((milestone) => milestone.id === roadmapCurrentMilestoneId);
+const currentMilestone = roadmapMilestones[currentMilestoneIndex];
+const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Roadmap - KSP2 Redux</title>
+	<meta
+		name="description"
+		content="See what KSP2 Redux has already shipped, what the team is working on now, and where the project is headed next."
+	>
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+<body class="bg-space-black text-white">
+	<Header />
+
+	<section class="relative pt-32 pb-16 overflow-hidden roadmap-hero">
+		<div class="absolute inset-0 z-0" style="background-image: url('/background.png'); background-size: cover; background-position: center;"></div>
+		<div class="absolute inset-0 z-0 bg-gradient-to-r from-space-black via-space-black/80 to-space-black/30"></div>
+		<div class="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-space-black/35 to-space-black"></div>
+
+		<div class="section-container relative z-10">
+			<div class="max-w-4xl">
+				<h1 class="roadmap-title">
+					Roadmap &amp;
+					<span>Features</span>
+				</h1>
+
+				<p class="roadmap-intro">
+					Redux is still in the stage where the team is fixing what is broken, smoothing off what is awkward, and putting basic systems in a better state.
+					The point of this page is simply to show what has already been done, what Foundation means, and what is planned after that.
+				</p>
+
+				<div class="roadmap-facts">
+					<div class="roadmap-fact">
+						<span class="roadmap-fact__label">Current phase</span>
+						<strong>{currentMilestone.title}</strong>
+					</div>
+					<div class="roadmap-fact">
+						<span class="roadmap-fact__label">Bug fixes so far</span>
+						<strong>{roadmapStats.bugFixCount}</strong>
+					</div>
+					<div class="roadmap-fact">
+						<span class="roadmap-fact__label">Performance improvements</span>
+						<strong>{roadmapStats.performanceCount}</strong>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section-container pb-18">
+		<div class="roadmap-panel card-glass">
+			<div class="roadmap-panel__top">
+				<div class="roadmap-panel__copy">
+					<p class="roadmap-panel__eyebrow">Current focus</p>
+					<h2>{currentMilestone.label}: {currentMilestone.title}</h2>
+					<p>{currentMilestone.summary}</p>
+				</div>
+
+				<div class="roadmap-panel__aside">
+					<div class="roadmap-panel__status">In progress</div>
+					{nextMilestone && (
+						<a class="roadmap-panel__next" href={`#${nextMilestone.id}`}>
+							<span>Next step</span>
+							<strong>{nextMilestone.title}</strong>
+						</a>
+					)}
+				</div>
+			</div>
+
+
+			<div class="roadmap-foundation">
+				{currentMilestone.sections.map((section) => (
+					<div class="roadmap-foundation__item">
+						<h3>{section.title}</h3>
+						<p>{section.summary}</p>
+					</div>
+				))}
+			</div>
+
+			<div class="roadmap-track" aria-label="Roadmap progress">
+				<ProgressBar
+					min={0}
+					max={100}
+					value={8}
+					class="roadmap-track__progress"
+					ariaLabel="Roadmap progress"
+				/>
+
+				<ol class="roadmap-track__stops">
+					{roadmapMilestones.map((milestone, index) => {
+						const state =
+							index < currentMilestoneIndex ? 'done' : milestone.status === 'current' ? 'current' : 'planned';
+
+						return (
+							<li class={`roadmap-track__stop roadmap-track__stop--${state}`}>
+								<a class="roadmap-track__link" href={`#${milestone.id}`}>
+									<span class="roadmap-track__dot"></span>
+									<span class="roadmap-track__stage">{milestone.label}</span>
+									<span class="roadmap-track__name">{milestone.title}</span>
+								</a>
+							</li>
+						);
+					})}
+				</ol>
+			</div>
+
+			<div class="roadmap-mobile-list">
+				{roadmapMilestones.map((milestone, index) => {
+					const state =
+						index < currentMilestoneIndex ? 'done' : milestone.status === 'current' ? 'current' : 'planned';
+
+					return (
+						<a
+							class={`roadmap-mobile-list__item roadmap-mobile-list__item--${state}`}
+							href={`#${milestone.id}`}
+						>
+							<div class="roadmap-mobile-list__dot"></div>
+							<div>
+								<p class="roadmap-mobile-list__stage">{milestone.label}</p>
+								<p class="roadmap-mobile-list__title">{milestone.title}</p>
+							</div>
+						</a>
+					);
+				})}
+			</div>
+		</div>
+	</section>
+
+	<section class="section-container py-18">
+		<div class="roadmap-section-heading max-w-4xl">
+			<p class="roadmap-kicker">Already in the game</p>
+			<h2>What Redux has already changed</h2>
+			<p>
+				Across the changelog so far, Redux has logged <strong>{roadmapStats.bugFixCount} bug fixes</strong> and
+				<strong> {roadmapStats.performanceCount} performance improvements</strong>.
+				Below is the plain-language version.
+			</p>
+		</div>
+
+		<div class="implemented-grid">
+			{roadmapFeatureGroups.map((group) => (
+				<article class="implemented-card card-glass">
+					<h3>{group.title}</h3>
+					<p>{group.summary}</p>
+					<ul>
+						{group.bullets.map((bullet) => (
+							<li>{bullet}</li>
+						))}
+					</ul>
+				</article>
+			))}
+		</div>
+	</section>
+
+	<section class="section-container py-18">
+		<div class="roadmap-section-heading max-w-4xl">
+			<p class="roadmap-kicker">Still ahead</p>
+			<h2>Where the roadmap opens up</h2>
+			<p>
+				After Foundation, the plan is to move into colonies, then interstellar work, and eventually multiplayer.
+				The exact order may change, but that is the general direction.
+			</p>
+		</div>
+
+		<div class="milestone-stack">
+			{roadmapMilestones.map((milestone) => (
+				<article
+					id={milestone.id}
+					class={`milestone-row ${milestone.status === 'current' ? 'milestone-row--current' : ''}`}
+				>
+					<div class="milestone-row__label">
+						<span class={`milestone-pill ${milestone.status === 'current' ? 'milestone-pill--current' : ''}`}>
+							{milestone.label}
+						</span>
+						<span class="milestone-row__state">{milestone.status === 'current' ? 'Now' : 'Planned'}</span>
+					</div>
+
+					<div class="milestone-row__body card-glass">
+						<h3>{milestone.title}</h3>
+						<p class="milestone-row__summary">{milestone.summary}</p>
+						{milestone.note && <p class="milestone-row__note">{milestone.note}</p>}
+
+						<div class="milestone-row__sections">
+							{milestone.sections.map((section) => (
+								<div class="milestone-row__section">
+									<h4>{section.title}</h4>
+									<p>{section.summary}</p>
+								</div>
+							))}
+						</div>
+					</div>
+				</article>
+			))}
+		</div>
+	</section>
+
+	<section class="section-container py-20">
+		<div class="card-glass text-center py-14 px-8">
+			<h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">
+				Help push the roadmap forward
+			</h2>
+			<p class="text-gray-400 text-lg max-w-2xl mx-auto mb-8">
+				Redux is still a volunteer effort. Testing, bug reports, modding experiments, and asset work all make the next stage easier to reach.
+			</p>
+			<div class="flex flex-col sm:flex-row gap-4 justify-center">
+				<a href="/guides/contributing" class="btn-primary">Contributing Guide</a>
+				<a href="/contact" class="btn-secondary">Join the Community</a>
+			</div>
+		</div>
+	</section>
+
+	<Footer />
+</body>
+</html>
+
+<style>
+	.roadmap-hero::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: 0;
+		background:
+			radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.12) 0 1px, transparent 1px) 0 0 / 170px 170px,
+			radial-gradient(circle at 75% 45%, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px) 0 0 / 220px 220px;
+		opacity: 0.6;
+		pointer-events: none;
+	}
+
+	.roadmap-kicker {
+		margin: 0 0 0.8rem;
+		color: #9ca3af;
+		font-size: 0.8rem;
+		font-weight: 700;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+	}
+
+	.roadmap-title {
+		margin: 0;
+		font-family: var(--font-family-logo);
+		font-size: clamp(3rem, 8vw, 5.8rem);
+		font-weight: 800;
+		line-height: 0.98;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: #ffffff;
+	}
+
+	.roadmap-title span {
+		display: block;
+		color: #df1601;
+	}
+
+	.roadmap-intro {
+		max-width: 48rem;
+		margin: 1.4rem 0 0;
+		color: #d1d5db;
+		font-size: 1.08rem;
+		line-height: 1.8;
+	}
+
+	.roadmap-facts {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.9rem;
+		margin-top: 2rem;
+	}
+
+	.roadmap-fact {
+		min-width: 11rem;
+		padding: 0.95rem 1.1rem;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 1rem;
+		background: rgba(10, 10, 10, 0.34);
+		backdrop-filter: blur(10px);
+	}
+
+	.roadmap-fact__label {
+		display: block;
+		color: #9ca3af;
+		font-size: 0.76rem;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+	}
+
+	.roadmap-fact strong {
+		display: block;
+		margin-top: 0.45rem;
+		color: #ffffff;
+		font-family: var(--font-family-heading);
+		font-size: 1.45rem;
+		line-height: 1.1;
+	}
+
+	.roadmap-panel {
+		padding: 2rem;
+		border-radius: 1.5rem;
+	}
+
+	.roadmap-panel__top {
+		display: grid;
+		grid-template-columns: minmax(0, 1.6fr) minmax(16rem, 0.7fr);
+		gap: 1.25rem;
+		align-items: start;
+	}
+
+	.roadmap-panel__eyebrow {
+		margin: 0;
+		color: #9ca3af;
+		font-size: 0.78rem;
+		font-weight: 700;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+	}
+
+	.roadmap-panel__copy h2 {
+		margin: 0.45rem 0 0;
+		font-family: var(--font-family-heading);
+		font-size: clamp(2rem, 5vw, 3.2rem);
+		line-height: 1.02;
+	}
+
+	.roadmap-panel__copy p:last-child {
+		margin: 1rem 0 0;
+		color: #d1d5db;
+		line-height: 1.8;
+	}
+
+	.roadmap-panel__aside {
+		display: grid;
+		gap: 0.9rem;
+	}
+
+	.roadmap-panel__status,
+	.roadmap-panel__next {
+		display: block;
+		padding: 1rem 1.1rem;
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 1rem;
+		background: rgba(255, 255, 255, 0.03);
+	}
+
+	.roadmap-panel__status {
+		color: #ffb3a8;
+		font-size: 0.95rem;
+		font-weight: 700;
+	}
+
+	.roadmap-panel__next span {
+		display: block;
+		color: #9ca3af;
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+	}
+
+	.roadmap-panel__next strong {
+		display: block;
+		margin-top: 0.45rem;
+		color: #ffffff;
+		font-size: 1.05rem;
+		line-height: 1.4;
+	}
+
+	.roadmap-panel__next:hover {
+		border-color: rgba(95, 174, 245, 0.28);
+		background: rgba(255, 255, 255, 0.05);
+	}
+
+	.roadmap-panel__next:focus-visible {
+		outline: 2px solid rgba(95, 174, 245, 0.8);
+		outline-offset: 3px;
+	}
+
+	.roadmap-track {
+		margin-top: 2rem;
+	}
+
+	.roadmap-track__progress {
+		display: block;
+	}
+
+	.roadmap-track__stops {
+		display: grid;
+		grid-template-columns: repeat(6, minmax(0, 1fr));
+		gap: 0.75rem;
+		list-style: none;
+		margin: 1rem 0 0;
+		padding: 0;
+	}
+
+	.roadmap-track__stop {
+		min-width: 0;
+	}
+
+	.roadmap-track__link {
+		display: grid;
+		justify-items: center;
+		gap: 0.45rem;
+		min-width: 0;
+		text-align: center;
+		text-decoration: none;
+	}
+
+	.roadmap-track__dot {
+		width: 0.95rem;
+		height: 0.95rem;
+		border-radius: 999px;
+		background: #24313d;
+		border: 3px solid #10151b;
+		box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05);
+	}
+
+	.roadmap-track__stop--done .roadmap-track__dot {
+		background: #7ec2ff;
+	}
+
+	.roadmap-track__stop--current .roadmap-track__dot {
+		background: #ff6951;
+		box-shadow: 0 0 0 5px rgba(223, 22, 1, 0.16);
+	}
+
+	.roadmap-track__stage {
+		color: #f3f4f6;
+		font-size: 0.74rem;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+	}
+
+	.roadmap-track__name {
+		color: #9ca3af;
+		font-size: 0.93rem;
+		line-height: 1.4;
+		text-wrap: balance;
+	}
+
+	.roadmap-track__link:hover .roadmap-track__name,
+	.roadmap-track__link:focus-visible .roadmap-track__name {
+		color: #f3f4f6;
+	}
+
+	.roadmap-track__link:hover .roadmap-track__dot {
+		box-shadow: 0 0 0 5px rgba(95, 174, 245, 0.12);
+	}
+
+	.roadmap-track__link:focus-visible {
+		outline: 2px solid rgba(95, 174, 245, 0.8);
+		outline-offset: 6px;
+		border-radius: 0.75rem;
+	}
+
+	.roadmap-mobile-list {
+		display: none;
+		margin-top: 1.75rem;
+		padding-left: 0.2rem;
+		border-left: 1px solid rgba(255, 255, 255, 0.12);
+	}
+
+	.roadmap-mobile-list__item {
+		display: grid;
+		grid-template-columns: 1rem 1fr;
+		gap: 0.9rem;
+		align-items: start;
+		padding: 0.4rem 0 0.9rem 1rem;
+		text-decoration: none;
+	}
+
+	.roadmap-mobile-list__dot {
+		width: 0.9rem;
+		height: 0.9rem;
+		margin-top: 0.2rem;
+		margin-left: -1.48rem;
+		border-radius: 999px;
+		background: #24313d;
+		border: 3px solid #10151b;
+		box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05);
+	}
+
+	.roadmap-mobile-list__item--done .roadmap-mobile-list__dot {
+		background: #7ec2ff;
+	}
+
+	.roadmap-mobile-list__item--current .roadmap-mobile-list__dot {
+		background: #ff6951;
+		box-shadow: 0 0 0 5px rgba(223, 22, 1, 0.16);
+	}
+
+	.roadmap-mobile-list__stage {
+		margin: 0;
+		color: #f3f4f6;
+		font-size: 0.74rem;
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+	}
+
+	.roadmap-mobile-list__title {
+		margin: 0.25rem 0 0;
+		color: #9ca3af;
+		font-size: 0.98rem;
+		line-height: 1.45;
+	}
+
+	.roadmap-mobile-list__item:hover .roadmap-mobile-list__title,
+	.roadmap-mobile-list__item:focus-visible .roadmap-mobile-list__title {
+		color: #f3f4f6;
+	}
+
+	.roadmap-mobile-list__item:focus-visible {
+		outline: 2px solid rgba(95, 174, 245, 0.8);
+		outline-offset: 0.25rem;
+		border-radius: 0.75rem;
+	}
+
+	.roadmap-foundation {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1rem;
+		margin-top: 2rem;
+	}
+
+	.roadmap-foundation__item {
+		padding: 1.25rem;
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 1rem;
+		background: rgba(255, 255, 255, 0.03);
+	}
+
+	.roadmap-foundation__item h3,
+	.implemented-card h3,
+	.milestone-row__body h3,
+	.milestone-row__section h4 {
+		margin: 0;
+		font-family: var(--font-family-heading);
+	}
+
+	.roadmap-foundation__item p,
+	.implemented-card p,
+	.milestone-row__summary,
+	.milestone-row__note,
+	.milestone-row__section p,
+	.roadmap-section-heading p:last-child {
+		color: #d1d5db;
+		line-height: 1.75;
+	}
+
+	.roadmap-foundation__item p {
+		margin: 0.7rem 0 0;
+	}
+
+	.roadmap-section-heading {
+		margin-bottom: 2rem;
+	}
+
+	.roadmap-section-heading h2 {
+		margin: 0;
+		font-family: var(--font-family-heading);
+		font-size: clamp(2rem, 5vw, 3.2rem);
+		line-height: 1.08;
+	}
+
+	.roadmap-section-heading p:last-child {
+		margin: 1rem 0 0;
+	}
+
+	.implemented-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1.25rem;
+	}
+
+	.implemented-card {
+		padding: 1.8rem;
+	}
+
+	.implemented-card p {
+		margin: 0.8rem 0 0;
+	}
+
+	.implemented-card ul {
+		margin: 1rem 0 0;
+		padding-left: 1.2rem;
+	}
+
+	.implemented-card li {
+		margin: 0.6rem 0;
+		color: #f3f4f6;
+		line-height: 1.65;
+	}
+
+	.milestone-stack {
+		position: relative;
+		display: grid;
+		gap: 1.4rem;
+	}
+
+	.milestone-stack::before {
+		content: '';
+		position: absolute;
+		top: 1.1rem;
+		bottom: 1.1rem;
+		left: 6rem;
+		width: 2px;
+		background: linear-gradient(
+			180deg,
+			rgba(223, 22, 1, 0.45) 0%,
+			rgba(95, 174, 245, 0.28) 18%,
+			rgba(95, 174, 245, 0.14) 100%
+		);
+		pointer-events: none;
+	}
+
+	.milestone-row {
+		position: relative;
+		display: grid;
+		grid-template-columns: 12rem minmax(0, 1fr);
+		gap: 1.25rem;
+		align-items: start;
+		scroll-margin-top: 7rem;
+	}
+
+	.milestone-row__label {
+		position: relative;
+		display: grid;
+		justify-items: center;
+		gap: 0.7rem;
+		padding-top: 0.6rem;
+		text-align: center;
+	}
+
+	.milestone-row__label::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 50%;
+		z-index: 0;
+		width: 9rem;
+		height: 5.2rem;
+		transform: translateX(-50%);
+		background: #05070b;
+		border-radius: 999px;
+	}
+
+	.milestone-pill {
+		position: relative;
+		z-index: 1;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: fit-content;
+		padding: 0.55rem 0.9rem;
+		border: 1px solid rgba(156, 207, 255, 0.22);
+		border-radius: 999px;
+		background: rgba(88, 187, 255, 0.08);
+		color: #d8efff;
+		font-size: 0.8rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.milestone-pill--current {
+		border-color: rgba(255, 109, 85, 0.32);
+		background: rgba(223, 22, 1, 0.14);
+		color: #ffb3a8;
+	}
+
+	.milestone-row__state {
+		position: relative;
+		z-index: 1;
+		color: #9ca3af;
+		font-size: 0.78rem;
+		font-weight: 700;
+		letter-spacing: 0.18em;
+		text-transform: uppercase;
+	}
+
+	.milestone-row__body {
+		padding: 1.8rem;
+	}
+
+	.milestone-row__summary {
+		margin: 0.85rem 0 0;
+	}
+
+	.milestone-row__note {
+		margin: 1rem 0 0;
+		padding: 0.85rem 1rem;
+		border-left: 3px solid rgba(95, 174, 245, 0.55);
+		border-radius: 0.9rem;
+		background: rgba(95, 174, 245, 0.08);
+	}
+
+	.milestone-row__sections {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+		margin-top: 1.3rem;
+	}
+
+	.milestone-row__section {
+		padding: 1.1rem 1.15rem;
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: 1rem;
+		background: rgba(255, 255, 255, 0.03);
+	}
+
+	.milestone-row__section p {
+		margin: 0.65rem 0 0;
+	}
+
+	@media (max-width: 1024px) {
+		.milestone-stack::before {
+			left: 50%;
+		}
+
+		.roadmap-panel__top,
+		.implemented-grid,
+		.milestone-row,
+		.milestone-row__sections {
+			grid-template-columns: 1fr;
+		}
+
+		.roadmap-foundation {
+			grid-template-columns: 1fr;
+		}
+
+		.milestone-row__label {
+			padding-top: 0;
+		}
+
+		.milestone-row__label::after {
+			top: auto;
+			right: auto;
+			bottom: -0.7rem;
+			left: 50%;
+			width: 1px;
+			height: 0.9rem;
+			transform: translateX(-50%);
+		}
+
+		.milestone-row__label::before {
+			width: 8.4rem;
+			height: 5rem;
+		}
+	}
+
+	@media (max-width: 720px) {
+		.roadmap-panel,
+		.implemented-card,
+		.milestone-row__body {
+			padding: 1.35rem;
+		}
+
+		.roadmap-track {
+			display: none;
+		}
+
+		.roadmap-mobile-list {
+			display: block;
+		}
+
+		.roadmap-facts {
+			display: grid;
+			grid-template-columns: 1fr;
+		}
+	}
+
+</style>

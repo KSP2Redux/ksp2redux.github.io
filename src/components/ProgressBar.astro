@@ -1,0 +1,91 @@
+---
+interface Props {
+	min: number;
+	max: number;
+	value: number;
+	animated?: boolean;
+	class?: string;
+	ariaLabel?: string;
+}
+
+const {
+	min,
+	max,
+	value,
+	animated = true,
+	class: className = '',
+	ariaLabel = 'Progress',
+} = Astro.props;
+
+const range = Math.max(max - min, 1);
+const clampedValue = Math.min(Math.max(value, min), max);
+const percent = ((clampedValue - min) / range) * 100;
+---
+
+<div
+	class:list={['progress-bar', className]}
+	data-progress-bar
+	data-animated={animated ? 'true' : 'false'}
+	data-target={percent.toString()}
+	role="progressbar"
+	aria-label={ariaLabel}
+	aria-valuemin={min}
+	aria-valuemax={max}
+	aria-valuenow={clampedValue}
+>
+	<div class="progress-bar__track">
+		<div class="progress-bar__fill"></div>
+	</div>
+</div>
+
+<script is:inline>
+	document.querySelectorAll('[data-progress-bar]').forEach((element) => {
+		if (!(element instanceof HTMLElement) || element.dataset.ready === 'true') {
+			return;
+		}
+
+		const fill = element.querySelector('.progress-bar__fill');
+
+		if (!(fill instanceof HTMLElement)) {
+			return;
+		}
+
+		const target = element.dataset.target ?? '0';
+		const animate = element.dataset.animated !== 'false';
+		const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+		element.dataset.ready = 'true';
+
+		if (!animate || reducedMotion) {
+			fill.style.width = `${target}%`;
+			return;
+		}
+
+		requestAnimationFrame(() => {
+			fill.style.width = `${target}%`;
+		});
+	});
+</script>
+
+<style>
+	.progress-bar__track {
+		height: 0.38rem;
+		border-radius: 999px;
+		background: rgba(255, 255, 255, 0.12);
+		overflow: hidden;
+	}
+
+	.progress-bar__fill {
+		width: 0;
+		height: 100%;
+		border-radius: inherit;
+		background: linear-gradient(90deg, #5faef5 0%, #df1601 100%);
+		transition: width 1.1s cubic-bezier(0.2, 0.9, 0.25, 1);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.progress-bar__fill {
+			transition: none;
+		}
+	}
+</style>
