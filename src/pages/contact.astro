@@ -2,6 +2,7 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import forumIcon from '../assets/links-forums.png';
 ---
 
 <!DOCTYPE html>
@@ -42,7 +43,7 @@ import '../styles/global.css';
 			</p>
 		</div>
 
-		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
 			<a 
 				href="https://discord.gg/8yq8d5VGQR" 
 				target="_blank"
@@ -102,6 +103,28 @@ import '../styles/global.css';
 					Open subreddit →
 				</span>
 			</a>
+
+			<a 
+				href="https://forum.kerbalspaceprogram.com/topic/226985-ksp2-redux" 
+				target="_blank"
+				rel="noopener noreferrer"
+				class="card-glass text-center border border-transparent hover:border-ksp-red/40"
+			>
+				<div class="text-6xl mb-4">
+					<span
+						class="contact-forum-icon mx-auto text-ksp-red"
+						style={`-webkit-mask-image: url('${forumIcon.src}'); mask-image: url('${forumIcon.src}');`}
+						aria-hidden="true"
+					></span>
+				</div>
+				<h3 class="text-2xl font-heading font-bold mb-3">KSP Forums</h3>
+				<p class="text-gray-400 mb-4">
+					The official forum thread is a good place for longer-form updates, replies, and community discussion around Redux.
+				</p>
+				<span class="text-ksp-red font-semibold">
+					Open forum thread →
+				</span>
+			</a>
 		</div>
 
 		<div class="page-section-heading">
@@ -122,7 +145,7 @@ import '../styles/global.css';
 				<p class="text-gray-400 mb-4">
 					Installation, troubleshooting, compatibility notes, and contribution docs live here.
 				</p>
-				<a href="/guides" class="btn-primary inline-block">
+				<a href="/guides" class="btn-primary">
 					Open docs
 				</a>
 			</div>
@@ -137,7 +160,7 @@ import '../styles/global.css';
 				<p class="text-gray-400 mb-4">
 					If you are filing a bug, include steps to reproduce it, your Redux version, and any logs or screenshots you have.
 				</p>
-				<a href="https://github.com/KSP2Redux/Redux/issues" target="_blank" rel="noopener noreferrer" class="btn-primary inline-block">
+				<a href="https://github.com/KSP2Redux/Redux/issues" target="_blank" rel="noopener noreferrer" class="btn-primary">
 					Open issue tracker
 				</a>
 			</div>
@@ -207,7 +230,7 @@ import '../styles/global.css';
 		</div>
 		
 		<p class="text-center text-gray-400 mt-8 text-sm">
-			Discord is still the best way to reach any of them.
+			Discord is the best way to reach all of us.
 		</p>
 	</section>
 
@@ -231,3 +254,18 @@ import '../styles/global.css';
 	<Footer />
 </body>
 </html>
+
+<style>
+	.contact-forum-icon {
+		display: block;
+		width: 4rem;
+		height: 4rem;
+		background-color: currentColor;
+		-webkit-mask-repeat: no-repeat;
+		mask-repeat: no-repeat;
+		-webkit-mask-position: center;
+		mask-position: center;
+		-webkit-mask-size: contain;
+		mask-size: contain;
+	}
+</style>

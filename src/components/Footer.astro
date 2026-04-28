@@ -1,5 +1,7 @@
 ---
 // Unified footer component for all pages (custom + Starlight docs)
+import forumIcon from '../assets/links-forums.png';
+
 const currentYear = new Date().getFullYear();
 
 const socialLinks = [
@@ -17,6 +19,11 @@ const socialLinks = [
 		name: 'Reddit',
 		url: 'https://reddit.com/r/KSP2Redux',
 		icon: 'reddit'
+	},
+	{
+		name: 'KSP Forums',
+		url: 'https://forum.kerbalspaceprogram.com/topic/226985-ksp2-redux',
+		icon: 'forums'
 	}
 ];
 
@@ -69,10 +76,18 @@ const icons: Record<string, string> = {
 							href={link.url}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="text-gray-400 hover:text-ksp-red transition-colors duration-200"
+							class="inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-400 hover:text-ksp-red transition-colors duration-200"
 							aria-label={link.name}
 						>
-							<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" set:html={icons[link.icon]} />
+							{link.icon === 'forums' ? (
+								<span
+									class="footer-social-icon"
+									style={`-webkit-mask-image: url('${forumIcon.src}'); mask-image: url('${forumIcon.src}');`}
+									aria-hidden="true"
+								></span>
+							) : (
+								<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" set:html={icons[link.icon]} />
+							)}
 						</a>
 					))}
 				</div>
@@ -118,3 +133,18 @@ const icons: Record<string, string> = {
 		</div>
 	</div>
 </footer>
+
+<style>
+	.footer-social-icon {
+		display: block;
+		width: 1.5rem;
+		height: 1.5rem;
+		background-color: currentColor;
+		-webkit-mask-repeat: no-repeat;
+		mask-repeat: no-repeat;
+		-webkit-mask-position: center;
+		mask-position: center;
+		-webkit-mask-size: contain;
+		mask-size: contain;
+	}
+</style>
