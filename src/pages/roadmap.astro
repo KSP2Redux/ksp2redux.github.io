@@ -9,7 +9,7 @@ import {
 	roadmapFeatureGroups,
 	roadmapMilestones,
 	roadmapStats,
-} from '../data/roadmap';
+} from '../data/data';
 
 const currentMilestoneIndex = roadmapMilestones.findIndex((milestone) => milestone.id === roadmapCurrentMilestoneId);
 const currentMilestone = roadmapMilestones[currentMilestoneIndex];
@@ -145,15 +145,9 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 		</div>
 	</section>
 
-	<section class="section-container py-18">
+	<section class="section-container py-8">
 		<div class="roadmap-section-heading max-w-4xl">
-			<p class="roadmap-kicker">Already in the game</p>
 			<h2>What Redux has already changed</h2>
-			<p>
-				Across the changelog so far, Redux has logged <strong>{roadmapStats.bugFixCount} bug fixes</strong> and
-				<strong> {roadmapStats.performanceCount} performance improvements</strong>.
-				Below is the plain-language version.
-			</p>
 		</div>
 
 		<div class="implemented-grid">
@@ -171,9 +165,8 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 		</div>
 	</section>
 
-	<section class="section-container py-18">
+	<section class="section-container py-8">
 		<div class="roadmap-section-heading max-w-4xl">
-			<p class="roadmap-kicker">Still ahead</p>
 			<h2>Where the roadmap opens up</h2>
 			<p>
 				After Foundation, the plan is to move into colonies, then interstellar work, and eventually multiplayer.
@@ -213,7 +206,7 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 		</div>
 	</section>
 
-	<section class="section-container py-20">
+	<section class="section-container py-8">
 		<div class="card-glass text-center py-14 px-8">
 			<h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">
 				Help push the roadmap forward
@@ -243,15 +236,6 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 			radial-gradient(circle at 75% 45%, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px) 0 0 / 220px 220px;
 		opacity: 0.6;
 		pointer-events: none;
-	}
-
-	.roadmap-kicker {
-		margin: 0 0 0.8rem;
-		color: #9ca3af;
-		font-size: 0.8rem;
-		font-weight: 700;
-		letter-spacing: 0.22em;
-		text-transform: uppercase;
 	}
 
 	.roadmap-title {

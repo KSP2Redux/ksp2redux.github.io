@@ -64,26 +64,30 @@ const categories = ['all', 'missions', 'builds', 'performance', 'tutorials'];
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Gallery - KSP2 Redux</title>
-	<meta name="description" content="Explore screenshots and videos showcasing KSP2 Redux in action.">
+	<meta name="description" content="Screenshots and video clips related to KSP2 Redux.">
 	<link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
 <body class="bg-space-black text-white min-h-screen">
 	<Header />
 
-	<!-- Page Header -->
-	<section class="pt-24 pb-12 bg-gradient-to-b from-ksp-blue to-space-black">
-		<div class="section-container text-center">
-			<h1 class="text-5xl md:text-6xl font-heading font-extrabold mb-4 text-glow">
-				<span class="text-ksp-red">Redux</span> Gallery
-			</h1>
-			<p class="text-xl text-gray-300 max-w-2xl mx-auto">
-				See the transformative power of KSP2 Redux through community screenshots, 
-				gameplay videos, and performance comparisons.
-			</p>
+	<section class="page-hero pt-32 pb-16">
+		<div class="absolute inset-0 z-0" style="background-image: url('/background.png'); background-size: cover; background-position: center;"></div>
+		<div class="absolute inset-0 z-0 bg-gradient-to-r from-space-black via-space-black/80 to-space-black/20"></div>
+		<div class="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-space-black/25 to-space-black"></div>
+
+		<div class="section-container relative z-10">
+			<div class="max-w-4xl">
+				<h1 class="page-title">
+					Redux
+					<span>Gallery</span>
+				</h1>
+				<p class="page-intro">
+					This page is for screenshots, clips, and other visual material related to Redux. It is a simple media page, not a feature list.
+				</p>
+			</div>
 		</div>
 	</section>
 
-	<!-- Filter Tabs -->
 	<section class="section-container py-8">
 		<div class="flex flex-wrap justify-center gap-3" id="filter-tabs">
 			{categories.map((category) => (
@@ -98,7 +102,6 @@ const categories = ['all', 'missions', 'builds', 'performance', 'tutorials'];
 		</div>
 	</section>
 
-	<!-- Gallery Grid -->
 	<section class="section-container py-12">
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-grid">
 			{galleryItems.map((item, index) => (
@@ -135,7 +138,6 @@ const categories = ['all', 'missions', 'builds', 'performance', 'tutorials'];
 			))}
 		</div>
 
-		<!-- Empty State -->
 		<div id="empty-state" class="hidden text-center py-16">
 			<div class="text-gray-500 text-6xl mb-4">🔍</div>
 			<p class="text-gray-400 text-lg">No items found in this category.</p>
@@ -148,21 +150,20 @@ const categories = ['all', 'missions', 'builds', 'performance', 'tutorials'];
 		</div>
 	</section>
 
-	<!-- Call to Action -->
 	<section class="section-container py-20">
 		<div class="card-glass text-center py-12">
 			<h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">
-				Share Your <span class="text-ksp-red">Redux</span> Experience
+				Have something worth adding?
 			</h2>
 			<p class="text-gray-400 mb-6 max-w-xl mx-auto">
-				Got amazing screenshots or gameplay footage? Share them with the community!
+				If you have screenshots or footage that would make sense for this page, post them in Discord or on Reddit.
 			</p>
 			<div class="flex flex-col sm:flex-row gap-4 justify-center">
-				<a href="https://discord.gg/ksp2redux" target="_blank" class="btn-primary">
-					Submit to Gallery
+				<a href="https://discord.gg/8yq8d5VGQR" target="_blank" rel="noopener noreferrer" class="btn-primary">
+					Open Discord
 				</a>
-				<a href="https://reddit.com/r/KSP2Redux" target="_blank" class="btn-secondary">
-					Reddit Community
+				<a href="https://reddit.com/r/KSP2Redux" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+					Open Reddit
 				</a>
 			</div>
 		</div>

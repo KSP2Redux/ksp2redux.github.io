@@ -10,32 +10,44 @@ import '../styles/global.css';
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Contact - KSP2 Redux</title>
-	<meta name="description" content="Get in touch with the KSP2 Redux team and community.">
+	<meta name="description" content="Links for Discord, GitHub, Reddit, and the people coordinating the main areas of KSP2 Redux.">
 	<link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
 <body class="bg-space-black text-white min-h-screen">
 	<Header />
 
-	<!-- Page Header -->
-	<section class="pt-24 pb-12 bg-gradient-to-b from-ksp-blue to-space-black">
-		<div class="section-container text-center">
-			<h1 class="text-5xl md:text-6xl font-heading font-extrabold mb-4 text-glow">
-				Get In <span class="text-ksp-red">Touch</span>
-			</h1>
-			<p class="text-xl text-gray-300 max-w-2xl mx-auto">
-				Join our thriving community, report issues, or contribute to the project.
-			</p>
+	<section class="page-hero pt-32 pb-16">
+		<div class="absolute inset-0 z-0" style="background-image: url('/background.png'); background-size: cover; background-position: center;"></div>
+		<div class="absolute inset-0 z-0 bg-gradient-to-r from-space-black via-space-black/80 to-space-black/20"></div>
+		<div class="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-space-black/25 to-space-black"></div>
+
+		<div class="section-container relative z-10">
+			<div class="max-w-4xl">
+				<h1 class="page-title">
+					Where to
+					<span>Reach Redux</span>
+				</h1>
+				<p class="page-intro">
+					If you need help, want to report a problem, or want the right place to watch development, these are the main channels the project actually uses.
+				</p>
+			</div>
 		</div>
 	</section>
 
-	<!-- Contact Options -->
 	<section class="section-container py-16">
+		<div class="page-section-heading">
+			<h2>Start here</h2>
+			<p>
+				Discord is where most discussion happens. GitHub is better for code, releases, and issue tracking. Reddit is more for general posts and screenshots.
+			</p>
+		</div>
+
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-			<!-- Discord -->
 			<a 
 				href="https://discord.gg/8yq8d5VGQR" 
 				target="_blank"
-				class="card-glass text-center hover:scale-105 transition-all duration-300 hover:border-ksp-red border-2 border-transparent"
+				rel="noopener noreferrer"
+				class="card-glass text-center border border-transparent hover:border-ksp-red/40"
 			>
 				<div class="text-6xl mb-4">
 					<svg class="w-16 h-16 mx-auto text-ksp-red" fill="currentColor" viewBox="0 0 24 24">
@@ -44,18 +56,18 @@ import '../styles/global.css';
 				</div>
 				<h3 class="text-2xl font-heading font-bold mb-3">Discord</h3>
 				<p class="text-gray-400 mb-4">
-					Join 5,000+ community members for real-time support, discussions, and community events.
+					This is the main day-to-day hub for bug reports, testing, questions, and general discussion.
 				</p>
 				<span class="text-ksp-red font-semibold">
-					Join Server →
+					Open Discord →
 				</span>
 			</a>
 
-			<!-- GitHub -->
 			<a 
 				href="https://github.com/KSP2Redux/Redux" 
 				target="_blank"
-				class="card-glass text-center hover:scale-105 transition-all duration-300 hover:border-ksp-red border-2 border-transparent"
+				rel="noopener noreferrer"
+				class="card-glass text-center border border-transparent hover:border-ksp-red/40"
 			>
 				<div class="text-6xl mb-4">
 					<svg class="w-16 h-16 mx-auto text-ksp-red" fill="currentColor" viewBox="0 0 24 24">
@@ -64,18 +76,18 @@ import '../styles/global.css';
 				</div>
 				<h3 class="text-2xl font-heading font-bold mb-3">GitHub</h3>
 				<p class="text-gray-400 mb-4">
-					Report bugs, contribute code, or track development progress.
+					Use this for releases, source code, issue tracking, and pull requests.
 				</p>
 				<span class="text-ksp-red font-semibold">
-					View Repository →
+					Open repository →
 				</span>
 			</a>
 
-			<!-- Reddit -->
 			<a 
 				href="https://reddit.com/r/KSP2Redux" 
 				target="_blank"
-				class="card-glass text-center hover:scale-105 transition-all duration-300 hover:border-ksp-red border-2 border-transparent"
+				rel="noopener noreferrer"
+				class="card-glass text-center border border-transparent hover:border-ksp-red/40"
 			>
 				<div class="text-6xl mb-4">
 					<svg class="w-16 h-16 mx-auto text-ksp-red" fill="currentColor" viewBox="0 0 24 24">
@@ -84,61 +96,61 @@ import '../styles/global.css';
 				</div>
 				<h3 class="text-2xl font-heading font-bold mb-3">Reddit</h3>
 				<p class="text-gray-400 mb-4">
-					Share your builds, ask questions, and engage with the community.
+					Use Reddit for longer posts, screenshots, and general discussion outside Discord.
 				</p>
 				<span class="text-ksp-red font-semibold">
-					Visit Subreddit →
+					Open subreddit →
 				</span>
 			</a>
 		</div>
 
-		<!-- Quick Links -->
+		<div class="page-section-heading">
+			<h2>Common starting points</h2>
+			<p>
+				If you just need installation help or want to report something, these are the usual first stops.
+			</p>
+		</div>
+
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-			<!-- Documentation -->
 			<div class="card-glass">
 				<h3 class="text-2xl font-heading font-bold mb-4 flex items-center">
 					<svg class="w-6 h-6 mr-3 text-ksp-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
 					</svg>
-					Need Help?
+					Documentation
 				</h3>
 				<p class="text-gray-400 mb-4">
-					Check out our comprehensive documentation for installation guides, 
-					troubleshooting tips, and FAQs.
+					Installation, troubleshooting, compatibility notes, and contribution docs live here.
 				</p>
 				<a href="/guides" class="btn-primary inline-block">
-					Browse Documentation
+					Open docs
 				</a>
 			</div>
 
-			<!-- Report Issues -->
 			<div class="card-glass">
 				<h3 class="text-2xl font-heading font-bold mb-4 flex items-center">
 					<svg class="w-6 h-6 mr-3 text-ksp-red" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
 					</svg>
-					Found a Bug?
+					Issue reports
 				</h3>
 				<p class="text-gray-400 mb-4">
-					Report bugs and issues on our GitHub repository. Include system specs 
-					and reproduction steps.
+					If you are filing a bug, include steps to reproduce it, your Redux version, and any logs or screenshots you have.
 				</p>
-				<a href="https://github.com/KSP2Redux/Redux/issues" target="_blank" class="btn-primary inline-block">
-					Report Issue
+				<a href="https://github.com/KSP2Redux/Redux/issues" target="_blank" rel="noopener noreferrer" class="btn-primary inline-block">
+					Open issue tracker
 				</a>
 			</div>
 		</div>
 	</section>
 
-	<!-- FAQ Link Section -->
-	<section class="bg-gradient-to-b from-space-black to-ksp-blue py-20">
-		<div class="section-container text-center">
+	<section class="section-container py-10">
+		<div class="card-glass text-center py-12 px-8">
 			<h2 class="text-4xl font-heading font-bold mb-6">
-				Browse Our <span class="text-ksp-red">FAQ</span>
+				Still looking for a basic answer?
 			</h2>
 			<p class="text-gray-400 mb-8 max-w-2xl mx-auto text-lg">
-				Check out our comprehensive FAQ for answers to common questions about installation, 
-				compatibility, safety, and more.
+				The FAQ covers installation, compatibility, legal questions, updates, and the usual first-time setup issues.
 			</p>
 			<a href="/faq" class="btn-primary text-lg">
 				<svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -149,14 +161,13 @@ import '../styles/global.css';
 		</div>
 	</section>
 
-	<!-- Project Leads Section -->
 	<section class="section-container py-20">
-		<h2 class="text-4xl font-heading font-bold mb-12 text-center">
-			Project <span class="text-ksp-red">Leads</span>
-		</h2>
-		<p class="text-center text-gray-300 mb-12 max-w-2xl mx-auto">
-			Project Leads are responsible for specific branches of development. Have a question about an area of development? Feel free to reach out to the corresponding Lead!
-		</p>
+		<div class="page-section-heading mx-auto text-center">
+			<h2>Team leads</h2>
+			<p>
+				These are the people currently coordinating the main areas of work. If you are not sure who to ask, start in Discord and point to the area you mean.
+			</p>
+		</div>
 		
 		<div class="overflow-x-auto">
 			<table class="w-full border-collapse">
@@ -173,7 +184,7 @@ import '../styles/global.css';
 					</tr>
 					<tr class="border-b border-gray-700 hover:bg-gray-900/30 transition-colors">
 						<td class="py-4 px-6 font-semibold text-white">Munix</td>
-						<td class="py-4 px-6 text-gray-300">Gameplay, Public Relations, Modding Support</td>
+						<td class="py-4 px-6 text-gray-300">Gameplay, project communication, modding support</td>
 					</tr>
 					<tr class="border-b border-gray-700 hover:bg-gray-900/30 transition-colors">
 						<td class="py-4 px-6 font-semibold text-white">ShadowDev</td>
@@ -196,24 +207,23 @@ import '../styles/global.css';
 		</div>
 		
 		<p class="text-center text-gray-400 mt-8 text-sm">
-			You can reach out to any lead through our Discord server for questions or collaboration opportunities.
+			Discord is still the best way to reach any of them.
 		</p>
 	</section>
 
-	<!-- Final CTA -->
 	<section class="section-container py-20">
 		<div class="card-glass text-center py-12">
 			<h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">
-				Still Have Questions?
+				Not sure where to ask?
 			</h2>
 			<p class="text-gray-400 mb-6 max-w-xl mx-auto">
-				Our community is here to help! Join Discord for instant support.
+				Start on Discord. If it needs to become an issue, someone can point you to the right tracker or channel.
 			</p>
-			<a href="https://discord.gg/ksp2redux" target="_blank" class="btn-primary text-lg">
+			<a href="https://discord.gg/8yq8d5VGQR" target="_blank" rel="noopener noreferrer" class="btn-primary text-lg">
 				<svg class="w-5 h-5 inline-block mr-2" fill="currentColor" viewBox="0 0 24 24">
 					<path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
 				</svg>
-				Join Our Discord
+				Open Discord
 			</a>
 		</div>
 	</section>

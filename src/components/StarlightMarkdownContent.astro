@@ -1,0 +1,118 @@
+---
+import Default from '@astrojs/starlight/components/MarkdownContent.astro';
+
+import Cover from '../../node_modules/starlight-blog/components/Cover.astro';
+import PostTags from '../../node_modules/starlight-blog/components/PostTags.astro';
+import PrevNextLinks from '../../node_modules/starlight-blog/components/PrevNextLinks.astro';
+import { getEntryAuthors } from '../../node_modules/starlight-blog/libs/authors';
+import { getBlogEntry } from '../../node_modules/starlight-blog/libs/content';
+import { isAnyBlogPostPage } from '../../node_modules/starlight-blog/libs/page';
+
+const { id, locale } = Astro.locals.starlightRoute;
+const isBlogPost = isAnyBlogPostPage(id);
+
+let entry;
+let nextLink;
+let prevLink;
+let authors = [];
+let formattedDate = '';
+
+if (isBlogPost) {
+	({ entry, nextLink, prevLink } = await getBlogEntry(id, locale));
+	authors = getEntryAuthors(entry);
+	formattedDate = Astro.locals.t('starlightBlog.post.date', { date: entry.data.date });
+}
+---
+
+{
+	isBlogPost ? (
+		<Default>
+			{entry.data.cover && <Cover cover={entry.data.cover} />}
+			<div class="blog-post-meta-inline not-content">
+				<time datetime={entry.data.date.toISOString()}>{formattedDate}</time>
+				{
+					authors.length > 0 && (
+						<>
+							<span class="blog-post-meta-inline__separator">/</span>
+							<div class="blog-post-meta-inline__authors">
+								{authors.map((author, index) => (
+									<>
+										{index > 0 && <span class="blog-post-meta-inline__comma">, </span>}
+										{author.url ? (
+											<a href={author.url} class="blog-post-meta-inline__author">
+												{author.name}
+											</a>
+										) : (
+											<span class="blog-post-meta-inline__author">{author.name}</span>
+										)}
+									</>
+								))}
+							</div>
+						</>
+					)
+				}
+			</div>
+			<slot />
+			<div class="post-footer">
+				<PostTags entry={entry} {locale} />
+				<PrevNextLinks next={nextLink} prev={prevLink} />
+			</div>
+		</Default>
+	) : (
+		<Default>
+			<slot />
+		</Default>
+	)
+}
+
+<style>
+	.blog-post-meta-inline {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.35rem;
+		padding-bottom: 1.25rem;
+		margin-bottom: 1.5rem;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+		color: #9ca3af;
+		font-size: 0.95rem;
+	}
+
+	.blog-post-meta-inline time {
+		color: #9ca3af;
+	}
+
+	.blog-post-meta-inline__separator,
+	.blog-post-meta-inline__comma {
+		color: rgba(255, 255, 255, 0.24);
+	}
+
+	.blog-post-meta-inline__authors {
+		display: inline;
+	}
+
+	.blog-post-meta-inline__author {
+		color: #ffffff;
+		font-weight: 600;
+		text-decoration: none;
+	}
+
+	.blog-post-meta-inline__author:hover {
+		color: #ff7f6b;
+	}
+
+	.blog-post-meta-inline + :global(.sl-heading-wrapper.level-h1) {
+		margin-top: 0.75rem !important;
+	}
+
+	.blog-post-meta-inline + :global(.sl-heading-wrapper.level-h1) h1 {
+		margin-top: 0 !important;
+	}
+
+	.post-footer {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		margin-block-start: 2rem !important;
+	}
+</style>

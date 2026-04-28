@@ -3,7 +3,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 
-import { latestVersion, releaseDate } from '../assets/version.json';
+import { latestVersion, releaseDate, roadmapCurrentMilestoneId, roadmapMilestones, roadmapStats } from '../data/data';
 
 // Format the release date
 const formattedDate = new Date(releaseDate).toLocaleDateString('en-US', {
@@ -11,6 +11,8 @@ const formattedDate = new Date(releaseDate).toLocaleDateString('en-US', {
 	month: 'long',
 	day: 'numeric'
 });
+
+const currentMilestone = roadmapMilestones.find((milestone) => milestone.id === roadmapCurrentMilestoneId);
 ---
 
 <!DOCTYPE html>
@@ -19,33 +21,50 @@ const formattedDate = new Date(releaseDate).toLocaleDateString('en-US', {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>KSP2 Redux</title>
-	<meta name="description" content="KSP2 Redux is a free, community-made mod for the game Kerbal Space Program 2, aiming to implement most of the features promised by the original developers.">
+	<meta name="description" content="KSP2 Redux is a community-made continuation patch for Kerbal Space Program 2, focused on bug fixes, performance work, and unfinished systems.">
 	<link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
 <body class="bg-space-black text-white">
 	<Header />
 
-	<!-- Masthead -->
-	<section class="relative pt-32 pb-16 overflow-hidden">
+	<section class="page-hero pt-32 pb-16">
 		<div class="absolute inset-0 z-0" style="background-image: url('/background.png'); background-size: cover; background-position: center;"></div>
 		<div class="absolute inset-0 z-0 bg-gradient-to-r from-space-black via-space-black/70 to-space-black/10"></div>
 		<div class="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-transparent to-space-black"></div>
 
 		<div class="section-container relative z-10">
-			<div class="max-w-3xl">
-				<h1 class="text-5xl md:text-7xl font-heading font-extrabold mb-6">
-					<span class="text-ksp-red font-logo">KSP2 Redux</span>
+			<div class="max-w-4xl">
+				<h1 class="page-title">
+					KSP2
+					<span>Redux</span>
 				</h1>
 
-				<p class="text-lg md:text-xl text-gray-300 mb-6 leading-relaxed">
+				<p class="page-intro">
 					KSP2 Redux is a free, community-made mod for the game <strong class="text-white">Kerbal Space Program 2</strong>,
 					aiming to implement most of the features promised by the original developers.
 				</p>
 
-				<p class="text-sm text-gray-500 mb-8">
-					Current Version <span class="text-gray-300 font-semibold">{latestVersion}</span>
-					<span class="text-gray-600 mx-2">·</span>
-					<span>{formattedDate}</span>
+				<div class="page-facts">
+					<div class="page-fact">
+						<span class="page-fact__label">Current build</span>
+						<strong>{latestVersion}</strong>
+					</div>
+					<div class="page-fact">
+						<span class="page-fact__label">Current phase</span>
+						<strong>{currentMilestone?.title ?? 'Foundation'}</strong>
+					</div>
+					<div class="page-fact">
+						<span class="page-fact__label">Bug fixes</span>
+						<strong>{roadmapStats.bugFixCount}</strong>
+					</div>
+					<div class="page-fact">
+						<span class="page-fact__label">Performance changes</span>
+						<strong>{roadmapStats.performanceCount}</strong>
+					</div>
+				</div>
+
+				<p class="text-sm text-gray-500 mt-6 mb-8">
+					Latest public build from <span class="text-gray-300 font-semibold">{formattedDate}</span>
 				</p>
 
 				<div class="flex flex-wrap gap-3">
@@ -54,6 +73,9 @@ const formattedDate = new Date(releaseDate).toLocaleDateString('en-US', {
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
 						</svg>
 						Download
+					</a>
+					<a href="/roadmap" class="btn-secondary">
+						Roadmap
 					</a>
 					<a href="/guides" class="btn-secondary">
 						<svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,95 +88,62 @@ const formattedDate = new Date(releaseDate).toLocaleDateString('en-US', {
 		</div>
 	</section>
 
-	<!-- Features Section -->
 	<section class="section-container py-16">
-		<div class="max-w-5xl">
-			<h2 class="text-sm font-heading font-semibold uppercase tracking-[0.2em] text-gray-400 mb-3">Redux Features</h2>
-			<div class="h-px bg-gradient-to-r from-ksp-red via-ksp-red/30 to-transparent mb-12"></div>
+		<div class="page-section-heading">
+			<h2>What Redux is currently working on</h2>
+			<p>
+				The project is still in the Foundation stage, so most of the current work is practical: fewer broken missions,
+				better FPS, more user-friendly UI, and systems that other features can build on later.
+			</p>
+		</div>
 
-			<dl class="grid grid-cols-1 md:grid-cols-[14rem_1fr] gap-x-10 gap-y-10">
-				<dt class="text-xl font-heading font-semibold text-white md:text-right">Performance Improvements</dt>
-				<dd class="text-gray-400 md:border-l md:border-white/10 md:pl-10">
-					Reworked rendering, ECS/Burst, and memory handling push frame rates 30-56% above stock.
-				</dd>
-
-				<dt class="text-xl font-heading font-semibold text-white md:text-right">Bug Fixes</dt>
-				<dd class="text-gray-400 md:border-l md:border-white/10 md:pl-10">
-					Hundreds of stock bugs patched, covering physics glitches, UI errors, and the game-breakers.
-				</dd>
-
-				<dt class="text-xl font-heading font-semibold text-white md:text-right">Planned Features</dt>
-				<dd class="text-gray-400 md:border-l md:border-white/10 md:pl-10">
-					Colonies, resource management, interstellar travel, and multiplayer are all planned. These are the features KSP2 was originally meant to ship with.
-				</dd>
-
-				<dt class="text-xl font-heading font-semibold text-white md:text-right">Modding Support</dt>
-				<dd class="text-gray-400 md:border-l md:border-white/10 md:pl-10">
-					A Unity Editor-based SDK, so mods can be built and iterated inside the engine instead of reloading the game.
-				</dd>
-
-				<dt class="text-xl font-heading font-semibold text-white md:text-right">The Team</dt>
-				<dd class="text-gray-400 md:border-l md:border-white/10 md:pl-10">
-					Built by volunteer KSP2 modders on their own time, shaped by what the community actually asks for.
-				</dd>
-
-				<dt class="text-xl font-heading font-semibold text-white md:text-right">Debug Tools</dt>
-				<dd class="text-gray-400 md:border-l md:border-white/10 md:pl-10">
-					In-game debug windows for vessel info, science, teleportation, and Kerbal management.
-				</dd>
-			</dl>
+		<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+			<article class="card-glass">
+				<h3 class="text-2xl font-heading font-bold mb-3">Performance</h3>
+				<p class="text-gray-300 leading-7">
+					A lot of the work so far has gone into rendering, simulation, and memory use. The exact gain depends on the scene and hardware, but this is one of the main priorities.
+				</p>
+			</article>
+			<article class="card-glass">
+				<h3 class="text-2xl font-heading font-bold mb-3">Bug fixing</h3>
+				<p class="text-gray-300 leading-7">
+					Redux has already accumulated {roadmapStats.bugFixCount} bug fixes across flight behavior, map view, missions, save handling, UI problems, and other stock issues.
+				</p>
+			</article>
+			<article class="card-glass">
+				<h3 class="text-2xl font-heading font-bold mb-3">Roadmap systems</h3>
+				<p class="text-gray-300 leading-7">
+					Some Foundation work is directly tied to later roadmap stages, including heat, vessel ISRU, tech tree work, and the colony-related systems that depend on them.
+				</p>
+			</article>
+			<article class="card-glass">
+				<h3 class="text-2xl font-heading font-bold mb-3">Modding support</h3>
+				<p class="text-gray-300 leading-7">
+					The modding side is moving toward a Unity Editor workflow so Redux-native mods can be built and iterated without relying on the older, slower setup.
+				</p>
+			</article>
+			<article class="card-glass">
+				<h3 class="text-2xl font-heading font-bold mb-3">Debugging tools</h3>
+				<p class="text-gray-300 leading-7">
+					We have added in-game tools for things like missions, vessel state, science, teleportation, and Kerbal management, which helps both development and bug reporting.
+				</p>
+			</article>
+			<article class="card-glass">
+				<h3 class="text-2xl font-heading font-bold mb-3">Volunteer project</h3>
+				<p class="text-gray-300 leading-7">
+					This project is being built by modders in their spare time. If you want to help, the best way is to join the Discord and ask how you can contribute!
+				</p>
+			</article>
 		</div>
 	</section>
 
-	<!-- Showcase Section -->
-	<!-- <section class="bg-gradient-to-b from-space-black to-ksp-blue py-20">
-		<div class="section-container">
-			<div class="text-center mb-16">
-				<h2 class="text-4xl md:text-5xl font-heading font-bold mb-4">
-					See It in <span class="text-ksp-red">Action</span>
-				</h2>
-				<p class="text-gray-400 text-lg max-w-2xl mx-auto">
-					Watch how Redux transforms your Kerbal experience.
-				</p>
-			</div>
-
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-				<div class="card-glass">
-					<div class="aspect-video bg-gray-800 rounded-lg mb-4 flex items-center justify-center">
-						<span class="text-gray-500 text-lg">Before Redux</span>
-					</div>
-					<h3 class="text-lg font-semibold mb-2">Vanilla KSP2</h3>
-					<p class="text-gray-400 text-sm">Average 35 FPS with frequent stuttering</p>
-				</div>
-
-				<div class="card-glass">
-					<div class="aspect-video bg-gray-800 rounded-lg mb-4 flex items-center justify-center">
-						<span class="text-ksp-red text-lg font-semibold">After Redux</span>
-					</div>
-					<h3 class="text-lg font-semibold mb-2">KSP2 Redux</h3>
-					<p class="text-gray-400 text-sm">Consistent 60+ FPS with smooth gameplay</p>
-				</div>
-			</div>
-
-			<div class="text-center">
-				<a href="/gallery" class="btn-primary">
-					View Full Gallery
-					<svg class="w-5 h-5 inline-block ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-					</svg>
-				</a>
-			</div>
-		</div>
-	</section> -->
-
-	<!-- Community CTA -->
 	<section class="section-container py-20">
 		<div class="card-glass text-center py-16">
 			<h2 class="text-4xl md:text-5xl font-heading font-bold mb-6">
-				Join the <span class="text-ksp-red">Community</span>
+				Where discussion happens
 			</h2>
 			<p class="text-gray-400 text-lg max-w-2xl mx-auto mb-8">
-				Connect with other players, share your creations, and help shape the future of KSP2 Redux.
+				Most testing coordination, bug reports, and day-to-day discussion happen on Discord. GitHub is the better place if you want releases, changelogs, or the issue tracker.
 			</p>
 			<div class="flex flex-col sm:flex-row gap-4 justify-center">
 				<a href="https://discord.gg/8yq8d5VGQR" target="_blank" class="btn-primary">
@@ -163,12 +152,13 @@ const formattedDate = new Date(releaseDate).toLocaleDateString('en-US', {
 					</svg>
 					Join Discord
 				</a>
-				<a href="https://github.com/KSP2Redux/Redux" target="_blank" class="btn-secondary">
+				<a href="https://github.com/KSP2Redux/Redux" target="_blank" rel="noopener noreferrer" class="btn-secondary">
 					<svg class="w-5 h-5 inline-block mr-2" fill="currentColor" viewBox="0 0 24 24">
 						<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
 					</svg>
-					View on GitHub
+					GitHub
 				</a>
+				<a href="/roadmap" class="btn-secondary">Roadmap</a>
 			</div>
 		</div>
 	</section>

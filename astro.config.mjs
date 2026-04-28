@@ -16,7 +16,7 @@ export default defineConfig({
 				authors: {
 					redux: {
 						name: 'Redux Team',
-						title: 'Developers of KSP2 Redux',
+						title: 'KSP2 Redux contributors',
 						picture: 'https://styles.redditmedia.com/t5_g4hm02/styles/communityIcon_rvtruzn4i47g1.png?width=128&frame=1&auto=webp&s=383d92582a7abb7f0a010604ed9625807cc24f82',
 					}
 				}
@@ -36,6 +36,8 @@ export default defineConfig({
 			components: {
 				Header: './src/components/Header.astro',
 				Footer: './src/components/Footer.astro',
+				Hero: './src/components/StarlightHero.astro',
+				MarkdownContent: './src/components/StarlightMarkdownContent.astro',
 			},
 			sidebar: [
 				{

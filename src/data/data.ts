@@ -1,6 +1,5 @@
-import fs from 'node:fs';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+export const latestVersion = 'v0.2.3 Beta 5 Hotfix 2';
+export const releaseDate = '2026-04-28';
 
 export type RoadmapMilestoneStatus = 'current' | 'planned';
 
@@ -31,64 +30,10 @@ export interface RoadmapStats {
 	performanceCount: number;
 }
 
-const moduleDir = path.dirname(fileURLToPath(import.meta.url));
-const changelogPath = path.resolve(moduleDir, '..', '..', '..', 'changelogs.md');
-
-function readChangelog(): string[] {
-	return fs.readFileSync(changelogPath, 'utf8').split(/\r?\n/);
-}
-
-function parseRoadmapStats(): RoadmapStats {
-	const lines = readChangelog();
-	let bugFixCount = 0;
-	let performanceCount = 0;
-	let inPlainFixSection = false;
-	let inPerformanceSection = false;
-
-	for (const rawLine of lines) {
-		const line = rawLine.trim();
-
-		if (/^Performance$|^# Performance$/.test(line)) {
-			inPerformanceSection = true;
-			inPlainFixSection = false;
-			continue;
-		}
-
-		if (/^Bug Fixes$|^Fixes$|^## Bug Fixes$|^## Fixes$/.test(line)) {
-			inPlainFixSection = true;
-			inPerformanceSection = false;
-			continue;
-		}
-
-		if (
-			/^(Known Issues|Mod Breaking Changes|Other|Improvements|Bug Fixes & QoL Improvements)$/.test(line) ||
-			/^# (Known Issues|Mod Breaking Changes|Redux Beta|v0\.)/.test(line) ||
-			/^## (Bug Fixes & QoL Improvements|New Content|Features)$/.test(line) ||
-			/^---$/.test(line)
-		) {
-			inPlainFixSection = false;
-			inPerformanceSection = false;
-		}
-
-		if (/^\s*[-*]\s+Fixed:/i.test(rawLine)) {
-			bugFixCount += 1;
-			continue;
-		}
-
-		if (inPlainFixSection && /^\s*[-*]\s+/.test(rawLine)) {
-			bugFixCount += 1;
-			continue;
-		}
-
-		if (inPerformanceSection && /^\s*[-*]\s+/.test(rawLine)) {
-			performanceCount += 1;
-		}
-	}
-
-	return { bugFixCount, performanceCount };
-}
-
-export const roadmapStats = parseRoadmapStats();
+export const roadmapStats: RoadmapStats = {
+	bugFixCount: 148,
+	performanceCount: 34,
+};
 
 export const roadmapMilestones: RoadmapMilestone[] = [
 	{
