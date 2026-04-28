@@ -1,0 +1,74 @@
+---
+title: "SAS Improvements"
+date: 2026-04-28T13:00:00Z
+author: "Infinity"
+description: "Overview of the SAS improvements in KSP2 Redux"
+---
+
+Hello all, I thought I'd write a quick blog post summarizing the main changes that we've done to SAS in KSP2 Redux, as I think it'd make for an interesting semi-technical overview.
+
+## Background
+
+You might think that we could've just ripped KSP1's SAS system into KSP2, but that approach would not have worked, mainly given that the core of the SAS logic in KSP2 is the same algorithm as it is in KSP1.
+
+So then, why is SAS so stable in KSP1 while it is in KSP2, if the core is the same?
+
+The simple answer is, it has to do with how data is fed into the SAS system, and how its outputs are applied to the controls, there has to be differences in there, maybe the data coming in is stale, or maybe the outputs are being applied differently. And this is what guided our changes and our investigations into the differences in the 3 main passes we looked into the SAS system.
+
+## Pass 1 - First Misguided Attempts
+
+When I was first looking into the SAS differences, I started trying to look at how the outputs were applied, and I made the mistaken assumption that the SAS outputs were somehow going through Unity's input system, and as such the outputs were being smoothed in a way that they weren't in KSP2, so I tried replicating that input system to see if it improved this. The replication itself just made all the inputs feel sluggish and not fun to play with, and it did not even fix the issues with SAS in the first place, as such these changes were scrapped.
+
+Though, I'm still mentioning this because one improvement did come out of this pass of looking at it, the stability improvements for command pods/probe cores that are the sole part of a vessel. Essentially, what was going on there was that the moment of inertia calculations for a single part were using unity's own moment of inertia calculations directly, while every other case would apply some form of scaling to the moment of inertia based off of mass, so what I did here was just mirror the mass scaling for this case.
+
+## Pass 2 - Telemetry and other Improvements
+
+**Main Article:** [SAS, Flight Input, and Precision Mode](/blog/sas-and-input-update/)
+
+For this pass, we looked deeper into how the algorithm worked, and the data that is being fed into it, and there were 3 main things we noticed and subsequently fixed for Beta 5.
+
+1. _Coasting Logic_
+    The coasting logic in KSP2 was worse than KSP1 at predicting overshoots.
+2. _SAS Update Order_
+    The SAS commands were being sent out to the modules after
+    the modules had updated their state for the frame, meaning they'd be applied later than before.
+3. _Telemetry Data_
+    The telemetry data being fed to the SAS was in the Update loop, meaning during time warp it would not be fresh, leading to stability issues
+
+(More information on these changes can be found in the main article by Munix)
+
+## Pass 3 - Rigidbody Update Changes
+
+The prior changes still weren't enough to bring the SAS on par with KSP1's performance and stability, so we decided to look further into it to see anything else that could be an issue, again focusing on the inputs to the SAS system, and where the outputs are going. By comparing this to KSP1, we found one *crucial* difference, which will require a bit of explanation.
+
+### ITorque
+
+KSP2 Introduced interfaces for parts that apply torque and other forces to the main rigidbody that were not present in KSP1, in KSP1 all parts did these on their own immediately in their update cycle.
+
+This change was part of what introduced the instability that this pass fixed, as this torque was no longer being applied immediately.
+
+### The Rigidbody Update Behaviour
+
+So when was it being applied? During the RigidbodyBehaviour's OnFixedUpdate method near the beginning of a physics update. The entire relevant loop, including other modules, looking something like
+
+0. Begin the physics update
+1. Copy Unity's Rigidbody state into the data used for the simulation
+2. Write back the current torque being provided by ITorque components and other forces to the Unity Rigidbody
+3. Use the data copied in step 1 to update the SAS commands (SAS module)
+4. Use the SAS commands to update part torque output (Parts with ITorque)
+5. End the physics update
+
+As can be seen in the loop, the actual torque output was not being applied until the next frame *and* the SAS was getting data fed into it that was read before these outputs were applied, so it had stale data and an output lag.
+
+### The Fix
+
+The fix to this was quite simple, we just had to give the RigidbodyBehaviour 2 slots in the update cycle, rather than just one, keeping the early update for reading the data into the simulation state, then applying the outputs later in the cycle when everything has had a chance to update their torque and other physics outputs.
+
+Meaning that the new correct loop in Beta 5 Hotfix 2 looks something like:
+
+0. Begin the physics update
+1. Copy Unity's Rigidbody state into the data used for the simulation
+2. Use the data copied in step 1 to update the SAS commands (SAS module)
+3. Use the SAS commands to update part torque output (Parts with ITorque)
+4. Write back the current torque being provided by ITorque components and other forces to the Unity Rigidbody
+5. End the physics update
