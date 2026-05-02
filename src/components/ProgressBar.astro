@@ -79,7 +79,7 @@ const percent = ((clampedValue - min) / range) * 100;
 		width: 0;
 		height: 100%;
 		border-radius: inherit;
-		background: linear-gradient(90deg, #5faef5 0%, #df1601 100%);
+		background: var(--progress-fill, #df1601);
 		transition: width 1.1s cubic-bezier(0.2, 0.9, 0.25, 1);
 	}
 

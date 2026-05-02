@@ -13,7 +13,6 @@ import {
 
 const currentMilestoneIndex = roadmapMilestones.findIndex((milestone) => milestone.id === roadmapCurrentMilestoneId);
 const currentMilestone = roadmapMilestones[currentMilestoneIndex];
-const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 ---
 
 <!DOCTYPE html>
@@ -24,7 +23,7 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 	<title>Roadmap - KSP2 Redux</title>
 	<meta
 		name="description"
-		content="See what KSP2 Redux has already shipped, what the team is working on now, and where the project is headed next."
+		content="See what features KSP2 Redux already has, what we are working on, and what the long-term plans are."
 	>
 	<link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
@@ -70,19 +69,9 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 		<div class="roadmap-panel card-glass">
 			<div class="roadmap-panel__top">
 				<div class="roadmap-panel__copy">
-					<p class="roadmap-panel__eyebrow">Current focus</p>
+					<p class="roadmap-panel__eyebrow">In progress</p>
 					<h2>{currentMilestone.label}: {currentMilestone.title}</h2>
 					<p>{currentMilestone.summary}</p>
-				</div>
-
-				<div class="roadmap-panel__aside">
-					<div class="roadmap-panel__status">In progress</div>
-					{nextMilestone && (
-						<a class="roadmap-panel__next" href={`#${nextMilestone.id}`}>
-							<span>Next step</span>
-							<strong>{nextMilestone.title}</strong>
-						</a>
-					)}
 				</div>
 			</div>
 
@@ -302,10 +291,7 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 	}
 
 	.roadmap-panel__top {
-		display: grid;
-		grid-template-columns: minmax(0, 1.6fr) minmax(16rem, 0.7fr);
-		gap: 1.25rem;
-		align-items: start;
+		max-width: 52rem;
 	}
 
 	.roadmap-panel__eyebrow {
@@ -330,59 +316,13 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 		line-height: 1.8;
 	}
 
-	.roadmap-panel__aside {
-		display: grid;
-		gap: 0.9rem;
-	}
-
-	.roadmap-panel__status,
-	.roadmap-panel__next {
-		display: block;
-		padding: 1rem 1.1rem;
-		border: 1px solid rgba(255, 255, 255, 0.08);
-		border-radius: 1rem;
-		background: rgba(255, 255, 255, 0.03);
-	}
-
-	.roadmap-panel__status {
-		color: #ffb3a8;
-		font-size: 0.95rem;
-		font-weight: 700;
-	}
-
-	.roadmap-panel__next span {
-		display: block;
-		color: #9ca3af;
-		font-size: 0.75rem;
-		font-weight: 700;
-		letter-spacing: 0.16em;
-		text-transform: uppercase;
-	}
-
-	.roadmap-panel__next strong {
-		display: block;
-		margin-top: 0.45rem;
-		color: #ffffff;
-		font-size: 1.05rem;
-		line-height: 1.4;
-	}
-
-	.roadmap-panel__next:hover {
-		border-color: rgba(95, 174, 245, 0.28);
-		background: rgba(255, 255, 255, 0.05);
-	}
-
-	.roadmap-panel__next:focus-visible {
-		outline: 2px solid rgba(95, 174, 245, 0.8);
-		outline-offset: 3px;
-	}
-
 	.roadmap-track {
 		margin-top: 2rem;
 	}
 
 	.roadmap-track__progress {
 		display: block;
+		--progress-fill: #df1601;
 	}
 
 	.roadmap-track__stops {
@@ -399,9 +339,9 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 	}
 
 	.roadmap-track__link {
-		display: grid;
-		justify-items: center;
-		gap: 0.45rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 		min-width: 0;
 		text-align: center;
 		text-decoration: none;
@@ -410,6 +350,7 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 	.roadmap-track__dot {
 		width: 0.95rem;
 		height: 0.95rem;
+		margin-bottom: 0.9rem;
 		border-radius: 999px;
 		background: #24313d;
 		border: 3px solid #10151b;
@@ -417,7 +358,7 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 	}
 
 	.roadmap-track__stop--done .roadmap-track__dot {
-		background: #7ec2ff;
+		background: #9ca3af;
 	}
 
 	.roadmap-track__stop--current .roadmap-track__dot {
@@ -426,14 +367,18 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 	}
 
 	.roadmap-track__stage {
+		display: block;
+		margin-bottom: 0.08rem;
 		color: #f3f4f6;
 		font-size: 0.74rem;
 		font-weight: 700;
+		line-height: 1.15;
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
 	}
 
 	.roadmap-track__name {
+		display: block;
 		color: #9ca3af;
 		font-size: 0.93rem;
 		line-height: 1.4;
@@ -446,11 +391,11 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 	}
 
 	.roadmap-track__link:hover .roadmap-track__dot {
-		box-shadow: 0 0 0 5px rgba(95, 174, 245, 0.12);
+		box-shadow: 0 0 0 5px rgba(223, 22, 1, 0.12);
 	}
 
 	.roadmap-track__link:focus-visible {
-		outline: 2px solid rgba(95, 174, 245, 0.8);
+		outline: 2px solid rgba(223, 22, 1, 0.8);
 		outline-offset: 6px;
 		border-radius: 0.75rem;
 	}
@@ -465,7 +410,7 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 	.roadmap-mobile-list__item {
 		display: grid;
 		grid-template-columns: 1rem 1fr;
-		gap: 0.9rem;
+		gap: 1.1rem;
 		align-items: start;
 		padding: 0.4rem 0 0.9rem 1rem;
 		text-decoration: none;
@@ -483,7 +428,7 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 	}
 
 	.roadmap-mobile-list__item--done .roadmap-mobile-list__dot {
-		background: #7ec2ff;
+		background: #9ca3af;
 	}
 
 	.roadmap-mobile-list__item--current .roadmap-mobile-list__dot {
@@ -496,12 +441,13 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 		color: #f3f4f6;
 		font-size: 0.74rem;
 		font-weight: 700;
+		line-height: 1.15;
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
 	}
 
 	.roadmap-mobile-list__title {
-		margin: 0.25rem 0 0;
+		margin: 0.1rem 0 0;
 		color: #9ca3af;
 		font-size: 0.98rem;
 		line-height: 1.45;
@@ -513,7 +459,7 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 	}
 
 	.roadmap-mobile-list__item:focus-visible {
-		outline: 2px solid rgba(95, 174, 245, 0.8);
+		outline: 2px solid rgba(223, 22, 1, 0.8);
 		outline-offset: 0.25rem;
 		border-radius: 0.75rem;
 	}
@@ -526,10 +472,7 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 	}
 
 	.roadmap-foundation__item {
-		padding: 1.25rem;
-		border: 1px solid rgba(255, 255, 255, 0.08);
-		border-radius: 1rem;
-		background: rgba(255, 255, 255, 0.03);
+		padding: 0;
 	}
 
 	.roadmap-foundation__item h3,
@@ -615,8 +558,8 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 		background: linear-gradient(
 			180deg,
 			rgba(223, 22, 1, 0.45) 0%,
-			rgba(95, 174, 245, 0.28) 18%,
-			rgba(95, 174, 245, 0.14) 100%
+			rgba(156, 163, 175, 0.28) 22%,
+			rgba(156, 163, 175, 0.12) 100%
 		);
 		pointer-events: none;
 	}
@@ -660,10 +603,10 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 		justify-content: center;
 		width: fit-content;
 		padding: 0.55rem 0.9rem;
-		border: 1px solid rgba(156, 207, 255, 0.22);
+		border: 1px solid rgba(156, 163, 175, 0.28);
 		border-radius: 999px;
-		background: rgba(88, 187, 255, 0.08);
-		color: #d8efff;
+		background: rgba(156, 163, 175, 0.08);
+		color: #e5e7eb;
 		font-size: 0.8rem;
 		font-weight: 700;
 		letter-spacing: 0.12em;
@@ -697,9 +640,9 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 	.milestone-row__note {
 		margin: 1rem 0 0;
 		padding: 0.85rem 1rem;
-		border-left: 3px solid rgba(95, 174, 245, 0.55);
+		border-left: 3px solid rgba(156, 163, 175, 0.45);
 		border-radius: 0.9rem;
-		background: rgba(95, 174, 245, 0.08);
+		background: rgba(156, 163, 175, 0.06);
 	}
 
 	.milestone-row__sections {
@@ -710,10 +653,7 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 	}
 
 	.milestone-row__section {
-		padding: 1.1rem 1.15rem;
-		border: 1px solid rgba(255, 255, 255, 0.08);
-		border-radius: 1rem;
-		background: rgba(255, 255, 255, 0.03);
+		padding: 0;
 	}
 
 	.milestone-row__section p {
@@ -725,7 +665,6 @@ const nextMilestone = roadmapMilestones[currentMilestoneIndex + 1];
 			left: 50%;
 		}
 
-		.roadmap-panel__top,
 		.implemented-grid,
 		.milestone-row,
 		.milestone-row__sections {
