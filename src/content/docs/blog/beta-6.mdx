@@ -1,0 +1,226 @@
+---
+title: "v0.2.3 Beta 6"
+date: 2026-05-17
+author: "munix"
+description: "The sixth prerelease beta of Redux v0.2.3 has been released."
+---
+
+# v0.2.3 Beta 6
+We have just released the 6th beta of KSP2 Redux, which adds a large batch of new parts including SM+ decouplers, boosters, command pod, probe cores, cameras and decals, EVA parachutes, vessel categories and map icons, KSP1-style orbital camera behavior, expanded maneuver node controls, campaign flag changing, supersampling, major SDK tooling improvements, a Lua-powered Patch Manager rewrite, and as always, a ton of bugfixes and quality-of-life improvements.
+
+**To install, use the** [**Redux Updater app**](https://github.com/KSP2Redux/Updater/releases/latest)**, do not download any files from this page manually.**
+
+## New Content
+
+### Parts and tech tree
+
+* Added: Inline SM+ stack decoupler
+* Added: Inline SM+ stack separator
+* Added: SM+ solid rocket booster
+* Added: XS "Shrimp" solid rocket booster
+* Added: XS "Mantis" solid rocket booster
+* Added: SM+ conical crew pod
+* Added: SM+ inline probe core
+* Added: SM+ octagonal probe core
+* Added: Radial and downward camera parts
+* Added: Sticker decal part
+* Added: New camera tech node and updated SM+ tech tree placement
+* Updated: SM+ fuel tank and adapter models and textures
+* Updated: Bobcat and Cheetah engine models and textures
+* Updated: Bobcat and Cheetah engines now have shrouds
+* Updated: Bobcat and Cheetah engines now have audio
+* Updated: All Redux parts now have reentry meshes
+* Updated: Fairings now have an optional interstage node
+
+### Flight and Map
+
+* Added: EVA parachutes, including gliding, agency colors, and external seat support
+* Added: Aerodynamic stress now breaks deployed parts
+* Added: Vessel categories and icons for map/tracking station identity
+* Added: KSP1-style celestial (orbital) camera behavior
+* Added: Maneuver nodes can be added and edited while paused
+* Added: Scroll wheel precision input for maneuver gizmos
+* Added: Notifications when toggling normal and precision flight input modes
+* Added: Notifications when trim is applied or reset
+* Updated: Time warp limits are no longer applied in safe orbits
+* Updated: Physics warp status text and color now change when physics warp is enabled
+* Updated: Flags planted before updating the campaign flag now retain their original flag design
+
+### EVA
+
+* Added: Helmet toggling is available on oxygen worlds and in command pods
+
+### Science
+
+* Added: Stored research reports are now shown in the flight report window
+* Updated: Lowered minimum science rewards difficulty option to 10%
+
+### Missions
+
+* Added: Gateway tier 1 mission triumph video
+
+### UI/UX
+
+* Added: You can now change the campaign flag in the Settings menu
+* Added: "Advanced Editor" toggle in the Part Manager and Settings menu, with advanced part module actions moved behind it
+* Added: "Remove from symmetry" advanced part action
+* Added: "Add to Staging" toggle for docking ports
+* Added: "Preview Deployment" action for science parts in the VAB
+* Added: Mouse wheel scrolling in the R&D Center
+* Added: Color Manager tooltips
+* Updated: Mission Tracker button moved to the main VAB app bar
+* Updated: Bug Reporter is now localized
+
+### Graphics
+
+* Added: Supersampling setting for flight and VAB (improves anti-aliasing and visual quality at the cost of performance)
+
+## Bug Fixes & QoL Improvements
+
+### Construction
+
+* Fixed: VAB symmetry preview ghosts
+* Fixed: Radially attached symmetry parts creating empty stages
+* Fixed: Improved performance when placing parts (caused by staging updates during VAB change processing)
+* Fixed: Stage reordering bug
+* Fixed: Symmetry issues when docking vessels
+* Fixed: Vessel combination is now atomic during docking
+* Fixed: Symmetry interfering with action group deployment
+* Fixed: Copying a part not copying its resources
+* Fixed: Procedural wings not recalculating mass in the VAB
+* Fixed: Undo reverting the VAB camera to the root part
+* Fixed: VAB part finalization/tracking null references during loading
+* Fixed: Fairing construction being laggy in snap mode
+* Fixed: Fairing construction snapping outside snap mode
+* Fixed: Fairing snapping to the wrong diameter when adding a new segment
+* Fixed: Fairing material issues with transparent base colors
+* Fixed: Strut configurations causing launch explosions or VAB crashes
+* Fixed: Radiator extension and activation are now separate toggles
+* Fixed: Thermal tab missing from the Action Group Manager
+* Fixed: Color Manager preset bugs
+* Fixed: Docking ports, decouplers and abort action staging behavior in several edge cases
+
+### EVA
+
+* Fixed: Kerbal and sample container animations getting out of sync during time warp
+* Fixed: Kerbal ground checks causing null references
+
+### Flight and Map
+
+* Fixed: SAS/telemetry edge cases and wheel torque axis mismatch on rotated multi-wheel vessels
+* Fixed: Out-of-fuel maneuver duration calculation
+* Fixed: Maneuver nodes desyncing after thrust limiter changes
+* Fixed: Map raycasts when transform syncing is needed
+* Fixed: KSC entry breaking in the tracking station list after renaming vessels
+* Fixed: Decoupling/undocking assigning focus to the debris part via heuristic
+* Fixed: Cheat menu null reference during docking with the rendezvous menu open
+* Fixed: Kerbol shining through Kerbin
+* Fixed: Jool and Eve clouds being too bright
+* Fixed: Discord Rich Presence timer resetting when state changes
+* Fixed: Discord Rich Presence errors before a vessel is fully initialized
+* Fixed: Discord Rich Presence does not update when recovering a vessel
+* Fixed: Vessel validity checks in simulation
+* Fixed: Disposed removed portrait culling groups
+
+### Parts and Thermal
+
+* Fixed: Thermal system and heat shield tuning issues
+* Fixed: Parachute deployment forecast making parachutes deploy too early and bypassing the Risky state
+* Fixed: Active radiators disabling cooler/device state incorrectly
+* Fixed: Incorrect lifetime checks for Module_Color
+* Fixed: Deployable, fairing, engine, RCS, reaction wheel, wheel and science module edge cases
+* Fixed: Bobcat and Cheetah engine setup issues
+
+### Science, Tutorials and Missions
+
+* Fixed: "Mun or Bust" completing at the wrong apoapsis
+* Fixed: Pol's Midlands experiments not being localized
+* Fixed: Crashing into Laythe ocean not being detected as a crash for mission objectives
+
+### UI/UX
+
+* Fixed: UI locks getting stuck after windows close
+* Fixed: UITK tooltip positioning and added more tooltip options
+* Fixed: Flag Site UI z-index, button localization and title styling
+* Fixed: Statistics module preventing revert to VAB
+* Fixed: Statistics manager errors when loading non-campaign saves
+* Fixed: Engineer Report icons now load asynchronously and cache sprites
+* Fixed: Bug Reporter localization coverage
+* Fixed: Chinese, Japanese and Korean font replacement null reference safeguards
+* Fixed: Various common null references and loading-state errors
+* Fixed: Color manager title spacing issues
+* Fixed: Color manager button text overflowing in some languages
+
+## Modding Support
+
+### SDK
+
+* Added: Part icon generation editor tooling including presets and category defaults
+* Added: Drag cube generation and visualization
+* Added: Reentry mesh generation and visualization
+* Added: Improved and simplified Plume editor (one-click VFX object gathering based on sub-plume hints)
+* Added: Part size registry and revised legacy part-size handling
+* Added: Fairing shroud preview in the editor
+* Added: Paintable shader custom editor
+* Added: Interaction presets, airlock and ladder interactions
+* Added: Unity Audio setup for modding and part audio preset authoring tools
+* Updated: Debug Tools bookmarks, including reentry testing bookmarks
+
+### Patch Manager
+
+* Updated: Patch Manager rewritten to use Lua scripting
+* Added: Fluent Patch Manager APIs and improved diagnostics
+* Added: Generated Lua stubs for IntelliSense/autocompletion support
+* Visual Studio Code extension for Patch Manager: <https://marketplace.visualstudio.com/items?itemName=infinity-sys.pm-lua>)
+* Added: Patch passes and config values for patches
+* Added: Additional Lua selection helpers and V-SwiFT stubs
+* Added: Audio preset patching support
+* Added: Per-part PAM hiding flags
+* Updated: Improved patch ordering, caching, cache invalidation and summary/error reporting
+* Updated: Reduced Patch Manager overhead by removing extra JSON round trips and improving hot paths
+* Fixed: Improved Patch Manager performance and reduced unnecessary allocations
+
+### SpaceWarp and Redux-Lib
+
+* Added: REPL support to the SpaceWarp console
+* Updated: Reworked SpaceWarp console layout and styles
+* Updated: Config registration now uses the new config system across Redux-Lib and SpaceWarp
+* Added: Internal-only config value support
+
+### V-SwiFT
+
+* Updated: Variant swaps are now tracked in VAB history
+* Updated: Material and variant handling for Shakespeare/imported parts
+* Fixed: V-SwiFT swapping parts back to the default variant
+* Fixed: Flight-state transform activation
+* Fixed: V-SwiFT VAB attach-node and Patch Manager integration issues
+
+### UITK for KSP2
+
+* Added: AppShell control for unified window layout and theming
+* Added: C# dialog API and updated dialog styles
+* Added: Window resizing, draggable handle support and better game-input blocking
+* Added: Tooltip localization and automatic text resizing support
+* Added: Uppercase localization converter and converter API updates
+* Added: Moved shared Redux UI components into UitkForKsp2 for modders
+
+### Project Shakespeare / KSP1 Import
+
+* Added: Category list is now scrollable when overflowing
+* Added: Attachment node symmetry support
+* Updated: Improved KSP1 part import performance during loading
+* Updated: Improved KSP1 part performance in the VAB
+* Updated: Improved attachment node size and bulkhead size handling
+* Updated: Cached KSP1 textures by resolved file name
+* Updated: Faster texture loading/compression paths and reduced VRAM pressure
+* Updated: Improved plume scaling
+* Fixed: Reduced large allocations from file reads
+* Fixed: Part variants resetting
+* Fixed: Imported part resource lookup and user data module adaptation issues
+
+## Mod Breaking Changes
+
+* Patch Manager scripting was rewritten to use Lua. All existing patches will need to be rewritten in Lua, but the new system is more powerful and easier to learn.
+* Config registration was moved to the newer Redux/SpaceWarp config system. Mods using low-level config registration APIs may need to update.
+* UitkForKsp2 package names, namespaces, assemblies and theme structure were reorganized. Mods directly referencing old control namespaces or theme paths may need updates.
+* Part size handling was revamped. Mods or patches relying on old legacy part sizes should update their part metadata.
