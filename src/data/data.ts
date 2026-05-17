@@ -1,5 +1,5 @@
-export const latestVersion = 'v0.2.3 Beta 5 Hotfix 2';
-export const releaseDate = '2026-04-28';
+export const latestVersion = 'v0.2.3 Beta 6';
+export const releaseDate = '2026-05-17';
 
 export type RoadmapMilestoneStatus = 'current' | 'planned';
 
