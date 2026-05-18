@@ -31,8 +31,8 @@ export interface RoadmapStats {
 }
 
 export const roadmapStats: RoadmapStats = {
-	bugFixCount: 148,
-	performanceCount: 34,
+	bugFixCount: 204,
+	performanceCount: 40,
 };
 
 export const roadmapMilestones: RoadmapMilestone[] = [
@@ -185,9 +185,10 @@ export const roadmapFeatureGroups: RoadmapFeatureGroup[] = [
 		summary:
 			'A lot of work has already gone into flight reliability, map view behavior, and the kinds of errors that can ruin an otherwise normal mission.',
 		bullets: [
-			'Map view and camera behavior have been cleaned up in a lot of frustrating edge cases.',
-			'SAS, warp handling, targeting, and vessel state changes have all seen practical fixes.',
-			'Long missions benefit from fewer surprises and better feedback while you are actually piloting.',
+			'Map view and camera behavior have been cleaned up in a lot of frustrating edge cases, including new KSP1-style orbital camera behavior.',
+			'SAS stability, time warp behavior, targeting, and vessel state changes have been fixed in several edge cases, along with new vessel categories and icons in the map and tracking station.',
+			'Maneuver nodes can now be added and edited while paused, with scroll-wheel precision input for maneuver gizmos.',
+			'Flight controls now show notifications when precision input mode changes and when trim is applied or reset.',
 		],
 	},
 	{
@@ -198,6 +199,7 @@ export const roadmapFeatureGroups: RoadmapFeatureGroup[] = [
 		bullets: [
 			'There is now an in-game bug reporter, better search in the part picker, and more consistent UI styling.',
 			'Redux has added things like an improved color manager with presets, better orbital info panel, better notifications, and cleaner loading flows.',
+			'Various parts of the UI have been improved or completely reworked in the flight view, map view, tracking station, VAB and R&D Center.',
 			'We are also gradually working on unifying the UI style and replacing the inconsistent stock UI with our own versions.',
 		],
 	},
@@ -205,11 +207,12 @@ export const roadmapFeatureGroups: RoadmapFeatureGroup[] = [
 		id: 'content-and-presentation',
 		title: 'New content',
 		summary:
-			'Even at this stage, the work is not limited to fixes. New missions, parts, and visual changes have already been added.',
+			'While Foundation is all about building a stronger base for the game, there is also plenty of new content:',
 		bullets: [
-			'New radiators, SM+ parts, updated tech tree, and extra missions have been added to the game.',
-			'Visual improvements include better clouds, sun flares, reentry colors for different planets, and EVA helmet lights.',
-			'Additional improvements include things like custom flags and statistics.',
+			'New radiators, SM+ engines, fuel tanks, adapters, decouplers, separators, boosters, command pods, probe cores, cameras, and decals have been added to the game.',
+			'The tech tree and missions have been expanded, including new gateway missions and tech tree nodes for new parts.',
+			'Visual and EVA additions include better clouds, sun flares, planet-specific reentry colors, helmet lights, EVA parachutes, and supersampling for flight and the VAB.',
+			'Campaign-related additions include custom flags, a statistics window, and clearer vessel categories and icons in the map and tracking station.',
 		],
 	},
 	{
@@ -220,6 +223,8 @@ export const roadmapFeatureGroups: RoadmapFeatureGroup[] = [
 		bullets: [
 			'We have upgraded the game\'s Unity engine version from 2022.3 to 6.4+ and our Redux SDK lets modders make full use of Unity\'s features.',
 			'Project Shakespeare is an experimental KSP1 part mod loader, which serves as a preview for our future comprehensive editor tooling for helping KSP1 modders port their parts to KSP2 Redux.',
+			'The SDK includes improved part modding tools, including part icons, drag cubes and reentry meshes generation, tools for making engine plumes, fairing shrouds, reusable audio components, and more',
+			'Patch Manager now uses Lua scripting with better diagnostics, dedicated VS Code extension, generated stubs, patch ordering controls, and a new config system.',
 			'Our crossplatform Updater app reduces the amount of setup and maintenance work around the game.',
 		],
 	},

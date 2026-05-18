@@ -1,0 +1,272 @@
+---
+title: Implemented Features and Fixes
+description: A higher-level summary of the features, improvements, and bug fixes already in KSP2 Redux.
+---
+
+Redux is still in beta. Compared with stock KSP2 before Redux, it adds new parts and missions, flight and map-view improvements, EVA additions, UI cleanup, graphics updates, installer work, modding tools, and many fixes across the base game.
+
+This page lists the main things already present in Redux, grouped by area for easier reading than the full release notes.
+
+For full release notes of each update, see the [Dev Blog](/blog/) and [GitHub releases](https://github.com/KSP2Redux/Redux/releases).
+
+This reflects the current public state as of **v0.2.3 Beta 6**.
+
+## Added and Improved Features
+
+### Parts and Tech Tree
+
+- Added new thermal control parts, including the TCS-400X and TCS-200F radiators.
+- Added SM+ orbital and launcher engines, fuel tanks, adapters, decouplers, separators, boosters, a conical crew pod, and probe cores.
+- Added XS solid rocket boosters, camera parts, and a sticker decal part.
+- Extended the tech tree to include Redux parts.
+- Added optional interstage support to fairings.
+- Added SDK tools that help modders generate part icons, drag cubes, reentry meshes, engine plumes, and fairing shrouds.
+- Added SDK helpers for part shaders, audio setup, interaction presets, ladders, and airlocks.
+
+### Flight and Map View
+
+- Planted flags now appear in map view with their flag colors.
+- Flags can be deleted from map view, and existing planted flags keep their original design when the campaign flag changes.
+- Added camera field-of-view adjustment in flight.
+- Added double-click part focus and a keybind to reset flight camera state.
+- Added KSP1-style celestial/orbital camera behavior.
+- Added maneuver node creation and editing while paused.
+- Added scroll-wheel precision input for maneuver gizmos.
+- Added notifications when precision input mode changes or trim is applied/reset.
+- Added clearer feedback for time warp limits and warping to a point.
+- Added physics warp initiation in space with the Alt key.
+- Added 10,000,000x time warp.
+- Improved time warp limits so safe orbits are less constrained.
+- Improved physics warp status text and color feedback.
+- Added vessel categories and icons for clearer map and tracking station identity.
+- Added aerodynamic stress behavior that can break deployed parts.
+- Improved SAS stability.
+- Added flight input smoothing for normal and precision mode.
+- Improved vessel naming after decoupling, undocking, and docking.
+
+### EVA
+
+- Added toggleable Kerbal helmet lights.
+- Added helmet toggling on oxygen worlds and inside command pods.
+- Added EVA parachutes, including gliding, agency colors, and external seat support.
+- Allowed EVA Kerbals to take stored science reports out of command pods and probes.
+- Disabled the EVA exit obstruction check to reduce blocked exits in common cases.
+
+### Science, Tutorials, and Missions
+
+- Added a feature for locking tech tree nodes behind missions and science experiments.
+- Added new mission granters and Mission Control logos.
+- Added tier 1, 2, and 3 gateway missions.
+- Added the "I., P.A.I.G.E" mission series.
+- Added additional missions beyond the original stock mission set.
+- Added stored research reports to the flight report window.
+- Added a lower minimum science rewards difficulty option.
+- Improved mission objective reveal behavior for mission authors.
+- Fixed several mission unlocks, objective checks, rewards, and completion rules.
+
+### UI and Quality of Life
+
+- Added an in-game bug reporter in the Escape menu and on Ctrl+B. Reports can include logs, version information, screenshots, saves, and other attachments.
+- Added Redux Credits to the main menu.
+- Added a Mods menu update notification when a new Redux version is available.
+- Added a Statistics window in the main menu and Escape menu, which tracks various player stats and gameplay milestones.
+- Added custom flags from mod folders.
+- Added campaign flag changing in the Settings menu.
+- Added an improved VAB part picker search with tag support.
+- Added a warning icon near the Engineer Report.
+- Added a new Color Manager with preset persistence, tooltips, and better state handling.
+- Added Enhanced Orbital Info.
+- Added resource display in the Part Action Manager.
+- Added a radiator action group button.
+- Added advanced part actions such as "Remove from symmetry".
+- Added an "Add to Staging" toggle for docking ports.
+- Added science-part deployment previews in the VAB.
+- Added a Mission Tracker button to the VAB app bar.
+- Added mouse-wheel scrolling in the R&D Center.
+- Cleaned up styling for Redux and SpaceWarp UI, including the mods menu, loading screen, flag sites, scrollbars, and windows.
+- Improved UI behavior on ultrawide, 3:2, and other non-16:9 displays.
+- Improved localization coverage and font handling, especially for Chinese, Japanese, and Korean text.
+- Unified fonts between stock and modded UI.
+- Added a setting to disable the photosensitivity warning.
+
+### Graphics, FX, and Audio
+
+- Added sunset and sunrise color shifts to sun flares.
+- Added different reentry effect colors per planet.
+- Added cloud layers and improved stock cloud shapes.
+- Added a sunflare graphics toggle.
+- Added supersampling for flight and the VAB to improve visual quality at a performance cost.
+- Restored countdown audio and improved countdown behavior after loading from saves.
+
+### Installer, Tools, and Infrastructure
+
+- Added the Redux Updater app for installing, updating, downgrading, uninstalling, and launching Redux.
+- Added Discord Rich Presence support.
+- Added integrated Debug Tools for multiple systems through Alt+F12.
+- Disabled stock online services that had already been taken down and causing errors.
+- Improved the logging system.
+- Added DirectStorage support.
+- Added a splash-screen skip for the SDK.
+
+### Modding Support
+
+- Integrated the core modding libraries and tools: SpaceWarp, Patch Manager, V-SwiFT, Shoemaker, and UITK for KSP2.
+- Upgraded the Unity version from 2022.3 to Unity 6.4.
+- Added Redux Template support and the Modding SDK workflow for Redux mods.
+- Added Project Shakespeare, an experimental KSP1 parts mod to KSP2 parts mod converter.
+- Added UITK helpers for event binding, commands, sound handling, localization conversion, app shells, and dialogs.
+- Added shared UI pieces for resizing, drag handles, tooltips, automatic text sizing, and common mod windows.
+- Added an API for mouse-click sort ordering between UITK and UGUI windows.
+- Improved UI-under-cursor checks so stock code accounts for modded UI.
+- Improved the KerbalUI theme and moved away from deprecated UITK experimental controls.
+- Rewrote Patch Manager around Lua scripting, with better diagnostics, generated stubs, patch ordering controls, and config values.
+- Added Patch Manager helpers for selection, audio presets, PAM visibility, caching, summaries, and error reporting.
+- Added a Visual Studio Code extension for Patch Manager Lua workflows.
+- Added REPL support to the SpaceWarp console.
+- Added shared config registration through the Redux and SpaceWarp config system.
+- Improved V-SwiFT variant tracking and attach-node integration.
+
+## Fixed Bugs and Quality Issues
+
+### Construction and VAB
+
+- Fixed undo behavior that could disconnect parts, struts, or vessel assemblies instead of restoring the intended state.
+- Fixed several strut problems, including placement, symmetry, and cross-wiring issues.
+- Fixed VAB crash cases and some launch explosions caused by construction bugs.
+- Fixed multiple symmetry bugs involving preview ghosts, docking interactions, action groups, radiators, and deployable parts.
+- Fixed stage creation, stage reordering, abort action, docking port, decoupler, and "Add to Staging" edge cases.
+- Fixed copying parts without copying resources.
+- Fixed procedural wings not recalculating mass in the VAB.
+- Fixed VAB camera resets and airplane-mode camera behavior.
+- Fixed first-load fairing creation problems.
+- Fixed several fairing problems, including clipping checks, lag, snapping, diameter selection, shielding, interstage behavior, and transparent materials.
+- Fixed deployable parts being blocked while extending.
+- Fixed Color Manager preset handling, eyedropper behavior, revert behavior, apply mode, and localized button overflow.
+- Fixed docking ports getting stuck unable to dock after nose cones or other VAB attachments.
+- Fixed stock vessels remaining visible on the launch pad after being turned off.
+- Fixed launch buttons failing in certain cases.
+- Fixed VAB part info and size category readability problems.
+- Fixed thermal tab availability in the Action Group Manager.
+- Improved VAB performance while placing parts and loading vessel data.
+
+### Flight, Map, and Simulation
+
+- Fixed several maneuver node problems where nodes could stick to the screen, break after saves, disappear after loading, or become impossible to move.
+- Fixed intersect markers not showing in map view without an active maneuver.
+- Fixed map UI and telemetry behavior when targeted vessels are destroyed.
+- Fixed tracking station and map object list issues after renaming vessels or entering KSC.
+- Fixed camera orientation resets between map view, flight view, KSC entry, and part focus.
+- Fixed time warp and physics warp problems around landing gear toggles, staging during physics warp, and Right Alt physics warp behavior.
+- Fixed science experiments continuing after situation changes.
+- Fixed Kerbals being recoverable where they should not be.
+- Fixed solar panels generating power while occluded and solar panel behavior on Laythe.
+- Fixed planted flags disappearing or resetting after SOI changes.
+- Fixed flag-related terrain collider glitches, failed destruction, and invalid planting locations.
+- Fixed flags and miscellaneous object data in the tracking station.
+- Fixed decoupling, undocking, docking, vessel recreation, and focus assignment issues.
+- Fixed docking so vessel combination behaves more reliably.
+- Fixed single-part SAS oscillation and stale SAS telemetry.
+- Fixed wheel torque axes on rotated multi-wheel vessels.
+- Fixed out-of-fuel maneuver duration calculations and infinite-fuel event behavior.
+- Fixed inaccurate orbital lines in other SOIs by accounting for axial tilt.
+- Fixed Kerbol shining through Kerbin and overly bright Jool/Eve clouds.
+- Fixed vessel validity and simulation-state edge cases.
+- Fixed portrait culling cleanup after vessel changes.
+
+### Parts, Resources, Thermal, and Modules
+
+- Fixed heat shield tuning problems.
+- Fixed engines with multiple nozzles overheating incorrectly.
+- Fixed Puff and Ant engine category classification.
+- Fixed manufacturer metadata on TVR parts.
+- Fixed radiator activation, extension, and moving-state behavior.
+- Fixed parachute VFX disappearing after quickload and parachute deployment forecasts triggering too early.
+- Fixed edge cases across aerodynamic, deployable, fairing, engine, RCS, reaction wheel, wheel, color, and science modules.
+- Fixed SRB audio after fuel depletion and SRB spool timing on launch.
+- Fixed resource converter and resource lookup behavior in several modded/imported part cases.
+
+### EVA
+
+- Fixed Kerbals rotating endlessly.
+- Fixed Kerbal and sample container animations getting out of sync during time warp.
+- Fixed Kerbal ground-check errors.
+- Fixed invalid flag-planting behavior on spacecraft.
+
+### Science, Missions, and Tutorials
+
+- Fixed missions completing without their actual objectives being completed.
+- Fixed missions being impossible or unlocking at the wrong time.
+- Fixed incorrect objective text, reward values, and mission granter assignments.
+- Fixed primary mission video pop-up ordering.
+- Fixed tier unlock animation playback.
+- Fixed disabling Cadet Orientation breaking mission completion.
+- Fixed localized biome and mission text problems.
+- Fixed Laythe ocean crashes not counting correctly for mission objectives.
+- Fixed science experiments causing load errors.
+- Fixed science transmission through relays.
+- Fixed science reward UI display limits.
+- Fixed default placeholder text appearing in science reports.
+
+### UI, Menus, and Localization
+
+- Fixed resolution labels, non-standard resolutions, settings sliders, hover sounds, and settings-menu localization.
+- Fixed the navball state after reverting to launch and improved navball map-view wording.
+- Fixed vertical speed scaling and Tracking Station unit display issues.
+- Fixed heat gauge clarity and part heating bars hiding behavior.
+- Fixed action group labels, science category display, non-stageable resource naming, and vessel action buttons.
+- Fixed cheat menu dropdown text and docking-related menu errors.
+- Fixed F2 hiding behavior for stock UI, Redux UI, SpaceWarp UI, mod windows, part outlines, heating bars, and the assembly parts picker.
+- Fixed UI locks getting stuck after windows close.
+- Fixed several UITK window issues, including dragging, multiline text fields, offscreen spawning, scroll speed, tooltip positioning, game input blocking, and window layering.
+- Fixed scrolling over modded windows also zooming the game.
+- Fixed SpaceWarp console log display and console styling.
+- Fixed mods menu setting buttons and version notifications.
+- Fixed Mission Control categories remaining clickable when collapsed.
+- Fixed mission description rich text rendering.
+- Fixed R&D Center node readability and ultrawide parallax behavior.
+- Fixed campaign folders being deleted when empty.
+- Fixed escape-menu flag setting and live language switching.
+- Fixed Statistics window interactions that could block reverting or loading non-campaign saves.
+- Fixed UI breakage from Chinese, Japanese, and Korean localization.
+- Improved font fallback safeguards.
+- Fixed text overflow and readability issues in part subtitles, throttle text, color manager buttons, flag site names/descriptions, and localized UI.
+- Fixed common loading-state and UI lifetime errors across Redux and stock UI.
+
+### Graphics, FX, Audio, and Environments
+
+- Fixed other moons not being visible while inside a moon's SOI.
+- Fixed Dres' rings rendering behind the planet.
+- Fixed mission control shader display color.
+- Fixed VAB lighting and part color darkening.
+- Fixed ring particles duplicating when switching camera modes.
+- Fixed FX behavior when teleporting.
+- Fixed countdown timing and countdown-on-load behavior.
+- Fixed Mission Control lighting issues.
+
+### Modding and SDK
+
+- Fixed configuration callbacks firing before new values were applied.
+- Fixed mod localization override behavior.
+- Fixed Patch Manager caching, sole-selector patches, parser error counting, and editor invalidation.
+- Reduced Patch Manager performance and allocation overhead.
+- Fixed runtime prefab changes carrying back to prefab files on disk in the editor.
+- Fixed V-SwiFT variant resets, attach-node integration, and Patch Manager integration.
+- Fixed flight-state transform activation for imported parts.
+
+### Performance and Stability
+
+- Enabled Unity multithreaded rendering settings.
+- Reduced general transform synchronization overhead and refactored code that depended on automatic transform syncing.
+- Improved CollisionManager scalability for large vessels and moved more collision callback work to multithreaded APIs.
+- Used ECS and Burst for TransformModel calculations.
+- Reduced map-view allocation pressure and RelativeOrbitSolver overhead.
+- Reduced allocation pressure in background part systems, thermal code, solar panels, RCS, wheels, engines, resources, drag, the message center, sessions, and data contexts.
+- Cached expensive ownership and getter lookups in frequently used code.
+- Removed unused IMGUI event processing.
+- Reduced save UI hierarchy and layout overhead.
+- Improved orphaned part scanning.
+- Improved DeltaV stage timing calculations.
+- Fixed memory leaks and unnecessary rebuilds in thermal code.
+- Reduced overhead for vessels orbiting Kerbol.
+- Improved VAB performance and part placement responsiveness.
+- Reduced DirectStorage-enabled loading overhead where supported.
