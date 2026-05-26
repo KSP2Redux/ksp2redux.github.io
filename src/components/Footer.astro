@@ -1,5 +1,6 @@
 ---
 // Unified footer component for all pages (custom + Starlight docs)
+import { Mail } from '@lucide/astro';
 import forumIcon from '../assets/links-forums.png';
 
 const currentYear = new Date().getFullYear();
@@ -24,6 +25,11 @@ const socialLinks = [
 		name: 'KSP Forums',
 		url: 'https://forum.kerbalspaceprogram.com/topic/226985-ksp2-redux',
 		icon: 'forums'
+	},
+	{
+		name: 'Email',
+		url: 'mailto:contact@ksp2redux.org',
+		icon: 'email'
 	}
 ];
 
@@ -40,6 +46,7 @@ const quickLinks = [
 const resourceLinks = [
 	{ href: '/guides/installation', label: 'Installation Guide' },
 	{ href: '/guides/troubleshooting', label: 'Troubleshooting' },
+	{ href: 'mailto:contact@ksp2redux.org', label: 'Contact Email' },
 	{ href: 'https://github.com/KSP2Redux/Redux/releases', label: 'Releases', external: true },
 	{ href: 'https://github.com/KSP2Redux/Redux/issues', label: 'Report Issue', external: true },
 ];
@@ -74,8 +81,7 @@ const icons: Record<string, string> = {
 					{socialLinks.map(link => (
 						<a 
 							href={link.url}
-							target="_blank"
-							rel="noopener noreferrer"
+							{...link.url.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
 							class="inline-flex h-10 w-10 items-center justify-center rounded-full text-gray-400 hover:text-ksp-red transition-colors duration-200"
 							aria-label={link.name}
 						>
@@ -85,6 +91,8 @@ const icons: Record<string, string> = {
 									style={`-webkit-mask-image: url('${forumIcon.src}'); mask-image: url('${forumIcon.src}');`}
 									aria-hidden="true"
 								></span>
+							) : link.icon === 'email' ? (
+								<Mail class="w-6 h-6" aria-hidden="true" />
 							) : (
 								<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" set:html={icons[link.icon]} />
 							)}
