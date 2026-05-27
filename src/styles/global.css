@@ -1590,16 +1590,6 @@ pre {
 	color: #9ca3af !important;
 }
 
-.sl-markdown-content .flag-unicode {
-	font-family: "Noto Color Emoji", sans-serif;
-	font-size: 1.05em;
-	line-height: 1;
-	margin-right: 0.3em;
-	vertical-align: -0.05em;
-	font-variant-emoji: emoji;
-	font-feature-settings: "colr" 1;
-}
-
 /* Card icon contrast fix */
 .card svg.icon {
 	color: #2d3748 !important;
