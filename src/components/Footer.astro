@@ -77,7 +77,7 @@ const icons: Record<string, string> = {
 				<p class="text-gray-400 text-sm max-w-md mb-4">
 					A fan-made continuation patch for Kerbal Space Program 2, focused on bug fixing, performance work, UI cleanup, and the larger systems still planned on the roadmap.
 				</p>
-				<div class="flex space-x-4">
+				<div class="footer-social-links">
 					{socialLinks.map(link => (
 						<a 
 							href={link.url}
@@ -143,6 +143,16 @@ const icons: Record<string, string> = {
 </footer>
 
 <style>
+	.footer-social-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1rem !important;
+	}
+
+	.footer-social-links > * {
+		margin-left: 0 !important;
+	}
+
 	.footer-social-icon {
 		display: block;
 		width: 1.5rem;
