@@ -1125,7 +1125,6 @@ body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-p
 }
 
 nav[aria-label='Main'] button[aria-label='Menu'] {
-	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	border: 1px solid rgba(255, 255, 255, 0.16) !important;
