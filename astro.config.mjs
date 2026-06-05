@@ -49,6 +49,10 @@ export default defineConfig({
 				{
 					label: 'Modding Documentation',
 					link: 'https://modding.ksp2redux.org',
+				},
+				{
+					label: 'API Reference',
+					link: 'https://api.ksp2redux.org',
 				}
 			],
 			expressiveCode: {

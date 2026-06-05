@@ -50,18 +50,6 @@ import '../styles/global.css';
 
 			<details class="card-glass group">
 				<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
-					Does Redux replace the base game?
-					<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-					</svg>
-				</summary>
-				<p class="text-gray-400 mt-4">
-					It depends, it replaces the game in whatever directory it is installed in, so if you make a copy of the base game it can replace that.
-				</p>
-			</details>
-
-			<details class="card-glass group">
-				<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
 					Will my saves work with Redux?
 					<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -132,28 +120,23 @@ import '../styles/global.css';
 
 			<details class="card-glass group">
 				<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
-					How do I install Redux?
+					How do I install, update, or uninstall Redux?
 					<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
 					</svg>
 				</summary>
-				<p class="text-gray-400 mt-4">
-					Download the latest release of the Updater from <a href="https://github.com/KSP2Redux/Updater/releases/latest" target="_blank" rel="noopener noreferrer" class="text-ksp-red hover:underline">GitHub</a>, run the updater, point it to your KSP2 installation, 
-					and select which version of Redux you want to install. The process takes a few minutes depending on your disk speed. 
-					Check our <a href="/guides/installation" class="text-ksp-red hover:underline">detailed installation guide</a> for step-by-step instructions.
-				</p>
-			</details>
-
-			<details class="card-glass group">
-				<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
-					How do I uninstall Redux?
-					<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-					</svg>
-				</summary>
-				<p class="text-gray-400 mt-4">
-					Use the uninstall button in the Updater settings.
-				</p>
+				<div class="text-gray-400 mt-4 space-y-2">
+					<p>
+						Download the latest release of the Updater from <a href="https://github.com/KSP2Redux/Updater/releases/latest" target="_blank" rel="noopener noreferrer" class="text-ksp-red hover:underline">GitHub</a>, run the updater, point it to your KSP2 installation,
+						and select which version of Redux you want to install. The process takes a few minutes depending on your disk speed.
+					</p>
+					<p>
+						To uninstall Redux, use the uninstall button in the Updater settings. Check our <a href="/guides/installation" class="text-ksp-red hover:underline">detailed installation guide</a> for step-by-step instructions.
+					</p>
+					<p>
+						You can also update between newer beta versions through the Updater. If you are on a version older than beta 5, you will need a fresh install of the latest beta.
+					</p>
+				</div>
 			</details>
 
 			<details class="card-glass group">
@@ -165,12 +148,24 @@ import '../styles/global.css';
 				</summary>
 				<div class="text-gray-400 mt-4 space-y-2">
 					<p>
-						<strong>Current (Stage 0 - Foundation):</strong> Performance work, bug fixing, debug tools, heat management, tech tree work, and modding SDK improvements.
+						<strong>Current (Stage 0 - Foundation):</strong> Performance work, bug fixing, debug tools, heat management, tech tree work, and modding SDK improvements. The <a href="/guides/implemented-features-and-fixes/" class="text-ksp-red hover:underline">implemented features and fixes</a> page has a fuller list.
 					</p>
 					<p>
 						<strong>Planned:</strong> Orbital and planetary colonies, a full resource system, supply routes, interstellar work, and multiplayer. The <a href="/roadmap" class="text-ksp-red hover:underline">roadmap</a> has a full breakdown.
 					</p>
 				</div>
+			</details>
+
+			<details class="card-glass group">
+				<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
+					What is the difference between Exploration and Frontier mode?
+					<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+					</svg>
+				</summary>
+				<p class="text-gray-400 mt-4">
+					Exploration mode is the lighter progression path where resources mostly work as unlocks. Frontier mode is planned later as a deeper colony economy with production, stockpiles, and supply routes. Read the <a href="/guides/frontier-and-exploration/" class="text-ksp-red hover:underline">full Frontier and Exploration guide</a>.
+				</p>
 			</details>
 
 			<details class="card-glass group">
@@ -188,22 +183,9 @@ import '../styles/global.css';
 					</p>
 					<p>
 						You can also report bugs in the <strong>#🟡redux-bugs</strong> channel on the 
-						<a href="https://discord.gg/8yq8d5VGQR" class="text-ksp-red hover:underline">KSP2 Modding Society Discord</a>.
+						<a href="https://discord.gg/8yq8d5VGQR" class="text-ksp-red hover:underline">KSP2 Redux Discord</a>.
 					</p>
 				</div>
-			</details>
-
-			<details class="card-glass group">
-				<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
-					Can I update from beta to beta?
-					<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-					</svg>
-				</summary>
-				<p class="text-gray-400 mt-4">
-					Yes, the new updater allows this. You need to have beta 5 or newer installed to be able to directly update to newer betas.
-					If you're on an older version, you will need a fresh install of the latest beta.
-				</p>
 			</details>
 
 			<details class="card-glass group">

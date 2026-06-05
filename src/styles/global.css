@@ -1541,14 +1541,24 @@ pre {
 }
 
 /* Tables */
-.sl-markdown-content table {
+.sl-markdown-content table,
+.sl-markdown-content table:not(:where(.not-content *)) {
 	border-collapse: collapse;
+	display: table;
+	table-layout: auto;
 	width: 100%;
+	max-width: 100%;
 	background-color: #1a1a1a;
 	border-radius: 0.5rem;
 	overflow: hidden;
 	margin: 1.5rem 0;
 	border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sl-markdown-content table th,
+.sl-markdown-content table td {
+	vertical-align: top;
+	overflow-wrap: break-word;
 }
 
 .sl-markdown-content table thead {
