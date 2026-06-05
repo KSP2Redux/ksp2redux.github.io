@@ -147,11 +147,6 @@
 		font-weight: 700 !important;
 	}
 
-	button {
-		color: #ffffff !important;
-		font-weight: 700 !important;
-	}
-
 	/* Starlight button styling */
 	.sl-button,
 	[class*='button'][class*='primary'],
@@ -1129,6 +1124,37 @@ body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-p
 	margin-left: 0.75rem !important;
 }
 
+nav[aria-label='Main'] button[aria-label='Menu'] {
+	align-items: center;
+	justify-content: center;
+	border: 1px solid rgba(255, 255, 255, 0.16) !important;
+	border-radius: 999px;
+	background-color: #0a0a0a !important;
+	color: #ffffff !important;
+	-webkit-text-fill-color: #ffffff !important;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+:root[data-theme='light'] nav[aria-label='Main'] button[aria-label='Menu'] {
+	border-color: rgba(10, 10, 10, 0.16) !important;
+	background-color: #ffffff !important;
+	color: #0a0a0a !important;
+	-webkit-text-fill-color: #0a0a0a !important;
+}
+
+nav[aria-label='Main'] button[aria-label='Menu'] svg,
+nav[aria-label='Main'] button[aria-label='Menu'] path {
+	color: inherit !important;
+	stroke: #ffffff !important;
+	fill: none !important;
+}
+
+:root[data-theme='light'] nav[aria-label='Main'] button[aria-label='Menu'] svg,
+:root[data-theme='light'] nav[aria-label='Main'] button[aria-label='Menu'] path {
+	color: #0a0a0a !important;
+	stroke: #0a0a0a !important;
+}
+
 /* Footer styling overrides for Starlight compatibility */
 .site-footer {
 	margin-top: 4rem;
@@ -1138,13 +1164,17 @@ body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-p
 
 .site-footer .grid {
 	display: grid !important;
-	grid-template-columns: 1fr !important;
+	grid-template-columns: minmax(0, 1fr) !important;
 	gap: 2rem !important;
+}
+
+.site-footer .grid > * {
+	min-width: 0;
 }
 
 @media (min-width: 768px) {
 	.site-footer .grid {
-		grid-template-columns: 2fr 1fr 1fr !important;
+		grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) !important;
 	}
 }
 
