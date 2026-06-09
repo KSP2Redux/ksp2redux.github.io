@@ -1393,6 +1393,50 @@ main {
 	color: #d1d5db !important;
 }
 
+.sl-markdown-content .qa-section-label {
+	margin: 1.35rem 0 0.35rem;
+	color: #ffffff;
+	font-size: 0.82rem;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	line-height: 1.2;
+	text-transform: uppercase;
+}
+
+.sl-markdown-content .qa-section-label--answer {
+	color: var(--sl-color-accent) !important;
+}
+
+.sl-markdown-content .qa-asked-by {
+	margin: -0.1rem 0 0.65rem;
+	color: #9ca3af !important;
+	font-size: 0.9rem;
+	font-style: italic;
+	line-height: 1.4;
+}
+
+.sl-markdown-content .qa-category-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+	margin: -0.05rem 0 0.7rem;
+}
+
+.sl-markdown-content .qa-category-tag {
+	display: inline-flex;
+	align-items: center;
+	border: 1px solid rgba(223, 22, 1, 0.5);
+	border-radius: 4px;
+	padding: 0.12rem 0.42rem;
+	background-color: rgba(223, 22, 1, 0.12);
+	color: #ff9a8b;
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	line-height: 1.35;
+	text-transform: uppercase;
+}
+
 /* Links - KSP Redux red */
 .sl-markdown-content a {
 	color: #df1601 !important;
