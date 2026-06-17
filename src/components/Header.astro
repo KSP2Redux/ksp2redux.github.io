@@ -4,6 +4,7 @@ const { pathname } = Astro.url;
 
 const navItems = [
 	{ href: '/', label: 'Home' },
+	{ href: '/guides/installation', label: 'Installation' },
 	{ href: '/roadmap', label: 'Roadmap' },
 	{ href: '/guides', label: 'Documentation' },
 	{ href: '/blog', label: 'Blog' },
@@ -18,6 +19,8 @@ const isStarlight = pathname.startsWith('/guides') || pathname.startsWith('/blog
 // Desktop nav path checking
 const isActive = (href: string) => {
 	if (href === '/') return pathname === '/';
+	if (href === '/guides/installation') return pathname.startsWith('/guides/installation');
+	if (href === '/guides') return pathname.startsWith('/guides') && !pathname.startsWith('/guides/installation');
 	return pathname.startsWith(href);
 };
 ---
