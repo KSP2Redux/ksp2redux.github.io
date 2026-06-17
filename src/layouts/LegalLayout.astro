@@ -1,0 +1,75 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+const { frontmatter } = Astro.props;
+const title = frontmatter.title ?? 'KSP2 Redux';
+const description = frontmatter.description ?? '';
+const updated = frontmatter.updated;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{title} - KSP2 Redux</title>
+	{description && <meta name="description" content={description} />}
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
+<body class="bg-space-black text-white min-h-screen">
+	<Header />
+
+	<section class="page-hero pt-32 pb-8">
+		<div class="absolute inset-0 z-0" style="background-image: url('/background.png'); background-size: cover; background-position: center;"></div>
+		<div class="absolute inset-0 z-0 bg-gradient-to-r from-space-black via-space-black/80 to-space-black/20"></div>
+		<div class="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-space-black/25 to-space-black"></div>
+
+		<div class="section-container relative z-10">
+			<div class="max-w-4xl">
+				<h1 class="page-title">
+					{title.replace(' for KSP2 Redux', '')}
+				</h1>
+				{description && <p class="page-intro">{description}</p>}
+				{updated && (
+					<p class="mt-6 text-sm font-semibold uppercase tracking-wider text-gray-400">
+						Last updated: {updated}
+					</p>
+				)}
+			</div>
+		</div>
+	</section>
+
+	<main class="section-container">
+		<article class="legal-document sl-markdown-content max-w-4xl">
+			<slot />
+		</article>
+	</main>
+
+	<Footer />
+</body>
+</html>
+
+<style>
+	.legal-document {
+		padding: 2rem;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 0.75rem;
+		background: rgba(255, 255, 255, 0.04);
+	}
+
+	.legal-document :global(h1) {
+		display: none;
+	}
+
+	.legal-document :global(p:first-child) {
+		margin-top: 0;
+	}
+
+	@media (max-width: 640px) {
+		.legal-document {
+			padding: 1.25rem;
+		}
+	}
+</style>
