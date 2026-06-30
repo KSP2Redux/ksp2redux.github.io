@@ -1,4 +1,4 @@
-export const latestVersion = '0.2.8.3';
+export const latestVersion = '0.2.8.4';
 export const releaseDate = '2026-05-17';
 
 export type RoadmapMilestoneStatus = 'current' | 'planned';
