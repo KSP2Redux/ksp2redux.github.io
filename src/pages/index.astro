@@ -2,7 +2,19 @@
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+import { getCollection } from 'astro:content';
 import { latestVersion } from '../data/data';
+
+const latestBlogPosts = (await getCollection('docs'))
+	.filter((entry) => entry.id.startsWith('blog/') && entry.data.draft !== true && entry.data.date)
+	.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf())
+	.slice(0, 3);
+
+const blogDateFormatter = new Intl.DateTimeFormat('en', {
+	month: 'short',
+	day: 'numeric',
+	year: 'numeric',
+});
 
 ---
 
@@ -37,11 +49,6 @@ import { latestVersion } from '../data/data';
 					and finishing systems that were left incomplete.
 				</p>
 
-				<p class="home-context">
-					This site is for downloads, installation docs, release notes, roadmap progress, and contributor-facing
-					documentation.
-				</p>
-
 				<div class="home-action-row">
 					<a href="https://github.com/KSP2Redux/Updater/releases/latest" target="_blank" rel="noopener noreferrer" class="btn-primary">
 						Download latest build
@@ -56,8 +63,29 @@ import { latestVersion } from '../data/data';
 			</div>
 		</div>
 	</section>
+	
+	<section class="section-container py-8">
+		<div class="home-summary">
+			<div class="page-section-heading">
+				<h2>What is KSP2 Redux?</h2>
+			</div>
+			<div class="home-summary__body">
+				<p>
+					KSP2 Redux is a community-made continuation of Kerbal Space Program 2. The goal is to build out the
+					major systems the game was originally meant to have: colonies, resource management, interstellar travel,
+					multiplayer, and the smaller features those systems depend on.
+				</p>
+				<p>
+					That also means doing some foundational work first: fixing bugs, more stable flights, clearer UI, better performance,
+					more complete set of parts, and a stronger base for mods. Redux is not trying to turn KSP2 into a different game or
+					implement every mod feature. The goal is to finish the game as it was originally intended, and make it easier for
+					modders to build on top of that.
+				</p>
+			</div>
+		</div>
+	</section>
 
-	<section class="section-container py-12">
+	<section class="section-container py-8">
 		<div class="page-section-heading">
 			<h2>Start here</h2>
 			<p>
@@ -70,40 +98,47 @@ import { latestVersion } from '../data/data';
 				<h3>Installation guide</h3>
 				<p>How to install Redux, which builds are supported, and where to start troubleshooting.</p>
 			</a>
+			<a href="/guides/implemented-features-and-fixes/" class="card-glass home-entry-card">
+				<h3>Implemented features</h3>
+				<p>The main features, improvements, and bug fixes already present in Redux.</p>
+			</a>
 			<a href="/roadmap" class="card-glass home-entry-card">
 				<h3>Roadmap</h3>
 				<p>Current priorities, already added content, and larger systems still planned for later.</p>
 			</a>
-			<a href="/blog" class="card-glass home-entry-card">
-				<h3>Development blog</h3>
-				<p>Release posts, technical writeups, previews, and progress notes from ongoing work.</p>
-			</a>
 		</div>
 	</section>
 
-	<section class="section-container py-12">
-		<div class="home-summary">
-			<div class="page-section-heading">
-				<h2>What Redux is for</h2>
-			</div>
-			<div class="home-summary__body">
-				<p>
-					In the Foundation stage, Redux is mainly about practical repair work: performance, bug fixing, UI cleanup, and getting
-					core game systems into a state that people can actually play and build on.
-				</p>
-				<p>
-					It is also used to improve the game as a modding base, with better tooling, better debugging,
-					and more predictable workflows for Redux mods.
-				</p>
-			</div>
+	<section class="section-container py-8">
+		<div class="page-section-heading">
+			<h2>Latest <a href="/blog" class="home-heading-link">blog</a> posts</h2>
+			<p>
+				Recent release notes, previews, and development updates.
+			</p>
+		</div>
+
+		<div class="home-blog-grid">
+			{latestBlogPosts.map((post) => (
+				<a href={`/${post.id}/`} class="card-glass home-blog-card">
+					<p class="home-blog-card__meta">
+						<time datetime={new Date(post.data.date).toISOString()}>
+							{blogDateFormatter.format(new Date(post.data.date))}
+						</time>
+						{post.data.author && <span>{post.data.author}</span>}
+					</p>
+					<h3>{post.data.title}</h3>
+					<p>{post.data.description}</p>
+					<span class="home-blog-card__textlink">Read post</span>
+				</a>
+			))}
 		</div>
 	</section>
 
-	<section class="section-container py-12">
+	<section class="section-container py-8">
 		<div class="page-section-heading">
 			<h2>Links</h2>
 			<p>
-				Discord is where most support and testing discussion happens. GitHub is for releases, source, and issue tracking. Reddit and the forum are useful for broader public discussion.
+				Discord is where most support and testing discussion happens. GitHub is for releases, source, and issue tracking. The forum, Reddit, YouTube, and TikTok are useful for public updates and community posts.
 			</p>
 		</div>
 
@@ -127,6 +162,16 @@ import { latestVersion } from '../data/data';
 				<h3>Reddit</h3>
 				<p>Community posts, screenshots, and general discussion outside of Discord.</p>
 				<span class="home-community-card__textlink">Open subreddit</span>
+			</a>
+			<a href="https://www.youtube.com/@KSP2Redux" target="_blank" rel="noopener noreferrer" class="card-glass home-community-card">
+				<h3>YouTube</h3>
+				<p>Videos, update previews, showcases, and longer-form community posts.</p>
+				<span class="home-community-card__textlink">Open channel</span>
+			</a>
+			<a href="https://www.tiktok.com/@ksp2redux" target="_blank" rel="noopener noreferrer" class="card-glass home-community-card">
+				<h3>TikTok</h3>
+				<p>Short videos, quick clips, and lighter updates from the project.</p>
+				<span class="home-community-card__textlink">Open TikTok</span>
 			</a>
 		</div>
 	</section>
@@ -163,7 +208,19 @@ import { latestVersion } from '../data/data';
 		line-height: 1.75;
 	}
 
+	.home-heading-link {
+		color: #ff7f6b;
+		text-decoration: none;
+	}
+
+	.home-heading-link:hover,
+	.home-heading-link:focus-visible {
+		text-decoration: underline;
+		text-underline-offset: 0.18em;
+	}
+
 	.home-entry-grid,
+	.home-blog-grid,
 	.home-community-grid {
 		display: grid;
 		grid-template-columns: 1fr;
@@ -171,6 +228,7 @@ import { latestVersion } from '../data/data';
 	}
 
 	.home-entry-card,
+	.home-blog-card,
 	.home-community-card {
 		display: block;
 		text-decoration: none;
@@ -178,6 +236,7 @@ import { latestVersion } from '../data/data';
 	}
 
 	.home-entry-card h3,
+	.home-blog-card h3,
 	.home-community-card h3 {
 		margin: 0;
 		font-family: var(--font-family-heading);
@@ -186,10 +245,43 @@ import { latestVersion } from '../data/data';
 	}
 
 	.home-entry-card p:last-child,
+	.home-blog-card p,
 	.home-community-card p {
 		margin: 0.85rem 0 0;
 		color: #d1d5db;
 		line-height: 1.75;
+	}
+
+	.home-blog-card {
+		display: flex;
+		flex-direction: column;
+		min-height: 100%;
+	}
+
+	.home-blog-card__meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+		margin: 0 0 0.8rem !important;
+		color: #9ca3af !important;
+		font-size: 0.85rem;
+		font-weight: 700;
+		line-height: 1.4 !important;
+		text-transform: uppercase;
+	}
+
+	.home-blog-card__meta span::before {
+		content: "/";
+		margin-right: 0.6rem;
+		color: rgba(156, 163, 175, 0.65);
+	}
+
+	.home-blog-card__textlink {
+		display: inline-block;
+		margin-top: auto;
+		padding-top: 1rem;
+		color: #ff7f6b;
+		font-weight: 700;
 	}
 
 	.home-summary {
@@ -198,7 +290,6 @@ import { latestVersion } from '../data/data';
 	}
 
 	.home-summary__body {
-		max-width: 48rem;
 		color: #d1d5db;
 		line-height: 1.75;
 	}
@@ -219,12 +310,13 @@ import { latestVersion } from '../data/data';
 	}
 
 	@media (min-width: 900px) {
-		.home-entry-grid {
+		.home-entry-grid,
+		.home-blog-grid {
 			grid-template-columns: repeat(3, minmax(0, 1fr));
 		}
 
 		.home-community-grid {
-			grid-template-columns: repeat(4, minmax(0, 1fr));
+			grid-template-columns: repeat(3, minmax(0, 1fr));
 		}
 	}
 
