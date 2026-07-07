@@ -1,5 +1,5 @@
-export const latestVersion = '0.2.8.4';
-export const releaseDate = '2026-05-17';
+export const latestVersion = '0.2.8.5';
+export const releaseDate = '2026-06-30';
 
 export type RoadmapMilestoneStatus = 'current' | 'planned';
 
@@ -31,7 +31,7 @@ export interface RoadmapStats {
 }
 
 export const roadmapStats: RoadmapStats = {
-	bugFixCount: 204,
+	bugFixCount: 240,
 	performanceCount: 40,
 };
 

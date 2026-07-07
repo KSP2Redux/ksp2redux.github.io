@@ -9,15 +9,15 @@ This page lists the main things already present in Redux, grouped by area for ea
 
 For full release notes of each update, see the [Dev Blog](/blog/) and [GitHub releases](https://github.com/KSP2Redux/Redux/releases).
 
-This reflects the current public state as of **v0.2.3 Beta 6**.
+This reflects the current public state as of **v0.2.8.5**.
 
 ## At a Glance
 
 - The game's engine has been upgraded to Unity 6.4 and improved modding tools are available, including the Redux modding SDK and mod template, as well as integrated SpaceWarp, Patch Manager, and UITK for KSP2.
-- Redux adds new parts, tech tree changes, new missions, EVA parachutes, helmet lights, custom flags, and a Statistics window.
+- Redux adds new parts, tech tree changes, new missions, EVA parachutes, helmet lights, custom flags, stickers, and a Statistics window.
 - Flight and map view have many practical fixes and additions, including better SAS behavior, higher time warp, KSP1-style orbital camera behavior, maneuver node editing while paused, visible map flags, and vessel categories.
 - The VAB and construction flow have many fixes around undo, struts, symmetry, staging, fairings, docking ports, part actions, and part placement performance.
-- UI work includes a new Color Manager, reworked Orbital Info panel, better part picker search, clearer notifications, better localization/font handling, and cleaner various other UI improvements.
+- UI work includes a new Color Manager, reworked Orbital Info panel, better part picker search, clearer notifications, better localization/font handling, and various other UI improvements.
 - Graphics, effects, and performance work includes cloud and sun flare changes, planet-specific reentry colors, supersampling, multithreaded rendering settings, and reduced allocation pressure in many simulation and UI systems.
 
 ## Added and Improved Features
@@ -25,8 +25,8 @@ This reflects the current public state as of **v0.2.3 Beta 6**.
 ### Parts and Tech Tree
 
 - Added new thermal control parts, including the TCS-400X and TCS-200F radiators.
-- Added SM+ orbital and launcher engines, fuel tanks, adapters, decouplers, separators, boosters, a conical crew pod, and probe cores.
-- Added XS solid rocket boosters, camera parts, and a sticker decal part.
+- Added SM+ orbital and launcher engines, fuel tanks, adapters, decouplers, separators, boosters, a heat shield, a conical crew pod, and probe cores.
+- Added XS solid rocket boosters, camera parts, procedural body flaps, and a sticker decal part.
 - Extended the tech tree to include Redux parts.
 - Added optional interstage support to fairings.
 - Added SDK tools that help modders generate part icons, drag cubes, reentry meshes, engine plumes, and fairing shrouds.
@@ -41,6 +41,7 @@ This reflects the current public state as of **v0.2.3 Beta 6**.
 - Added KSP1-style celestial/orbital camera behavior.
 - Added maneuver node creation and editing while paused.
 - Added scroll-wheel precision input for maneuver gizmos.
+- Improved maneuver node popups and burn patch colors in map view.
 - Added notifications when precision input mode changes or trim is applied/reset.
 - Added clearer feedback for time warp limits and warping to a point.
 - Added physics warp initiation in space with the Alt key.
@@ -48,8 +49,8 @@ This reflects the current public state as of **v0.2.3 Beta 6**.
 - Improved time warp limits so safe orbits are less constrained.
 - Improved physics warp status text and color feedback.
 - Added vessel categories and icons for clearer map and tracking station identity.
-- Added aerodynamic stress behavior that can break deployed parts.
-- Improved SAS stability.
+- Added aerodynamic stress behavior for deployed parts.
+- Improved SAS stability, including several edge-case bug fixes and improved high dynamic pressure behavior.
 - Added flight input smoothing for normal and precision mode.
 - Improved vessel naming after decoupling, undocking, and docking.
 
@@ -154,6 +155,7 @@ This reflects the current public state as of **v0.2.3 Beta 6**.
 - Fixed docking ports getting stuck unable to dock after nose cones or other VAB attachments.
 - Fixed stock vessels remaining visible on the launch pad after being turned off.
 - Fixed launch buttons failing in certain cases.
+- Fixed cases where launching could leave the player stuck in the VAB after the loading screen.
 - Fixed VAB part info and size category readability problems.
 - Fixed thermal tab availability in the Action Group Manager.
 - Improved VAB performance while placing parts and loading vessel data.
@@ -238,7 +240,7 @@ This reflects the current public state as of **v0.2.3 Beta 6**.
 - Fixed Statistics window interactions that could block reverting or loading non-campaign saves.
 - Fixed UI breakage from Chinese, Japanese, and Korean localization.
 - Improved font fallback safeguards.
-- Fixed text overflow and readability issues in part subtitles, throttle text, color manager buttons, flag site names/descriptions, and localized UI.
+- Fixed text overflow and readability issues in part subtitles, throttle text, color manager buttons, flag site names/descriptions, part sizes, and localized UI.
 - Fixed common loading-state and UI lifetime errors across Redux and stock UI.
 
 ### Graphics, FX, Audio, and Environments
