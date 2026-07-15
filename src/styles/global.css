@@ -147,11 +147,6 @@
 		font-weight: 700 !important;
 	}
 
-	button {
-		color: #ffffff !important;
-		font-weight: 700 !important;
-	}
-
 	/* Starlight button styling */
 	.sl-button,
 	[class*='button'][class*='primary'],
@@ -370,6 +365,7 @@ html {
 	color: #ffffff;
 	font-weight: 700;
 	letter-spacing: 0.01em;
+	text-align: center;
 	text-decoration: none;
 	transition:
 		transform 0.2s ease,
@@ -422,6 +418,14 @@ html {
 .btn-secondary:focus-visible {
 	outline: 2px solid rgba(255, 255, 255, 0.9);
 	outline-offset: 3px;
+}
+
+@media (min-width: 768px) {
+	.btn-primary {
+		min-height: 2.7rem;
+		padding-top: 0.65rem;
+		padding-bottom: 0.65rem;
+	}
 }
 
 /* Fix icon alignment in buttons */
@@ -1129,6 +1133,37 @@ body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-p
 	margin-left: 0.75rem !important;
 }
 
+nav[aria-label='Main'] button[aria-label='Menu'] {
+	align-items: center;
+	justify-content: center;
+	border: 1px solid rgba(255, 255, 255, 0.16) !important;
+	border-radius: 999px;
+	background-color: #0a0a0a !important;
+	color: #ffffff !important;
+	-webkit-text-fill-color: #ffffff !important;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+:root[data-theme='light'] nav[aria-label='Main'] button[aria-label='Menu'] {
+	border-color: rgba(10, 10, 10, 0.16) !important;
+	background-color: #ffffff !important;
+	color: #0a0a0a !important;
+	-webkit-text-fill-color: #0a0a0a !important;
+}
+
+nav[aria-label='Main'] button[aria-label='Menu'] svg,
+nav[aria-label='Main'] button[aria-label='Menu'] path {
+	color: inherit !important;
+	stroke: #ffffff !important;
+	fill: none !important;
+}
+
+:root[data-theme='light'] nav[aria-label='Main'] button[aria-label='Menu'] svg,
+:root[data-theme='light'] nav[aria-label='Main'] button[aria-label='Menu'] path {
+	color: #0a0a0a !important;
+	stroke: #0a0a0a !important;
+}
+
 /* Footer styling overrides for Starlight compatibility */
 .site-footer {
 	margin-top: 4rem;
@@ -1138,13 +1173,17 @@ body:has(#starlight__sidebar a[aria-current="page"][href^="/blog/"]) main[data-p
 
 .site-footer .grid {
 	display: grid !important;
-	grid-template-columns: 1fr !important;
+	grid-template-columns: minmax(0, 1fr) !important;
 	gap: 2rem !important;
+}
+
+.site-footer .grid > * {
+	min-width: 0;
 }
 
 @media (min-width: 768px) {
 	.site-footer .grid {
-		grid-template-columns: 2fr 1fr 1fr !important;
+		grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) !important;
 	}
 }
 
@@ -1393,6 +1432,50 @@ main {
 	color: #d1d5db !important;
 }
 
+.sl-markdown-content .qa-section-label {
+	margin: 1.35rem 0 0.35rem;
+	color: #ffffff;
+	font-size: 0.82rem;
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	line-height: 1.2;
+	text-transform: uppercase;
+}
+
+.sl-markdown-content .qa-section-label--answer {
+	color: var(--sl-color-accent) !important;
+}
+
+.sl-markdown-content .qa-asked-by {
+	margin: -0.1rem 0 0.65rem;
+	color: #9ca3af !important;
+	font-size: 0.9rem;
+	font-style: italic;
+	line-height: 1.4;
+}
+
+.sl-markdown-content .qa-category-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+	margin: -0.05rem 0 0.7rem;
+}
+
+.sl-markdown-content .qa-category-tag {
+	display: inline-flex;
+	align-items: center;
+	border: 1px solid rgba(223, 22, 1, 0.5);
+	border-radius: 4px;
+	padding: 0.12rem 0.42rem;
+	background-color: rgba(223, 22, 1, 0.12);
+	color: #ff9a8b;
+	font-size: 0.72rem;
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	line-height: 1.35;
+	text-transform: uppercase;
+}
+
 /* Links - KSP Redux red */
 .sl-markdown-content a {
 	color: #df1601 !important;
@@ -1541,14 +1624,24 @@ pre {
 }
 
 /* Tables */
-.sl-markdown-content table {
+.sl-markdown-content table,
+.sl-markdown-content table:not(:where(.not-content *)) {
 	border-collapse: collapse;
+	display: table;
+	table-layout: auto;
 	width: 100%;
+	max-width: 100%;
 	background-color: #1a1a1a;
 	border-radius: 0.5rem;
 	overflow: hidden;
 	margin: 1.5rem 0;
 	border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sl-markdown-content table th,
+.sl-markdown-content table td {
+	vertical-align: top;
+	overflow-wrap: break-word;
 }
 
 .sl-markdown-content table thead {
@@ -1588,16 +1681,6 @@ pre {
 
 .sl-markdown-content li::marker {
 	color: #9ca3af !important;
-}
-
-.sl-markdown-content .flag-unicode {
-	font-family: "Noto Color Emoji", sans-serif;
-	font-size: 1.05em;
-	line-height: 1;
-	margin-right: 0.3em;
-	vertical-align: -0.05em;
-	font-variant-emoji: emoji;
-	font-feature-settings: "colr" 1;
 }
 
 /* Card icon contrast fix */

@@ -1,0 +1,47 @@
+---
+title: Custom Flags
+description: How to add custom agency and sticker flags to KSP2 Redux.
+---
+
+## Install Location
+
+In a player install, Redux scans custom flags from `flags` folders inside mod folders:
+
+```text
+<KSP2 Redux install>/mods/<your folder>/flags/
+```
+
+For example:
+
+```text
+mods/
+  MyFlags/
+    flags/
+      mission-patch.png
+      agencies/
+        blue-program.jpg
+```
+
+The extra folder under `mods` is required. Files placed directly in `mods/flags` are not scanned by the current loader.
+
+## Supported Files
+
+Redux loads custom flags from:
+
+- `.png`
+- `.jpg`
+- `.jpeg`
+
+Subfolders inside `flags` are scanned. The in-game display name is the image file name without its extension.
+
+## Use In Game
+
+After adding flag files, restart Redux. Custom flags are loaded when the flag catalog is first initialized, so restarting is the reliable way to make newly added files appear.
+
+Custom flags appear alongside the built-in agency flags in the campaign creation flag selector. They are also available in the Redux flag picker used by the gameplay settings agency flag option and by sticker flag selection.
+
+Changing your current agency flag in settings updates the agency flag used from that point forward. Existing placed flags and stickers keep the flag image saved on those objects rather than automatically changing every time the agency flag changes.
+
+## Notes
+
+There is no required image size in the loader. Use a normal flag-shaped image if you want previews and flag surfaces to look predictable.

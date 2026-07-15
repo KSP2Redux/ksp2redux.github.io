@@ -1,0 +1,108 @@
+---
+title: KSP1 Part Mods
+description: How to install KSP1 part mods for Redux's experimental Project Shakespeare importer.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<Aside type="caution" title="Experimental feature">
+Project Shakespeare is a runtime importer for KSP1 part mods. It is useful for testing and playing with supported parts, but it is not a full KSP1 compatibility layer. KSP1 plugin DLLs are not run by Redux.
+</Aside>
+
+## Install Location
+
+In a player install, Redux looks for KSP1 imports in:
+
+```text
+<KSP2 Redux install>/mods/KSP1/
+```
+
+Create the `KSP1` folder if it does not exist yet.
+
+Treat `mods/KSP1` as the equivalent of KSP1's `GameData` folder. Put the same folders that would normally go inside `GameData` directly inside `mods/KSP1`. For example:
+
+```text
+mods/
+  KSP1/
+    TundraExploration/
+      Parts/
+      Patches/
+      ...
+    KerbalReusabilityExpansion/
+      Parts/
+      ...
+```
+
+If a mod zip contains a folder named `GameData`, copy the contents of that `GameData` folder into `mods/KSP1`, not the outer `GameData` folder itself.
+
+For example, this zip layout:
+
+```text
+GameData/
+  SomePartMod/
+  SomeAssetDependency/
+```
+
+should become:
+
+```text
+mods/
+  KSP1/
+    SomePartMod/
+    SomeAssetDependency/
+```
+
+not:
+
+```text
+mods/
+  KSP1/
+    GameData/
+      SomePartMod/
+```
+
+## Basic Steps
+
+1. Close Redux.
+2. Open the Redux install folder.
+3. Create `mods/KSP1` if it is not already there.
+4. Extract the KSP1 part mod's GameData-relative part and asset folders into `mods/KSP1`.
+5. Start Redux and load a campaign or save.
+
+The importer runs during campaign loading, after Redux parses resource and part data. If you add or remove KSP1 part files while the game is running, restart the game before expecting a clean import.
+
+## Dependencies
+
+Copy dependencies that provide part configs, models, textures, resources, or other assets that the part mod references.
+
+Do not copy KSP1 code-plugin dependencies just because the KSP1 mod lists them as dependencies. KSP1 plugin DLLs cannot be loaded by KSP2 Redux, so folders that only exist to provide KSP1 code, such as `DeployableEngines`, `B9PartSwitch`, `ModuleManager`, `SmokeScreen`, `Waterfall`, or similar plugin libraries, do not become working Redux plugins by being placed in `mods/KSP1`.
+
+Redux has importer-side handling for several common KSP1 libraries and module patterns, so the plugin dependency is often not something you should install separately:
+
+- ModuleManager-style config patching is implemented inside the importer.
+- `:NEEDS` checks are treated as satisfied for importer aliases for `B9PartSwitch`, `CommunityResourcePack`, and `Waterfall`.
+- B9 Part Switch data is used for tank definitions, visual variants, texture switches, and disabled transforms.
+- Waterfall template metadata is mapped to Redux/KSP2 plume placement where possible.
+- SmokeScreen and RealPlume-style engine plume config nodes are read for plume placement where possible.
+- Animated Decouplers-style modules are mapped to Redux's imported decoupler runtime where possible.
+- Tundra decoupler and engine-switch modules are recognized by the importer.
+
+## What Redux Reads
+
+Redux scans KSP1 `.cfg` files and imports `PART` nodes from the finalized config database. Compatible ModuleManager-style patches can be applied as part of that finalization, so patch folders such as `Patches` and `Compatibility` are part of the import path.
+
+The importer currently has handlers for a limited set of KSP1 part modules, including engines, gimbals, RCS, reaction wheels, command modules, decouplers, docking ports, generators, solar panels, transmitters, parachutes, resource intakes, lifting/control surfaces, lights, cargo bays, several common switcher modules, and Waterfall metadata used by the plume importer. Unsupported modules are skipped with warnings in the log.
+
+Texture lookup supports KSP1 texture references using `.dds`, `.mbm`, `.png`, `.jpg`, `.jpeg`, and `.tga` files.
+
+## What Not To Expect
+
+- This is a part importer, not a general KSP1 mod loader.
+- KSP1 plugin DLLs in `Plugins` folders are not loaded as Redux plugins.
+- KSP1 plugin dependency folders are usually not useful unless they also contain part configs, resource configs, models, textures, or other assets needed by the imported parts.
+- Internal spaces, props, sounds, and other KSP1 systems are not imported as working KSP2 systems just because their files are present.
+- IVA-only functionality, custom PartModule behavior implemented in KSP1 plugins, custom UI, custom flight logic, custom science systems, and custom gameplay systems do not automatically work.
+- Compatibility is part-by-part. A mod can have some parts that import well and other parts that are incomplete or unusable.
+- Some parts may load with missing behavior, bad visuals, or no useful functionality if they depend on unsupported modules or custom KSP1 plugin code.
+
+If a mod depends on another KSP1 asset folder, put that dependency's GameData-relative folder in `mods/KSP1` as well. If it depends on a KSP1 code plugin for behavior the importer does not emulate, that behavior will need a real Redux/KSP2 port.

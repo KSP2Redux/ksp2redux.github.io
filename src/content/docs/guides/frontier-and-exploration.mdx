@@ -1,0 +1,81 @@
+---
+title: Frontier and Exploration Modes
+description: How the planned Frontier and Exploration modes differ, especially around colonies, resources, and logistics.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<Aside type="caution" title="Planned Systems">
+Exploration mode colony resource rules are planned first. Frontier mode is planned for later. Details may change as the colony and resource systems are built.
+</Aside>
+
+Redux plans to support two progression modes with different levels of resource management. Exploration mode is planned to arrive before Frontier mode.
+
+**Exploration mode** is the lighter progression path. It keeps the focus on missions, science, discovery, and unlocking new capabilities. Resources still matter, but mostly as unlock requirements.
+
+**Frontier mode** is the deeper resource-management path. It treats parts, colonies, fuels, and building materials as things that must be produced, stored, moved, and spent.
+
+You can think of them as rough successors to KSP1's Science and Career modes:
+
+| Mode | Closest KSP1 comparison | Main focus |
+| --- | --- | --- |
+| Exploration | Science | Explore, run experiments, complete missions, unlock resources and parts |
+| Frontier | Career | Build an economy of colonies, factories, stockpiles, and supply routes |
+
+## Quick Comparison
+
+| Question | Exploration mode | Frontier mode |
+| --- | --- | --- |
+| Do parts consume materials when built? | No. A part can be built once its required resources are unlocked. | Yes. Parts cost materials and fuels that must be available. |
+| Do resource amounts and production rates matter? | Mostly no. Resource access is treated as an unlock. | Yes. Mining, processing, stockpiles, and flow rates are central. |
+| What are colonies for? | Unlocking and sharing resource access across the colony network. | Producing materials, fuels, colony parts, and vessels. |
+| Are supply routes required? | No. The goal is to avoid routine logistics management. | Yes, planned supply routes are a major part of connecting colonies. |
+| Who is it for? | Players who want colonies to support exploration without heavy economy management. | Players who want colony placement, production chains, and logistics to matter. |
+
+## Exploration Mode
+
+Exploration mode uses resources as a progression and exploration system.
+
+Instead of continuously mining and spending resource quantities, you unlock access to a resource at a colony. The unlock might require a specific colony facility, a mission, a science experiment, a location, or some other requirement.
+
+Once the requirement is met, that resource is considered available for that colony. If a vessel or colony part requires that resource, you can build it there without tracking stockpile amounts or production rates.
+
+### Orbital Colonies in Exploration
+
+Orbital colonies are planned to act as resource links between celestial bodies.
+
+If two celestial bodies both have an active orbital colony, their unlocked resources can be shared through that network. For example, if Duna and Kerbin both have orbital colonies, resources unlocked around Duna can become available to colonies connected through Kerbin's orbital network, and the other way around.
+
+The intent is to make orbital colonies useful without asking every player to manage cargo routes and storage limits.
+
+## Frontier Mode
+
+Frontier mode uses resources as a production and logistics system.
+
+In this mode, vessel and colony parts cost materials. To build those parts, you need the required materials available where the construction is happening. Those materials come from raw resources gathered by mining facilities and processed by factories.
+
+Production can depend on things like local resource density, colony conditions, power, heat, or other balancing factors. The exact list is not final.
+
+KSC is planned to provide unlimited access to basic building resources and common fuels, so the early game does not start with a logistics bottleneck. More advanced parts, colony growth, and exotic resources are expected to require off-world colonies.
+
+### Colonies in Frontier
+
+Frontier colonies are production hubs.
+
+To found or grow a new colony, you may need to move resources, materials, or construction hardware from Kerbin or another colony. Once a colony is established, it can mine local resources, process them into useful materials, produce fuel, and eventually support local vessel or colony construction.
+
+Later in the roadmap, supply routes are planned to reduce repeated manual cargo flights. A successful delivery from one colony to another could be recorded as a recurring route that transfers resources over time.
+
+## What Both Modes Share
+
+Both modes are planned to use colonies, resources, missions, science, and tech progression. The difference is not whether resources exist. The difference is how much resource bookkeeping the player is asked to do.
+
+In Exploration mode, resources answer the question: **Have you discovered and unlocked what this part needs?**
+
+In Frontier mode, resources answer the question: **Can your colony network produce, store, and deliver what this part costs?**
+
+## Current Status
+
+Redux is currently in **Stage 0: Foundation**. The public beta work is still focused on performance, bug fixes, UI cleanup, modding tools, heat, vessel ISRU groundwork, and tech tree requirements.
+
+Exploration mode colony resource rules are planned before Frontier mode. Colonies, full resource networks, and both progression-mode updates are still later roadmap work.
