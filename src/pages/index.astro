@@ -3,6 +3,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 import { getCollection } from 'astro:content';
+import { getEntryAuthors } from '../../node_modules/starlight-blog/libs/authors';
 import { latestVersion } from '../data/data';
 
 const latestBlogPosts = (await getCollection('docs'))
@@ -124,7 +125,7 @@ const blogDateFormatter = new Intl.DateTimeFormat('en', {
 						<time datetime={new Date(post.data.date).toISOString()}>
 							{blogDateFormatter.format(new Date(post.data.date))}
 						</time>
-						{post.data.author && <span>{post.data.author}</span>}
+						<span>{getEntryAuthors(post).map((author) => author.name).join(', ')}</span>
 					</p>
 					<h3>{post.data.title}</h3>
 					<p>{post.data.description}</p>
