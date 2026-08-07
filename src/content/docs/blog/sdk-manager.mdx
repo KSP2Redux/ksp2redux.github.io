@@ -1,0 +1,58 @@
+---
+title: "SDK Manager"
+date: 2026-08-07T12:00:00
+authors: { name: "Infinity" }
+description: "Overview of the new SDK Manager for managing your mods"
+---
+
+Hello again! It's me your local mod tooling gal, a.k.a Infinity, and I'm here to share to y'all something cool
+that I've been working on!
+
+So, I've noticed that creating modding projects is a huge hurdle for getting started with modding, and that there
+is also no way to easily upgrade a project between 0.2.8.5 and 26w32a or any version you'd want - with our current
+recommendations being to just create a new project and copy the assets. Obviously unsustainable...
+
+That's why I've decided to create something called the Redux SDK Manager
+
+## Overview
+
+The Redux SDK manager is a GUI/CLI based tool for managing your projects, with the CLI being for those more technically
+inclined to work with, so this will be a general overview of the GUI.
+
+Starting off when opened, you are greeted with a list of your projects (yours obviously will be empty) and buttons for importing/creating new projects easily.
+
+![View on launch](/blog/redux-news/sdk-manager/launch.png)
+
+Creating a new project for your mods is quite simple, all you do is press `new` and select a version (snapshot versions are hidden by default, you can enable them in the settings)
+
+![New project menu](/blog/redux-news/sdk-manager/new.png)
+
+Once you have chosen a version, a folder picker will pop up asking you for an *empty* folder to create the project in
+
+![Folder picker](/blog/redux-news/sdk-manager/folder.png)
+
+After that, you will be asked to choose a name for your project
+
+![Name dialog](/blog/redux-news/sdk-manager/name.png)
+
+And then it may prompt you that it found a KSP2 install, this is for the automated thunderkit importing.
+
+Afterwards, you just have to wait for the setup to complete (it will take like 5-10 minutes) and you should have a usable modding project!
+
+Upgrading a project to a new SDK version is also just as simple, you press the upgrade button and choose the new version you want to target and it will do everything for you.
+
+## Requirements
+
+This program does require you to have `git` and the unity hub installed, it will detect this on launch and prompt you to install if you don't have them, but if you want to download them first, here is where you can find them
+
+- Git - https://git-scm.com/install/windows
+- Unity Hub - https://unity.com/download (you might need to allow popups, this is a direct download link)
+
+On first launch you also need to be connected to the internet to fetch the latest SDK versions, subsequent launches and project upgrading does not require a connection *however* unity will not be able to download the packages
+without internet connection.
+
+## Download
+
+You can download this now at https://github.com/KSP2Redux/Redux-SDK-Manager/releases/latest
+
+Have fun making your mods! :3
