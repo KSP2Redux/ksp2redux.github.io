@@ -1,0 +1,55 @@
+---
+title: "Mission Editor and Tutorials"
+date: 2026-08-09T12:00:00
+authors: { name: "Onoya" }
+description: "A look at the Mission Editor used to build Redux's missions and tutorials, and the new tutorials in the works."
+---
+
+Hi everyone! I'm Onoya, one of the new devs for KSP2 Redux, I'm a beginner in development (both C# and Unity), and it's really a blessing being able to learn while helping Redux!
+
+For now I'm working mostly on making the new tutorials. And I'm here today to speak about how I work with the Mission editor, especially when doing tutorials!
+
+## Mission Editor
+
+In order to work on missions and tutorials (both modifying existing stock ones and creating new ones), we use the Mission editor, which is a tool made by Infinity (Thanks a lot Infinity for that, it would be a pain to do tutorials without it!).
+
+Basically, the missions and tutorials are just JSON files that the game's code reads from in order to have those appear and work ingame. But as shown by the image below, those JSON files aren't that readable, especially for beginners or people not used to using them
+
+![Raw Mission JSON, very hard to read/edit](/blog/redux-news/mission-editor-tutorials/mission-json.png)
+
+To make working more easily on those, the mission editor are able to convert those JSON files into more readable mission editor files.
+Here is how one of those mission editor files looks like (that's the beginning of the 4.1 tutorial)
+
+![The beginning of the 4.1 tutorial in the editor, the mission metadata and 2 of its stages are shwon in a much more readable/editable manner](/blog/redux-news/mission-editor-tutorials/4_1_tutorial.png)
+
+As you see, it's easier to understand at first glance what is going on, the flow of the tutorials etc...
+
+Using the editor, we can easily add new conditions or property watchers to validate that the player fullfill mission or tutorial's objective!
+
+Example here, this stage validates when the player's vessel is above 500 m above sea level, and once that condition is validated, the tutorial goes on next stage
+
+![2 stages in sequence with the first one having an Alittude condition of greater than 500 meters before flowing into the next](/blog/redux-news/mission-editor-tutorials/500_meters.png)
+
+Another example of the Mission Editor's possibilities are the ability to add failure tests, which are conditions that if they are met, consider the tutorial as failed and goes to a failure stage where the player is proposed to restart the tutorial.
+
+In this image, the failure test is met if the player removes a part from the vessel or if the player goes into the launch pad from the VAB. Since it's from the 4.2 tutorial which only takes place in the VAB, it makes sure that the player actually stays in the VAB
+
+![An exception branch being shown in the mission editor which allows the mission to be 'failed' if the user launches from the VAB or removes a part from the assembly](/blog/redux-news/mission-editor-tutorials/failure.png)
+
+There are a lot of others features of the mission Editor that I could speak about, but I'll speak about them later in another devblog or in tutorials about how to use the Mission Editor
+
+## Redux Tutorials
+
+Lately, I've been working on new tutorials to cover some stuffs not covered by the stock tutorials, and will work soon on tutorials about Redux's features (ISRU, and later Colony and Interstellar gameplay when it will be available), and I would like to share with you how I work on them.
+
+For now, I've been working an a new group of tutorials named "Rocket tips", which are like as the title says, some tips. 3 of these tutorials (ISP, Delta-V, and Passive Stability) are already available in the 26w32b Snapshot, and I'm working on the fourth tutorial of "Rocket Tips"
+
+For the "Rocket tips" tutorials, I tried to make those taking inspirations from how the already existing tutorials were done, since Redux's objective is to stay as close as possible from what we think Intercept Games planned for the game's future.
+
+Being a beginner, it's been a learning journey working on these tutorials, and I hope that the community will like them! Of course, do not hesitate to try these tutorials, nor to provide bug reports and opinions on them, so we can fix them if needed, and make the better!
+
+## Future Tutorials
+
+As I said, there will be tutorials about features implemented by Redux (or that will be implemented). But since those are still WIP (like ISRU) or still to be created (Colonies and Interstellar), so I can't really say now how I'll do them.
+
+But I can already say that there are new tutorials in the "Rocket tips" category to come, and that new categories of tutorials are coming! (like tutorials on interplanetary travel)
