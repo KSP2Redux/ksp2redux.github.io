@@ -14,6 +14,86 @@
     return String(value || '').replaceAll('&', '&amp;').replaceAll('"', '&quot;')
   }
 
+  function replaceAutolinksOutsideCodeSpans (line) {
+    var output = ''
+    var codeDelimiterLength = 0
+
+    for (var index = 0; index < line.length;) {
+      if (line[index] === '`') {
+        var delimiterEnd = index
+        while (line[delimiterEnd] === '`') delimiterEnd++
+
+        var delimiterLength = delimiterEnd - index
+        if (codeDelimiterLength === 0) codeDelimiterLength = delimiterLength
+        else if (codeDelimiterLength === delimiterLength) codeDelimiterLength = 0
+
+        output += line.slice(index, delimiterEnd)
+        index = delimiterEnd
+        continue
+      }
+
+      var isAutolink = codeDelimiterLength === 0 &&
+        (line.startsWith('<https://', index) || line.startsWith('<http://', index))
+
+      if (isAutolink) {
+        var closingBracket = line.indexOf('>', index + 1)
+        var url = closingBracket === -1 ? '' : line.slice(index + 1, closingBracket)
+
+        if (url && !/[\s<>]/.test(url)) {
+          var linkText = url.replace(/([\\\]])/g, '\\$1')
+          var linkDestination = url.replace(/([\\()])/g, '\\$1')
+          output += '[' + linkText + '](' + linkDestination + ')'
+          index = closingBracket + 1
+          continue
+        }
+      }
+
+      output += line[index]
+      index++
+    }
+
+    return output
+  }
+
+  function normalizeMdxAutolinks (markdown) {
+    var fenceCharacter = ''
+    var fenceLength = 0
+
+    return String(markdown).split(/(\r?\n)/).map(function (line) {
+      if (/^\r?\n$/.test(line)) return line
+
+      var fenceMatch = line.match(/^\s{0,3}(`{3,}|~{3,})(.*)$/)
+      if (fenceMatch) {
+        var marker = fenceMatch[1]
+        var remainder = fenceMatch[2]
+
+        if (!fenceCharacter) {
+          fenceCharacter = marker[0]
+          fenceLength = marker.length
+        } else if (marker[0] === fenceCharacter && marker.length >= fenceLength && /^\s*$/.test(remainder)) {
+          fenceCharacter = ''
+          fenceLength = 0
+        }
+
+        return line
+      }
+
+      return fenceCharacter ? line : replaceAutolinksOutsideCodeSpans(line)
+    }).join('')
+  }
+
+  CMS.registerEventListener({
+    name: 'preSave',
+    handler: function (event) {
+      var data = event.entry.get('data')
+      var body = data.get('body')
+
+      if (typeof body !== 'string') return data
+
+      return data.set('body', normalizeMdxAutolinks(body))
+    }
+  })
+
   CMS.registerEditorComponent({
     id: 'youtube',
     label: 'YouTube video',
