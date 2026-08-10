@@ -1,0 +1,115 @@
+backend:
+  name: github
+  repo: KSP2Redux/ksp2redux.github.io
+  branch: main
+  base_url: https://cms-auth.rendezvous.dev
+  auth_endpoint: auth
+  use_graphql: true
+
+publish_mode: editorial_workflow
+site_url: https://ksp2redux.github.io
+display_url: https://ksp2redux.github.io
+logo_url: https://ksp2redux.github.io/logo.png
+
+media_folder: public/blog/redux-news/uploads
+public_folder: /blog/redux-news/uploads
+
+slug:
+  encoding: unicode
+  clean_accents: true
+  sanitize_replacement: "-"
+
+collections:
+  - name: blog
+    label: Blog posts
+    label_singular: Blog post
+    description: News, release notes, and development updates.
+    folder: src/content/docs/blog
+    create: true
+    extension: mdx
+    format: frontmatter
+    identifier_field: title
+    summary: "{{title}} — {{date}}"
+    sortable_fields: [date, title]
+    fields:
+      - { label: Title, name: title, widget: string }
+      - label: Publication date
+        name: date
+        widget: datetime
+        date_format: YYYY-MM-DD
+        time_format: HH:mm
+        format: YYYY-MM-DDTHH:mm:ss
+      - label: Author
+        name: authors
+        widget: object
+        fields:
+          - { label: Name, name: name, widget: string }
+          - { label: Role or title, name: title, widget: string, required: false }
+          - { label: Picture, name: picture, widget: string, required: false }
+          - { label: Website, name: url, widget: string, required: false }
+      - { label: Description, name: description, widget: text }
+      - { label: Excerpt, name: excerpt, widget: text, required: false }
+      - { label: Tags, name: tags, widget: list, required: false }
+      - { label: Featured, name: featured, widget: boolean, required: false, default: false }
+      - { label: Draft, name: draft, widget: boolean, required: false, default: false }
+      - label: Body
+        name: body
+        widget: richtext
+        hint: Use Raw mode when editing MDX imports, JSX, or components that are not represented in the toolbar.
+        modes: [rich_text, raw]
+        editor_components: [image, code-block, youtube, aside, card]
+        sanitize_preview: true
+
+  - name: guides
+    label: Guides
+    label_singular: Guide
+    description: Installation, troubleshooting, compatibility, and contribution guides.
+    folder: src/content/docs/guides
+    create: true
+    extension: mdx
+    format: frontmatter
+    identifier_field: title
+    summary: "{{title}}"
+    sortable_fields: [title]
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Description, name: description, widget: text }
+      - label: Hero
+        name: hero
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { label: Title override, name: title, widget: string, required: false }
+          - { label: Tagline, name: tagline, widget: text, required: false }
+          - label: Actions
+            name: actions
+            widget: list
+            required: false
+            fields:
+              - { label: Text, name: text, widget: string }
+              - { label: Link, name: link, widget: string }
+              - label: Style
+                name: variant
+                widget: select
+                required: false
+                default: primary
+                options: [primary, secondary, minimal]
+              - { label: Icon, name: icon, widget: string, required: false }
+      - { label: Draft, name: draft, widget: boolean, required: false, default: false }
+      - label: Sidebar
+        name: sidebar
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { label: Label override, name: label, widget: string, required: false }
+          - { label: Order, name: order, widget: number, value_type: float, required: false }
+          - { label: Hidden, name: hidden, widget: boolean, required: false, default: false }
+      - label: Body
+        name: body
+        widget: richtext
+        hint: Use Raw mode when editing MDX imports, JSX, CardGrid wrappers, or components that are not represented in the toolbar.
+        modes: [rich_text, raw]
+        editor_components: [image, code-block, youtube, aside, card]
+        sanitize_preview: true
