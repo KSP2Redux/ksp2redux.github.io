@@ -7,9 +7,9 @@ backend:
   use_graphql: true
 
 publish_mode: editorial_workflow
-site_url: https://ksp2redux.github.io
-display_url: https://ksp2redux.github.io
-logo_url: https://ksp2redux.github.io/logo.png
+site_url: https://ksp2redux.org
+display_url: https://ksp2redux.org
+logo_url: https://ksp2redux.org/logo.png
 
 media_folder: public/blog/redux-news/uploads
 public_folder: /blog/redux-news/uploads
