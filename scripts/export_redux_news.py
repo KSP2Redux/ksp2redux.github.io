@@ -225,7 +225,7 @@ POSTS: list[Post] = [
 
             Unfortunately this post came out way too long for a discord message. So check it out on the forums:
 
-            https://forum.kerbalspaceprogram.com/topic/226985-ksp2-redux/?do=findComment&comment=4450060
+            https://forum.kerbalspaceprogram.com/topic/231578-ksp2-redux-v0285/
 
             TL;DR: Reduced time per frame by another %12 in the 2500 background parts test.
             """
