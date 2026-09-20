@@ -1,4 +1,5 @@
 ---
+import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
@@ -17,16 +18,60 @@ const blogDateFormatter = new Intl.DateTimeFormat('en', {
 	year: 'numeric',
 });
 
+
+const siteUrl = Astro.site!.href.replace(/\/$/, '');
+const structuredData = {
+	'@context': 'https://schema.org',
+	'@graph': [
+		{
+			'@type': 'Organization',
+			'@id': `${siteUrl}/#organization`,
+			name: 'KSP2 Redux',
+			alternateName: ['Kerbal Space Program 2 Redux', 'Redux'],
+			url: `${siteUrl}/`,
+			logo: `${siteUrl}/logo.png`,
+			description:
+				'A community project continuing development of Kerbal Space Program 2, focused on bug fixes, performance, and finishing unimplemented systems.',
+			sameAs: [
+				'https://github.com/KSP2Redux/Redux',
+				'https://reddit.com/r/KSP2Redux',
+				'https://discord.gg/8yq8d5VGQR',
+				'https://forum.kerbalspaceprogram.com/topic/231578-ksp2-redux-v0285/',
+			],
+		},
+		{
+			'@type': 'WebSite',
+			'@id': `${siteUrl}/#website`,
+			name: 'KSP2 Redux',
+			url: `${siteUrl}/`,
+			publisher: { '@id': `${siteUrl}/#organization` },
+			inLanguage: 'en',
+		},
+		{
+			'@type': 'SoftwareApplication',
+			name: 'KSP2 Redux',
+			applicationCategory: 'GameApplication',
+			operatingSystem: 'Windows, Linux',
+			softwareVersion: latestVersion,
+			url: `${siteUrl}/`,
+			downloadUrl: 'https://github.com/KSP2Redux/Updater/releases/latest',
+			publisher: { '@id': `${siteUrl}/#organization` },
+			description:
+				'A community-made continuation patch for Kerbal Space Program 2 that fixes bugs, improves performance, and implements systems left unfinished.',
+			offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+		},
+	],
+};
 ---
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>KSP2 Redux</title>
-	<meta name="description" content="KSP2 Redux is a community-made continuation patch for Kerbal Space Program 2, focused on bug fixes, performance work, and finishing the game.">
-	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	<BaseHead
+		title="KSP2 Redux – Community Continuation of Kerbal Space Program 2"
+		description="KSP2 Redux is a community-made continuation patch for Kerbal Space Program 2, focused on bug fixes, performance work, and finishing the game."
+	/>
+	<script type="application/ld+json" set:html={JSON.stringify(structuredData)} is:inline />
 </head>
 <body class="bg-space-black text-white">
 	<Header />
@@ -54,10 +99,10 @@ const blogDateFormatter = new Intl.DateTimeFormat('en', {
 					<a href="https://github.com/KSP2Redux/Updater/releases/latest" target="_blank" rel="noopener noreferrer" class="btn-primary">
 						Download latest build
 					</a>
-					<a href="/guides/installation" class="btn-secondary">
+					<a href="/guides/installation/" class="btn-secondary">
 						Installation guide
 					</a>
-					<a href="/blog" class="btn-secondary">
+					<a href="/blog/" class="btn-secondary">
 						Release notes and blog
 					</a>
 				</div>
@@ -95,7 +140,7 @@ const blogDateFormatter = new Intl.DateTimeFormat('en', {
 		</div>
 
 		<div class="home-entry-grid">
-			<a href="/guides/installation" class="card-glass home-entry-card">
+			<a href="/guides/installation/" class="card-glass home-entry-card">
 				<h3>Installation guide</h3>
 				<p>How to install Redux, which builds are supported, and where to start troubleshooting.</p>
 			</a>
@@ -103,7 +148,7 @@ const blogDateFormatter = new Intl.DateTimeFormat('en', {
 				<h3>Implemented features</h3>
 				<p>The main features, improvements, and bug fixes already present in Redux.</p>
 			</a>
-			<a href="/roadmap" class="card-glass home-entry-card">
+			<a href="/roadmap/" class="card-glass home-entry-card">
 				<h3>Roadmap</h3>
 				<p>Current priorities, already added content, and larger systems still planned for later.</p>
 			</a>
@@ -112,7 +157,7 @@ const blogDateFormatter = new Intl.DateTimeFormat('en', {
 
 	<section class="section-container py-8">
 		<div class="page-section-heading">
-			<h2>Latest <a href="/blog" class="home-heading-link">blog</a> posts</h2>
+			<h2>Latest <a href="/blog/" class="home-heading-link">blog</a> posts</h2>
 			<p>
 				Recent release notes, previews, and development updates.
 			</p>

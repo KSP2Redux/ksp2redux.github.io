@@ -8,7 +8,6 @@ const navItems = [
 	{ href: '/roadmap', label: 'Roadmap' },
 	{ href: '/guides', label: 'Documentation' },
 	{ href: '/blog', label: 'Blog' },
-	// { href: '/gallery', label: 'Gallery' },
 	{ href: '/faq', label: 'FAQ' },
 	{ href: '/contact', label: 'Contact' },
 ];
@@ -17,6 +16,9 @@ const navItems = [
 const isStarlight = pathname.startsWith('/guides') || pathname.startsWith('/blog');
 
 // Desktop nav path checking
+const withSlash = (href: string) =>
+	href.startsWith('/') && !href.endsWith('/') ? `${href}/` : href;
+
 const isActive = (href: string) => {
 	if (href === '/') return pathname === '/';
 	if (href === '/guides/installation') return pathname.startsWith('/guides/installation');
@@ -44,7 +46,7 @@ const isActive = (href: string) => {
 			<div class="hidden md:flex items-center space-x-8">
 				{navItems.map(item => (
 					<a 
-						href={item.href}
+						href={withSlash(item.href)}
 						class:list={[
 							"text-sm font-medium transition-colors duration-200",
 							isActive(item.href) ? "text-ksp-red" : "text-gray-300 hover:text-white"
@@ -98,7 +100,7 @@ const isActive = (href: string) => {
 		<div class="flex flex-col space-y-3 pt-4">
 			{navItems.map(item => (
 				<a
-					href={item.href}
+					href={withSlash(item.href)}
 					class:list={[
 						"transition-colors py-2 font-medium",
 						isActive(item.href) ? "text-ksp-red" : "text-gray-300 hover:text-white"

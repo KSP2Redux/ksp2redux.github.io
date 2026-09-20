@@ -1,4 +1,5 @@
 ---
+import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ProgressBar from '../components/ProgressBar.astro';
@@ -18,14 +19,10 @@ const currentMilestone = roadmapMilestones[currentMilestoneIndex];
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Roadmap - KSP2 Redux</title>
-	<meta
-		name="description"
-		content="See what features KSP2 Redux already has, what we are working on, and what the long-term plans are."
-	>
-	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	<BaseHead
+		title="Roadmap - KSP2 Redux"
+		description="See what features KSP2 Redux already has, what we are working on, and what the long-term plans are."
+	/>
 </head>
 <body class="bg-space-black text-white">
 	<Header />
