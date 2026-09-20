@@ -5,7 +5,10 @@ import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 import { getCollection } from 'astro:content';
 import { getEntryAuthors } from '../../node_modules/starlight-blog/libs/authors';
+import { getBlogConfig } from '../../node_modules/starlight-blog/libs/page';
 import { latestVersion } from '../data/data';
+
+const blogConfig = getBlogConfig('blog');
 
 const latestBlogPosts = (await getCollection('docs'))
 	.filter((entry) => entry.id.startsWith('blog/') && entry.data.draft !== true && entry.data.date)
@@ -170,7 +173,7 @@ const structuredData = {
 						<time datetime={new Date(post.data.date).toISOString()}>
 							{blogDateFormatter.format(new Date(post.data.date))}
 						</time>
-						<span>{getEntryAuthors(post).map((author) => author.name).join(', ')}</span>
+						<span>{getEntryAuthors(blogConfig, post).map((author) => author.name).join(', ')}</span>
 					</p>
 					<h3>{post.data.title}</h3>
 					<p>{post.data.description}</p>

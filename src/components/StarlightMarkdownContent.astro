@@ -6,10 +6,11 @@ import PostTags from '../../node_modules/starlight-blog/components/PostTags.astr
 import PrevNextLinks from '../../node_modules/starlight-blog/components/PrevNextLinks.astro';
 import { getEntryAuthors } from '../../node_modules/starlight-blog/libs/authors';
 import { getBlogEntry } from '../../node_modules/starlight-blog/libs/content';
-import { isAnyBlogPostPage } from '../../node_modules/starlight-blog/libs/page';
+import { getBlogConfigFromPath, isAnyBlogPostPage } from '../../node_modules/starlight-blog/libs/page';
 
 const { id, locale } = Astro.locals.starlightRoute;
-const isBlogPost = isAnyBlogPostPage(id);
+const blogConfig = getBlogConfigFromPath(id);
+const isBlogPost = Boolean(blogConfig) && isAnyBlogPostPage(blogConfig, id);
 
 let entry;
 let nextLink;
@@ -18,8 +19,8 @@ let authors = [];
 let formattedDate = '';
 
 if (isBlogPost) {
-	({ entry, nextLink, prevLink } = await getBlogEntry(id, locale));
-	authors = getEntryAuthors(entry);
+	({ entry, nextLink, prevLink } = await getBlogEntry(blogConfig, id, locale));
+	authors = getEntryAuthors(blogConfig, entry);
 	formattedDate = Astro.locals.t('starlightBlog.post.date', { date: entry.data.date });
 }
 ---
@@ -54,8 +55,8 @@ if (isBlogPost) {
 			</div>
 			<slot />
 			<div class="post-footer">
-				<PostTags entry={entry} {locale} />
-				<PrevNextLinks next={nextLink} prev={prevLink} />
+				<PostTags config={blogConfig} entry={entry} {locale} />
+				<PrevNextLinks config={blogConfig} next={nextLink} prev={prevLink} />
 			</div>
 		</Default>
 	) : (
