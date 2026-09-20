@@ -1,4 +1,5 @@
 ---
+import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { Mail } from '@lucide/astro';
@@ -9,11 +10,10 @@ import forumIcon from '../assets/links-forums.png';
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Contact - KSP2 Redux</title>
-	<meta name="description" content="Links for Discord, GitHub, Reddit links, and contact information for KSP2 Redux.">
-	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	<BaseHead
+		title="Contact - KSP2 Redux"
+		description="Discord, GitHub, and Reddit links plus contact information for the KSP2 Redux project."
+	/>
 </head>
 <body class="bg-space-black text-white min-h-screen">
 	<Header />

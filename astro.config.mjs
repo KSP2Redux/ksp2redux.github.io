@@ -2,15 +2,20 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import starlightBlog from 'starlight-blog';
+import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://ksp2redux.github.io',
+	site: 'https://ksp2redux.org',
+	server: { port: Number(process.env.PORT) || 4321 },
 	vite: {
 		plugins: [tailwindcss()],
 	},
 	integrations: [
+		sitemap({
+			filter: (page) => !page.endsWith('/gallery/'),
+		}),
 		starlight({
 			plugins: [starlightBlog({
 				title: 'DEV BLOG',
@@ -24,6 +29,12 @@ export default defineConfig({
 				}
 			})],
 			title: 'KSP2 Redux',
+			head: [
+				{ tag: 'meta', attrs: { property: 'og:image', content: 'https://ksp2redux.org/og-image.png' } },
+				{ tag: 'meta', attrs: { property: 'og:image:width', content: '1200' } },
+				{ tag: 'meta', attrs: { property: 'og:image:height', content: '630' } },
+				{ tag: 'meta', attrs: { name: 'twitter:image', content: 'https://ksp2redux.org/og-image.png' } },
+			],
 			favicon: '/favicon.ico',
 			logo: {
 				src: './src/assets/logo.png',
