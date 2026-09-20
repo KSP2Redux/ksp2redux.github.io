@@ -26,6 +26,8 @@ export default defineConfig({
 			})],
 			title: 'KSP2 Redux',
 			head: [
+				{ tag: 'link', attrs: { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/inter-latin.woff2', crossorigin: 'anonymous' } },
+				{ tag: 'link', attrs: { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/exo2-latin.woff2', crossorigin: 'anonymous' } },
 				{ tag: 'meta', attrs: { property: 'og:image', content: 'https://ksp2redux.org/og-image.png' } },
 				{ tag: 'meta', attrs: { property: 'og:image:width', content: '1200' } },
 				{ tag: 'meta', attrs: { property: 'og:image:height', content: '630' } },
