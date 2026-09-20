@@ -2,7 +2,6 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import starlightBlog from 'starlight-blog';
-import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
@@ -13,9 +12,6 @@ export default defineConfig({
 		plugins: [tailwindcss()],
 	},
 	integrations: [
-		sitemap({
-			filter: (page) => !page.endsWith('/gallery/'),
-		}),
 		starlight({
 			plugins: [starlightBlog({
 				title: 'DEV BLOG',
