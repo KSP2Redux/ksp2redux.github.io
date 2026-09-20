@@ -79,6 +79,8 @@ const structuredData = {
 <body class="bg-space-black text-white">
 	<Header />
 
+	<main class="page-main">
+
 	<section class="page-hero page-hero--simple pt-24 pb-10">
 		<div class="absolute inset-0 z-0" style="background-image: url('/background.webp'); background-size: cover; background-position: center;"></div>
 		<div class="absolute inset-0 z-0 bg-gradient-to-r from-space-black via-space-black/80 to-space-black/30"></div>
@@ -225,6 +227,8 @@ const structuredData = {
 		</div>
 	</section>
 
+	</main>
+
 	<Footer />
 </body>
 </html>
@@ -259,7 +263,8 @@ const structuredData = {
 
 	.home-heading-link {
 		color: #ff7f6b;
-		text-decoration: none;
+		text-decoration: underline;
+		text-underline-offset: 0.18em;
 	}
 
 	.home-heading-link:hover,

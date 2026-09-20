@@ -1380,6 +1380,12 @@ main {
 	background: #0a0a0a !important;
 }
 
+/* The custom pages render their own hero backdrop, so the rule above must not
+   paint over it. Higher specificity wins between the two !important rules. */
+main.page-main {
+	background: transparent !important;
+}
+
 /* Remove/fix borders between blocks */
 .sl-markdown-content > * + * {
 	border-color: rgba(255, 255, 255, 0.1) !important;
