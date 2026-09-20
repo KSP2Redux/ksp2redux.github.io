@@ -20,6 +20,7 @@ const socialImage = new URL(image, Astro.site);
 <link rel="canonical" href={canonical} />
 {noindex && <meta name="robots" content="noindex, follow" />}
 
+<link rel="preload" as="image" href="/background.webp" fetchpriority="high" />
 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
