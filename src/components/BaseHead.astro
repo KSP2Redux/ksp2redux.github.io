@@ -20,6 +20,8 @@ const socialImage = new URL(image, Astro.site);
 <link rel="canonical" href={canonical} />
 {noindex && <meta name="robots" content="noindex, follow" />}
 
+<link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin.woff2" crossorigin />
+<link rel="preload" as="font" type="font/woff2" href="/fonts/exo2-latin.woff2" crossorigin />
 <link rel="preload" as="image" href="/background.webp" fetchpriority="high" />
 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="sitemap" href="/sitemap-index.xml" />
