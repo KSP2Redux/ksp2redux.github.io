@@ -109,7 +109,7 @@ You agree to indemnify and hold harmless the Redux maintainers, contributors, an
 
 Your use of Redux is also governed by the Privacy Policy:
 
-[Privacy Policy](/privacy-policy)
+[Privacy Policy](/privacy-policy/)
 
 ## 14. Disputes
 
