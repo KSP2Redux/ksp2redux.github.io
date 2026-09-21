@@ -189,6 +189,8 @@ export const roadmapFeatureGroups: RoadmapFeatureGroup[] = [
 			'SAS stability, time warp behavior, targeting, and vessel state changes have been fixed in several edge cases, along with new vessel categories and icons in the map and tracking station.',
 			'Maneuver nodes can now be added and edited while paused, with scroll-wheel precision input for maneuver gizmos.',
 			'Flight controls now show notifications when precision input mode changes and when trim is applied or reset.',
+			'Docking ports can now be rotated in the 0.2.9 snapshots, struts can be disconnected from the Parts Manager or with action groups, and staging supports stage-based fuel priorities with per-tank flow controls.',
+			'A Stage Recovery system, personal waypoints, and a first-person Kerbal camera have been added in the 0.2.9 snapshots.',
 		],
 	},
 	{
@@ -201,6 +203,7 @@ export const roadmapFeatureGroups: RoadmapFeatureGroup[] = [
 			'Redux has added things like an improved color manager with presets, better orbital info panel, better notifications, and cleaner loading flows.',
 			'Various parts of the UI have been improved or completely reworked in the flight view, map view, tracking station, VAB and R&D Center.',
 			'We are also gradually working on unifying the UI style and replacing the inconsistent stock UI with our own versions.',
+			'The Tracking Station information panel has been rebuilt with resource overlays in the 0.2.9 snapshots, and the launch countdown has been updated.',
 		],
 	},
 	{
@@ -213,6 +216,8 @@ export const roadmapFeatureGroups: RoadmapFeatureGroup[] = [
 			'The tech tree and missions have been expanded, including new gateway missions and tech tree nodes for new parts.',
 			'Visual and EVA additions include better clouds, sun flares, planet-specific reentry colors, helmet lights, EVA parachutes, and supersampling for flight and the VAB.',
 			'Campaign-related additions include custom flags, a statistics window, and clearer vessel categories and icons in the map and tracking station.',
+			'Two new celestial bodies, Drast and Beyl, both moons of Dres, have been added in the 0.2.9 snapshots, built with the new in-engine planet authoring tools.',
+			'Mineable uranium has been added to Duna and Pol in the 0.2.9 snapshots, scannable from orbit, extractable with drills and stored in solid resource containers, alongside further SM+ parts and new missions.',
 		],
 	},
 	{
