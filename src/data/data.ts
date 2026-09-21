@@ -31,8 +31,8 @@ export interface RoadmapStats {
 }
 
 export const roadmapStats: RoadmapStats = {
-	bugFixCount: 240,
-	performanceCount: 40,
+	bugFixCount: 408,
+	performanceCount: 122,
 };
 
 export const roadmapMilestones: RoadmapMilestone[] = [
