@@ -14,6 +14,12 @@ permissions:
   pages: write
   id-token: write
 
+# Run one deployment at a time so a slower, older build can't overwrite a newer one when several
+# merges land together. Queued runs in between are skipped, but an in-progress deploy is never cancelled.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
