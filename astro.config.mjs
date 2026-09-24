@@ -25,6 +25,7 @@ export default defineConfig({
 				}
 			})],
 			title: 'KSP2 Redux',
+			routeMiddleware: './src/routeData.ts',
 			head: [
 				{ tag: 'link', attrs: { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/inter-latin.woff2', crossorigin: 'anonymous' } },
 				{ tag: 'link', attrs: { rel: 'preload', as: 'font', type: 'font/woff2', href: '/fonts/exo2-latin.woff2', crossorigin: 'anonymous' } },
