@@ -49,6 +49,7 @@ const structuredData = {
 			'@type': 'WebSite',
 			'@id': `${siteUrl}/#website`,
 			name: 'KSP2 Redux',
+			alternateName: ['KSP2Redux', 'KSP 2 Redux', 'Kerbal Space Program 2 Redux'],
 			url: `${siteUrl}/`,
 			publisher: { '@id': `${siteUrl}/#organization` },
 			inLanguage: 'en',
@@ -74,7 +75,7 @@ const structuredData = {
 <html lang="en">
 <head>
 	<BaseHead
-		title="KSP2 Redux – Community Continuation of Kerbal Space Program 2"
+		title="KSP2 Redux"
 		description="KSP2 Redux is a community-made continuation patch for Kerbal Space Program 2, focused on bug fixes, performance work, and finishing the game."
 	/>
 	<script type="application/ld+json" set:html={JSON.stringify(structuredData)} is:inline />
