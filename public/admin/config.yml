@@ -25,6 +25,8 @@ collections:
     label_singular: Blog post
     description: News, release notes, and development updates.
     folder: src/content/docs/blog
+    media_folder: /src/assets/blog/uploads
+    public_folder: ../../../assets/blog/uploads
     create: true
     extension: mdx
     format: frontmatter
