@@ -13,7 +13,14 @@ const navItems = [
 ];
 
 // Detect if we're on a Starlight page
-const isStarlight = pathname.startsWith('/guides') || pathname.startsWith('/blog');
+// Starlight's `starlightRoute` getter throws when read outside a Starlight page.
+const isStarlight = (() => {
+	try {
+		return Astro.locals.starlightRoute !== undefined;
+	} catch {
+		return false;
+	}
+})();
 
 // Desktop nav path checking
 const withSlash = (href: string) =>
@@ -49,7 +56,7 @@ const isActive = (href: string) => {
 						href={withSlash(item.href)}
 						class:list={[
 							"text-sm font-medium transition-colors duration-200",
-							isActive(item.href) ? "text-ksp-red" : "text-gray-300 hover:text-white"
+							isActive(item.href) ? "text-ksp-red-text" : "text-gray-300 hover:text-white"
 						]}
 					>
 						{item.label}
@@ -103,7 +110,7 @@ const isActive = (href: string) => {
 					href={withSlash(item.href)}
 					class:list={[
 						"transition-colors py-2 font-medium",
-						isActive(item.href) ? "text-ksp-red" : "text-gray-300 hover:text-white"
+						isActive(item.href) ? "text-ksp-red-text" : "text-gray-300 hover:text-white"
 					]}
 					aria-current={isActive(item.href) ? 'page' : undefined}
 				>
