@@ -1,15 +1,17 @@
 import { defineRouteMiddleware } from '@astrojs/starlight/route-data';
 
-const blogPaginationPath = /^\/blog\/(\d+)\/?$/;
+const blogIndexPath = /^\/blog(?:\/(\d+))?\/?$/;
+const blogIndexTitle = 'Dev Blog & Release Notes';
 
 export const onRequest = defineRouteMiddleware(async (context, next) => {
 	await next();
 
-	const pageNumber = context.url.pathname.match(blogPaginationPath)?.[1];
-	if (!pageNumber) return;
+	const match = context.url.pathname.match(blogIndexPath);
+	if (!match) return;
 
+	const pageNumber = match[1];
+	const pageTitle = pageNumber ? `${blogIndexTitle} – Page ${pageNumber}` : blogIndexTitle;
 	const { head, entry } = context.locals.starlightRoute;
-	const pageTitle = `${entry.data.title} – Page ${pageNumber}`;
 
 	for (const tag of head) {
 		if (tag.tag === 'title') {
