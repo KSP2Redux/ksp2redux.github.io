@@ -121,7 +121,7 @@ const icons: Record<string, string> = {
 				<h3 class="text-white font-heading font-semibold mb-4">Quick Links</h3>
 				<ul class="space-y-2">
 					{quickLinks.map(link => (
-						<li><a href={withSlash(link.href)} class="text-gray-400 hover:text-ksp-red transition-colors text-sm">{link.label}</a></li>
+						<li><a href={withSlash(link.href)} class="text-gray-400 hover:text-ksp-red-text transition-colors text-sm">{link.label}</a></li>
 					))}
 				</ul>
 			</div>
@@ -135,7 +135,7 @@ const icons: Record<string, string> = {
 							<a 
 								href={withSlash(link.href)}
 								{...link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}}
-								class="text-gray-400 hover:text-ksp-red transition-colors text-sm"
+								class="text-gray-400 hover:text-ksp-red-text transition-colors text-sm"
 							>
 								{link.label}
 							</a>

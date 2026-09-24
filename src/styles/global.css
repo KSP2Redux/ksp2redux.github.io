@@ -56,6 +56,7 @@
 @theme {
 	/* Custom Colors */
 	--color-ksp-red: #df1601;
+	--color-ksp-red-text: #ff3b24;
 	--color-orange-600: #c41301;
 	--color-ksp-blue: #1a1a1a;
 	--color-ksp-dark: #0a0a0a;
@@ -112,7 +113,7 @@
 	
 	/* Sidebar background */
 	--sl-color-bg-sidebar: #0a0a0a;
-	--sl-color-text-accent: #df1601;
+	--sl-color-text-accent: #ff3b24;
 }
 
 @media (forced-colors: none) and (prefers-contrast: no-preference) {
@@ -318,7 +319,7 @@
 
 	.blog-entry:hover .blog-entry-title,
 	.blog-post-entry:hover .blog-post-entry-title {
-		color: #df1601;
+		color: #ff3b24;
 	}
 
 	.blog-entry-date,
@@ -1262,7 +1263,7 @@ nav[aria-label='Main'] button[aria-label='Menu'] path {
 }
 
 .site-footer a:hover {
-	color: #df1601;
+	color: #ff3b24;
 }
 
 .site-footer .flex {
@@ -1403,11 +1404,11 @@ details.card-glass p {
 }
 
 .sl-toc a:hover {
-	color: #df1601 !important;
+	color: #ff3b24 !important;
 }
 
 .sl-toc .current {
-	color: #df1601 !important;
+	color: #ff3b24 !important;
 	font-weight: 600;
 }
 
@@ -1520,7 +1521,7 @@ main.page-main {
 
 /* Links - KSP Redux red */
 .sl-markdown-content a {
-	color: #df1601 !important;
+	color: #ff3b24 !important;
 	text-decoration: none !important;
 	border-bottom: 1px solid rgba(223, 22, 1, 0.3);
 	transition: all 0.2s;
@@ -1694,7 +1695,7 @@ pre {
 .sl-markdown-content table th {
 	padding: 1rem;
 	text-align: left;
-	color: #df1601;
+	color: #ff3b24;
 	font-weight: 600;
 	font-family: "Exo 2", system-ui, sans-serif;
 }

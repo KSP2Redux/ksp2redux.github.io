@@ -55,7 +55,7 @@ collections:
       - label: Body
         name: body
         widget: richtext
-        hint: Use Raw mode when editing MDX imports, JSX, or components that are not represented in the toolbar.
+        hint: Don't start the post with a Heading 1 repeating the title; the title is shown automatically. Use Heading 2 and below for sections. Use Raw mode when editing MDX imports, JSX, or components that are not represented in the toolbar.
         modes: [rich_text, raw]
         editor_components: [image, code-block, youtube, aside, card]
         sanitize_preview: true

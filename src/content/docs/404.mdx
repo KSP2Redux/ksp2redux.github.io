@@ -1,0 +1,37 @@
+---
+title: Page not found
+description: The page you were looking for doesn't exist or has moved.
+editUrl: false
+hero:
+  title: Page not found
+  tagline: The page you were looking for doesn't exist or has moved. These links should get you back on track.
+  actions:
+    - text: Go to the homepage
+      link: /
+      icon: right-arrow
+      variant: primary
+    - text: Installation guide
+      link: /guides/installation/
+      variant: secondary
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Popular pages
+
+<CardGrid>
+	<Card title="Installation guide" icon="rocket">
+		How to install Redux and where to start if something goes wrong. [Read the guide](/guides/installation/)
+	</Card>
+	<Card title="FAQ" icon="information">
+		Answers to the most common questions about Redux. [Open the FAQ](/faq/)
+	</Card>
+	<Card title="Dev blog" icon="document">
+		Release notes, snapshots, and development updates. [Read the blog](/blog/)
+	</Card>
+	<Card title="Roadmap" icon="list-format">
+		What's done, what's in progress, and what's planned. [See the roadmap](/roadmap/)
+	</Card>
+</CardGrid>
+
+Still stuck? Ask on the [KSP2 Redux Discord](https://discord.gg/ksp2redux).
