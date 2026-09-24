@@ -34,7 +34,10 @@ collections:
     summary: "{{title}} — {{date}}"
     sortable_fields: [date, title]
     fields:
-      - { label: Title, name: title, widget: string }
+      - label: Title
+        name: title
+        widget: string
+        hint: 'Releases: "v0.2.8.4 Beta 6 Hotfix 4" (four-part version). Snapshots: "Snapshot 26w39a". Challenges: "Snapshot Challenge #3: Theme".'
       - label: Publication date
         name: date
         widget: datetime
@@ -49,7 +52,10 @@ collections:
           - { label: Role or title, name: title, widget: string, required: false }
           - { label: Picture, name: picture, widget: string, required: false }
           - { label: Website, name: url, widget: string, required: false }
-      - { label: Description, name: description, widget: text }
+      - label: Description
+        name: description
+        widget: text
+        hint: One or two plain sentences (under 160 characters) summarizing the post. Shown in Google results and link previews, so no links, images or markdown.
       - { label: Excerpt, name: excerpt, widget: text, required: false }
       - { label: Tags, name: tags, widget: list, required: false }
       - { label: Featured, name: featured, widget: boolean, required: false, default: false }
