@@ -1,0 +1,585 @@
+---
+import { Image } from 'astro:assets';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { latestVersion } from '../data/data';
+import {
+	fetchLatestUpdaterRelease,
+	formatReleaseDate,
+	formatSize,
+	latestDownloadUrl,
+	updaterAssets,
+	updaterReleasesUrl,
+	updaterVersion,
+} from '../lib/updaterRelease';
+import updaterScreenshot from '../assets/updater/updater-settings.png';
+import '../styles/global.css';
+
+const release = await fetchLatestUpdaterRelease(process.env.GITHUB_TOKEN);
+const releaseSummary = release
+	? `Updater ${updaterVersion(release.tag)}, released ${formatReleaseDate(release.publishedAt)}`
+	: 'Always the latest Updater release';
+
+const withReleaseInfo = (kind: 'app' | 'cli') =>
+	updaterAssets
+		.filter((asset) => asset.kind === kind)
+		.map((asset) => ({ ...asset, url: latestDownloadUrl(asset.name), info: release?.assets[asset.name] }));
+
+const [windowsUpdater, linuxUpdater] = withReleaseInfo('app');
+const cliInstallCommands = {
+	Windows: 'irm https://raw.githubusercontent.com/KSP2Redux/Updater/main/scripts/install-cli.ps1 | iex',
+	Linux: 'curl -fsSL https://raw.githubusercontent.com/KSP2Redux/Updater/main/scripts/install-cli.sh | bash',
+};
+const cliPlatforms = withReleaseInfo('cli').map((file) => ({
+	label: file.platform === 'Windows' ? 'Windows (PowerShell)' : file.platform,
+	command: cliInstallCommands[file.platform],
+	file,
+}));
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<BaseHead
+		title="Download KSP2 Redux for Windows and Linux"
+		description="Download the free KSP2 Redux Updater for Windows or Linux. It installs Redux on top of stock Kerbal Space Program 2 v0.2.2.0 and keeps it up to date."
+	/>
+</head>
+<body class="bg-space-black text-white min-h-screen">
+	<Header />
+
+	<main class="page-main">
+
+	<section class="page-hero pt-32 pb-16">
+		<div class="absolute inset-0 z-0" style="background-image: url('/background.webp'); background-size: cover; background-position: center;"></div>
+		<div class="absolute inset-0 z-0 bg-gradient-to-r from-space-black via-space-black/80 to-space-black/20"></div>
+		<div class="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-space-black/25 to-space-black"></div>
+
+		<div class="section-container relative z-10">
+			<div class="max-w-4xl">
+				<h1 class="page-title">
+					Download{' '}
+					<span>KSP2 Redux</span>
+				</h1>
+				<p class="download-version">Latest stable release: {latestVersion}</p>
+				<p class="page-intro">
+					KSP2 Redux is free. Download the Redux Updater for your system, and it installs Redux on top of your own
+					copy of Kerbal Space Program 2 and keeps it up to date.
+				</p>
+				<div class="download-action-row">
+					<a href={windowsUpdater.url} class="btn-primary">Download for Windows</a>
+					<a href={linuxUpdater.url} class="btn-primary">Download for Linux</a>
+				</div>
+				<p class="download-hint">
+					macOS is coming soon. Prefer the terminal? Use the <a href="#command-line" class="download-link">command-line installer</a>.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="section-container py-8" id="updater">
+		<div class="page-section-heading">
+			<h2>Redux Updater</h2>
+			<p>
+				Pick the file for your operating system. Every download is the newest release.{' '}
+				<span data-updater-summary>{releaseSummary}</span>.
+			</p>
+		</div>
+
+		<div class="download-platforms">
+			{[windowsUpdater, linuxUpdater].map((file) => (
+				<article class="card-glass download-platform" data-asset={file.name}>
+					<header>
+						<h3>{file.platform}</h3>
+						<p class="download-platform__file"><code>{file.name}</code></p>
+					</header>
+					<div class="download-platform__body">
+						{file.platform === 'Windows' ? (
+							<p>Run the downloaded file to open the Updater.</p>
+						) : (
+							<>
+								<p>Make the file executable, then run it:</p>
+								<pre class="download-code"><code>chmod +x {file.name}{'\n'}./{file.name}</code></pre>
+							</>
+						)}
+					</div>
+					<dl class="download-meta">
+						<div>
+							<dt>Size</dt>
+							<dd data-field="size">{file.info ? formatSize(file.info.size) : '–'}</dd>
+						</div>
+						<div data-field="hash" hidden={!file.info?.sha256}>
+							<dt>SHA-256</dt>
+							<dd><code data-field="sha256">{file.info?.sha256}</code></dd>
+						</div>
+					</dl>
+					<a href={file.url} class="btn-primary download-platform__button">Download for {file.platform}</a>
+				</article>
+			))}
+			<article class="card-glass download-platform download-platform--soon">
+				<header>
+					<h3>macOS</h3>
+					<p class="download-platform__file">In development</p>
+				</header>
+				<div class="download-platform__body">
+					<p>
+						A macOS version is in the works. Follow the{' '}
+						<a href="/blog/" class="download-link">blog</a> or join the{' '}
+						<a href="https://discord.gg/ksp2redux" class="download-link">Discord</a> to hear when it's ready.
+					</p>
+				</div>
+				<span class="btn-primary download-platform__button" aria-disabled="true">Coming soon</span>
+			</article>
+		</div>
+
+		<p class="download-note">
+			Downloaded it? The <a href="/guides/installation/" class="download-link">installation guide</a> walks you through
+			setting up the Updater and installing Redux. On Linux, the game runs through Proton, so also read{' '}
+			<a href="/guides/linux-support/" class="download-link">Linux support</a>.
+		</p>
+	</section>
+
+	<section class="section-container py-12">
+		<div class="download-showcase">
+			<div>
+				<div class="page-section-heading">
+					<h2>What the Updater does</h2>
+				</div>
+				<ul class="download-list">
+					<li>Installs Redux on top of your stock KSP2 install</li>
+					<li>Updates Redux to the newest version whenever one comes out</li>
+					<li>Switches between the stable and beta (snapshot) release channels</li>
+					<li>Launches the game directly or through Steam</li>
+					<li>Uninstalls Redux and takes you back to stock KSP2</li>
+				</ul>
+			</div>
+			<figure class="download-screenshot">
+				<Image
+					src={updaterScreenshot}
+					alt="The Redux Updater's Settings tab, showing the KSP2 install path, release channel, launch options and the Uninstall Redux button."
+					widths={[640, 960, 1291]}
+					sizes="(min-width: 1024px) 60vw, 100vw"
+				/>
+				<figcaption>The Settings tab of the Redux Updater.</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section class="section-container py-8" id="command-line">
+		<div class="page-section-heading">
+			<h2>Command-line installer</h2>
+			<p>
+				<code>redux-launcher-cli</code> does the same install as the Updater from a terminal, on Windows and Linux.
+				It doesn't need administrator rights, keeps itself up to date, and is handy for scripting.
+			</p>
+		</div>
+
+		<div class="card-glass download-cli">
+			<div class="download-cli__intro">
+				<h3>Install with one command</h3>
+				<p>
+					The easiest way. It installs the CLI, adds it to your PATH, and upgrades it if you run it again. Then run{' '}
+					<code>redux-launcher-cli --help</code>. The{' '}
+					<a href="/guides/installation/#installing-from-the-command-line" class="download-link">installation guide</a>{' '}
+					covers every command.
+				</p>
+			</div>
+
+			<div class="download-cli__platforms">
+				{cliPlatforms.map(({ label, command, file }) => (
+					<div class="download-cli__platform" data-asset={file.name}>
+						<div class="download-cli__label">
+							<span>{label}</span>
+							<button type="button" class="download-copy" data-copy={command} aria-label={`Copy the ${label} install command`}>
+								Copy
+							</button>
+						</div>
+						<pre class="download-code"><code>{command}</code></pre>
+						<p class="download-cli__manual">
+							Or download <a href={file.url} class="download-link">{file.name}</a> manually
+							<span data-field="size" data-prefix=" · ">{file.info ? ` · ${formatSize(file.info.size)}` : ''}</span>
+						</p>
+						<p class="download-hash" data-field="hash" hidden={!file.info?.sha256}>
+							SHA-256 <code data-field="sha256">{file.info?.sha256}</code>
+						</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="section-container py-8">
+		<div class="page-section-heading">
+			<h2>Stable or snapshot?</h2>
+			<p>The Updater and the CLI both have two release channels. You can switch between them in the settings.</p>
+		</div>
+
+		<div class="download-grid">
+			<div class="card-glass download-card">
+				<h3>Stable</h3>
+				<p>
+					The tested release, currently {latestVersion}. This is the default, and the right choice if you just
+					want to play.
+				</p>
+			</div>
+			<div class="card-glass download-card">
+				<h3>Snapshots (beta channel)</h3>
+				<p>
+					Builds of the latest work, released most weeks. You get new features first, but expect bugs, and don't
+					play your main saves on them. Every snapshot has a changelog on the{' '}
+					<a href="/blog/" class="download-link">blog</a>.
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="section-container py-8 pb-20">
+		<div class="page-section-heading">
+			<h2>Before you install</h2>
+		</div>
+		<div class="download-body">
+			<p>
+				You need your own copy of KSP2 from Steam or the Epic Games Store, on stock v0.2.2.0, the last official
+				version, and at least 4 GB of free disk space. The{' '}
+				<a href="/guides/installation/#requirements" class="download-link">installation guide</a> has the full
+				requirements and every setup step.
+			</p>
+			<p>
+				To check a download, compare its SHA-256 with the value on this page, using{' '}
+				<code>Get-FileHash .\Ksp2Redux-win-x64.exe</code> in PowerShell or <code>sha256sum Ksp2Redux-linux-x64</code>{' '}
+				on Linux. Release notes for every Updater version are on{' '}
+				<a href={updaterReleasesUrl} target="_blank" rel="noopener noreferrer" class="download-link">GitHub</a>.
+			</p>
+		</div>
+	</section>
+
+	</main>
+
+	<Footer />
+</body>
+</html>
+
+<script>
+	import { fetchLatestUpdaterRelease, formatReleaseDate, formatSize, updaterVersion } from '../lib/updaterRelease';
+
+	document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((button) => {
+		button.addEventListener('click', async () => {
+			try {
+				await navigator.clipboard.writeText(button.dataset.copy ?? '');
+				button.textContent = 'Copied';
+			} catch {
+				button.textContent = 'Copy failed';
+			}
+			setTimeout(() => (button.textContent = 'Copy'), 2000);
+		});
+	});
+
+	// The page is static, so refresh the details in case a newer Updater was released after the last build.
+	fetchLatestUpdaterRelease().then((release) => {
+		if (!release) return;
+
+		const summary = document.querySelector('[data-updater-summary]');
+		if (summary) {
+			summary.textContent = `Updater ${updaterVersion(release.tag)}, released ${formatReleaseDate(release.publishedAt)}`;
+		}
+
+		document.querySelectorAll<HTMLElement>('[data-asset]').forEach((element) => {
+			const info = release.assets[element.dataset.asset ?? ''];
+			if (!info) return;
+
+			const size = element.querySelector('[data-field="size"]');
+			const hash = element.querySelector<HTMLElement>('[data-field="hash"]');
+			const sha256 = element.querySelector('[data-field="sha256"]');
+			if (size instanceof HTMLElement) size.textContent = `${size.dataset.prefix ?? ''}${formatSize(info.size)}`;
+			if (hash && sha256) {
+				sha256.textContent = info.sha256 ?? '';
+				hash.hidden = !info.sha256;
+			}
+		});
+	});
+</script>
+
+<style>
+	.download-version {
+		margin: 0.85rem 0 0;
+		color: #9ca3af;
+		font-family: var(--font-family-heading);
+		font-size: 1rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+	}
+
+	.download-action-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.85rem;
+		margin-top: 1.75rem;
+	}
+
+	.download-hint {
+		margin: 1rem 0 0;
+		color: #9ca3af;
+		font-size: 0.9rem;
+	}
+
+	.download-link {
+		color: #ff7f6b;
+		text-decoration: underline;
+		text-underline-offset: 0.18em;
+	}
+
+	.page-section-heading code,
+	.download-platform code,
+	.download-cli code,
+	.download-body code {
+		padding: 0.1rem 0.35rem;
+		border-radius: 0.25rem;
+		background: rgba(255, 255, 255, 0.08);
+		font-size: 0.9em;
+	}
+
+	.download-code {
+		margin: 0.75rem 0 0;
+		padding: 0.85rem 1rem;
+		overflow-x: auto;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 0.5rem;
+		background: rgba(0, 0, 0, 0.35);
+		color: #e5e7eb;
+		font-size: 0.85rem;
+		line-height: 1.6;
+	}
+
+	.download-code code {
+		padding: 0;
+		background: none;
+		white-space: pre;
+	}
+
+	.download-platforms {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+
+	.download-platform {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+
+	.download-platform h3,
+	.download-cli h3,
+	.download-card h3 {
+		margin: 0;
+		font-family: var(--font-family-heading);
+		font-size: 1.5rem;
+		line-height: 1.15;
+	}
+
+	.download-platform__file {
+		margin: 0.5rem 0 0;
+		color: #9ca3af;
+	}
+
+	.download-platform__body {
+		flex-grow: 1;
+	}
+
+	.download-platform__body p,
+	.download-cli p,
+	.download-card p {
+		margin: 0.75rem 0 0;
+		color: #d1d5db;
+		line-height: 1.75;
+	}
+
+	.download-platform__body > p:first-child {
+		margin-top: 0;
+	}
+
+	.download-meta {
+		display: grid;
+		gap: 0.5rem;
+		margin: 0;
+		font-size: 0.8rem;
+	}
+
+	.download-meta dt {
+		color: #9ca3af;
+		font-weight: 600;
+	}
+
+	.download-meta dd {
+		margin: 0.15rem 0 0;
+		color: #d1d5db;
+	}
+
+	.download-platform__button {
+		align-self: stretch;
+		text-align: center;
+	}
+
+	.download-platform--soon .download-platform__button {
+		opacity: 0.45;
+		cursor: not-allowed;
+	}
+
+	.download-note {
+		margin: 1.5rem 0 0;
+		color: #d1d5db;
+		line-height: 1.75;
+	}
+
+	.download-showcase {
+		display: grid;
+		gap: 2rem;
+		align-items: center;
+	}
+
+	.download-list {
+		margin: 0;
+		padding-left: 1.25rem;
+		list-style: disc;
+		color: #d1d5db;
+		line-height: 1.75;
+	}
+
+	.download-list li + li {
+		margin-top: 0.5rem;
+	}
+
+	.download-screenshot {
+		margin: 0;
+	}
+
+	.download-screenshot img {
+		display: block;
+		width: 100%;
+		height: auto;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 0.75rem;
+		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+	}
+
+	.download-screenshot figcaption {
+		margin-top: 0.75rem;
+		color: #9ca3af;
+		font-size: 0.85rem;
+		text-align: center;
+	}
+
+	.download-cli {
+		display: grid;
+		gap: 1.5rem;
+	}
+
+	.download-cli__intro p {
+		max-width: 48rem;
+	}
+
+	.download-cli__intro code {
+		white-space: nowrap;
+	}
+
+	.download-cli__platforms {
+		display: grid;
+		gap: 1.5rem;
+	}
+
+	.download-cli__platform {
+		min-width: 0;
+	}
+
+	.download-cli__label {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		color: #9ca3af;
+		font-size: 0.85rem;
+		font-weight: 600;
+	}
+
+	.download-copy {
+		padding: 0.2rem 0.7rem;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: 999px;
+		background: transparent;
+		color: #d1d5db;
+		font-size: 0.8rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: border-color 0.2s, color 0.2s;
+	}
+
+	.download-copy:hover,
+	.download-copy:focus-visible {
+		border-color: #ff7f6b;
+		color: #ffffff;
+	}
+
+	.download-cli .download-cli__manual {
+		margin-top: 0.85rem;
+		font-size: 0.9rem;
+	}
+
+	.download-cli__manual a {
+		font-family: var(--sl-font-mono, monospace);
+	}
+
+	.download-hash {
+		margin: 0.35rem 0 0;
+		color: #9ca3af;
+		font-size: 0.8rem;
+	}
+
+	.download-meta code,
+	.download-hash code {
+		padding: 0;
+		background: none;
+		color: #d1d5db;
+		overflow-wrap: anywhere;
+	}
+
+	.download-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+
+	.download-body {
+		max-width: 48rem;
+	}
+
+	.download-body p {
+		margin: 0;
+		color: #d1d5db;
+		line-height: 1.75;
+	}
+
+	.download-body p + p {
+		margin-top: 1rem;
+	}
+
+	@media (min-width: 768px) {
+		.download-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+	}
+
+	@media (min-width: 1024px) {
+		.download-platforms {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+
+		.download-showcase {
+			grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+		}
+
+		.download-cli__platforms {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+</style>
