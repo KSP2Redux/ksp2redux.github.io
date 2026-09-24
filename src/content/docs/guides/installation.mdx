@@ -5,7 +5,7 @@ description: Step-by-step instructions for installing KSP2 Redux on Steam, Epic 
 
 import { Aside } from '@astrojs/starlight/components';
 
-This guide will walk you through installing KSP2 Redux on your system.
+This guide will walk you through installing KSP2 Redux on your system. If you just need the files, head to the [download page](/download/).
 
 <Aside type="caution" title="Beta Software">
 We are currently in the beta testing phase. Please keep in mind that some things may be broken.
@@ -15,18 +15,13 @@ We are currently in the beta testing phase. Please keep in mind that some things
 
 - **KSP2 Version:** You must have stock KSP2 v0.2.2.0 installed (the latest official version)
 - **Disk Space:** At least 4 GB of free space for new assets
-- **Operating System:** Windows or Linux (x64)
+- **Operating System:** Windows or Linux (x64). macOS is coming soon.
 
 ## Installation Steps
 
 ### 1. Download the Updater
 
-Go to the [latest release](https://github.com/KSP2Redux/Updater/releases/latest) and download the file for your system:
-
-| System  | File                    |
-| ------- | ----------------------- |
-| Windows | `Ksp2Redux-win-x64.exe` |
-| Linux   | `Ksp2Redux-linux-x64`   |
+Get the Redux Updater for your system from the [download page](/download/): `Ksp2Redux-win-x64.exe` on Windows or `Ksp2Redux-linux-x64` on Linux. It always has the newest version.
 
 On Linux, mark it executable before running it:
 
@@ -41,6 +36,8 @@ chmod +x Ksp2Redux-linux-x64
 2. Setup your KSP2 Installation in the settings tab (if not auto-detected)
 3. Make sure the release channel in the settings tab is the one you want (it should be setup by default)
 4. Go back to the home tab
+
+![The Settings tab of the Redux Updater, showing the KSP2 install path, release channel and launch options](../../../assets/updater/updater-settings.png)
 
 ### 3. Select Version To Install
 
@@ -69,7 +66,7 @@ There is also a CLI, `redux-launcher-cli`, that does the same install as the Upd
 terminal. It reads and writes the same config, so you can move between the two freely. It works on
 Windows and Linux and does not need administrator rights.
 
-Install it with one line:
+Install it with one line, or download `redux-cli-x64.exe` (Windows) or `redux-cli-x64` (Linux) manually from the [download page](/download/#command-line):
 
 ```powershell
 irm https://raw.githubusercontent.com/KSP2Redux/Updater/main/scripts/install-cli.ps1 | iex
