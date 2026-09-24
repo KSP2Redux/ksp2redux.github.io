@@ -15,7 +15,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 BLOG_DIR = ROOT / "src" / "content" / "docs" / "blog"
+IMAGE_DIR = ROOT / "src" / "assets" / "blog"
+IMAGE_URL_PREFIX = "../../../assets/blog"
 MEDIA_DIR = ROOT / "public" / "blog" / "redux-news"
+MEDIA_URL_PREFIX = "/blog/redux-news"
+IMAGE_EXTENSIONS = (".png", ".jpg", ".jpeg", ".gif", ".webp")
 
 DISCORD_GUILD_BASE = "https://discord.com/channels/1078696971088433153"
 CHANNEL_NAMES = {
@@ -1231,7 +1235,7 @@ def download_file(url: str, destination: Path) -> str | None:
 def media_markup(media: Media, relative_path: str) -> str:
     lower = relative_path.lower()
     alt = media.alt or Path(relative_path).stem.replace("-", " ")
-    if lower.endswith((".png", ".jpg", ".jpeg", ".gif", ".webp")):
+    if lower.endswith(IMAGE_EXTENSIONS):
         return f"![{alt}]({relative_path})"
     if lower.endswith((".mp4", ".webm", ".mov")):
         return f'<video controls preload="metadata" src="{html.escape(relative_path)}"></video>'
@@ -1239,12 +1243,13 @@ def media_markup(media: Media, relative_path: str) -> str:
 
 
 def write_post(post: Post) -> None:
-    post_dir = MEDIA_DIR / post.slug
-    post_dir.mkdir(parents=True, exist_ok=True)
-
     media_blocks: list[str] = []
     for index, media in enumerate(post.media, start=1):
         filename = media.filename or f"asset-{index}{extension_from_url(media.url)}"
+        # Astro only optimizes images imported from src/; other media must be served from public/.
+        is_image = filename.lower().endswith(IMAGE_EXTENSIONS)
+        post_dir = (IMAGE_DIR if is_image else MEDIA_DIR) / post.slug
+        post_dir.mkdir(parents=True, exist_ok=True)
         target = post_dir / filename
         error = download_file(media.url, target)
         if error:
@@ -1252,7 +1257,8 @@ def write_post(post: Post) -> None:
                 f"*Unable to recover `{filename}` from Discord: {error}*"
             )
             continue
-        media_blocks.append(media_markup(media, f"/blog/redux-news/{post.slug}/{filename}"))
+        url_prefix = IMAGE_URL_PREFIX if is_image else MEDIA_URL_PREFIX
+        media_blocks.append(media_markup(media, f"{url_prefix}/{post.slug}/{filename}"))
 
     body = clean_text(post.body)
     if media_blocks:

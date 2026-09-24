@@ -15,12 +15,12 @@ In order to work on missions and tutorials (both modifying existing stock ones a
 
 Basically, the missions and tutorials are just JSON files that the game's code reads from in order to have those appear and work ingame. But as shown by the image below, those JSON files aren't that readable, especially for beginners or people not used to using them
 
-![Raw Mission JSON, very hard to read/edit](/blog/redux-news/mission-editor-tutorials/mission-json.png)
+![Raw Mission JSON, very hard to read/edit](../../../assets/blog/mission-editor-tutorials/mission-json.png)
 
 To make working more easily on those, the mission editor are able to convert those JSON files into more readable mission editor files.
 Here is how one of those mission editor files looks like (that's the beginning of the 4.1 tutorial)
 
-![The beginning of the 4.1 tutorial in the editor, the mission metadata and 2 of its stages are shwon in a much more readable/editable manner](/blog/redux-news/mission-editor-tutorials/4_1_tutorial.png)
+![The beginning of the 4.1 tutorial in the editor, the mission metadata and 2 of its stages are shwon in a much more readable/editable manner](../../../assets/blog/mission-editor-tutorials/4_1_tutorial.png)
 
 As you see, it's easier to understand at first glance what is going on, the flow of the tutorials etc...
 
@@ -28,13 +28,13 @@ Using the editor, we can easily add new conditions or property watchers to valid
 
 Example here, this stage validates when the player's vessel is above 500 m above sea level, and once that condition is validated, the tutorial goes on next stage
 
-![2 stages in sequence with the first one having an Alittude condition of greater than 500 meters before flowing into the next](/blog/redux-news/mission-editor-tutorials/500_meters.png)
+![2 stages in sequence with the first one having an Alittude condition of greater than 500 meters before flowing into the next](../../../assets/blog/mission-editor-tutorials/500_meters.png)
 
 Another example of the Mission Editor's possibilities are the ability to add failure tests, which are conditions that if they are met, consider the tutorial as failed and goes to a failure stage where the player is proposed to restart the tutorial.
 
 In this image, the failure test is met if the player removes a part from the vessel or if the player goes into the launch pad from the VAB. Since it's from the 4.2 tutorial which only takes place in the VAB, it makes sure that the player actually stays in the VAB
 
-![An exception branch being shown in the mission editor which allows the mission to be 'failed' if the user launches from the VAB or removes a part from the assembly](/blog/redux-news/mission-editor-tutorials/failure.png)
+![An exception branch being shown in the mission editor which allows the mission to be 'failed' if the user launches from the VAB or removes a part from the assembly](../../../assets/blog/mission-editor-tutorials/failure.png)
 
 There are a lot of others features of the mission Editor that I could speak about, but I'll speak about them later in another devblog or in tutorials about how to use the Mission Editor
 
