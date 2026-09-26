@@ -15,15 +15,13 @@ Launcher 0.6.0 is out, and it's a big one. The short version: KSP2 now runs on a
 
 ## KSP2 on a Mac
 
-KSP2 never came out for the Mac. There is no macOS build of the game, and Steam won't even let you download it on one. Getting it running on a Mac before meant setting up something like CrossOver yourself and fiddling with it until it maybe worked.
+KSP2 never came out for the Mac. There is no macOS build of the game, and Steam won't even let you download it on one.
 
-I've been working on this for quite a while now, and the goal was always the same: make KSP2 with Redux just work on a Mac, without any of that. That meant building our own Wine runtime and shipping it inside the launcher, getting CI to build all of it automatically, teaching the launcher to download the game from Steam by itself, and chasing down a whole pile of small Mac-only problems along the way, like Rosetta missing or macOS refusing to open an unsigned app. It took a lot longer than I'd like to admit, but it works now, and I'm honestly pretty proud of how it turned out.
-
-So the macOS launcher brings its own Wine runtime and runs the Windows version of the game.
+I've been working on this for quite a while, trying to make the whole setup as simple as possible so KSP2 with Redux just works on a Mac. The macOS launcher brings its own Wine runtime and runs the Windows version of the game, so there's no CrossOver or anything else to set up yourself.
 
 ![The KSP2 Redux launcher open on a macOS desktop, with the Snapshot 26w39b build selected and the Launch button ready](../../../assets/blog/launcher-0-6-0/mac-desktop-launcher.png)
 
-A bit more detail for the curious: Wine runs the Windows game, and DXMT translates the game's Direct3D 11 calls to Metal, which is what the GPU in your Mac actually speaks. The runtime is built from CodeWeavers' open source release of CrossOver 26.3 and bundled inside the app, so there's nothing to install or set up. If you already have CrossOver installed the launcher can use that too.
+A bit more detail for the curious: Wine runs the Windows game, and DXMT translates the game's Direct3D 11 calls to Metal, which is what the GPU in your Mac actually speaks. The runtime is built from CodeWeavers' open source release of CrossOver 26.3 and bundled inside the app. If you already have CrossOver installed the launcher can use that too.
 
 It's Apple Silicon only for now, and it needs Rosetta 2 since the game and Wine are x86_64. If Rosetta is missing the launcher tells you how to install it instead of just falling over.
 
