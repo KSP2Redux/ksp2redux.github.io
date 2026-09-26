@@ -26,10 +26,13 @@ const withReleaseInfo = (kind: 'app' | 'cli') =>
 		.filter((asset) => asset.kind === kind)
 		.map((asset) => ({ ...asset, url: latestDownloadUrl(asset.name), info: release?.assets[asset.name] }));
 
-const [windowsUpdater, linuxUpdater] = withReleaseInfo('app');
+const updaters = withReleaseInfo('app');
+const updaterFor = (platform: string) => updaters.find((file) => file.platform === platform)!;
+const installCliUnix = 'curl -fsSL https://raw.githubusercontent.com/KSP2Redux/Updater/main/scripts/install-cli.sh | bash';
 const cliInstallCommands = {
 	Windows: 'irm https://raw.githubusercontent.com/KSP2Redux/Updater/main/scripts/install-cli.ps1 | iex',
-	Linux: 'curl -fsSL https://raw.githubusercontent.com/KSP2Redux/Updater/main/scripts/install-cli.sh | bash',
+	macOS: installCliUnix,
+	Linux: installCliUnix,
 };
 const cliPlatforms = withReleaseInfo('cli').map((file) => ({
 	label: file.platform === 'Windows' ? 'Windows (PowerShell)' : file.platform,
@@ -42,8 +45,8 @@ const cliPlatforms = withReleaseInfo('cli').map((file) => ({
 <html lang="en">
 <head>
 	<BaseHead
-		title="Download KSP2 Redux for Windows and Linux"
-		description="Download the free KSP2 Redux Updater for Windows or Linux. It installs Redux on top of stock Kerbal Space Program 2 v0.2.2.0 and keeps it up to date."
+		title="Download KSP2 Redux for Windows, macOS and Linux"
+		description="Download the free KSP2 Redux Updater for Windows, macOS or Linux. It installs Redux on top of stock Kerbal Space Program 2 v0.2.2.0 and keeps it up to date."
 	/>
 </head>
 <body class="bg-space-black text-white min-h-screen">
@@ -68,11 +71,12 @@ const cliPlatforms = withReleaseInfo('cli').map((file) => ({
 					copy of Kerbal Space Program 2 and keeps it up to date.
 				</p>
 				<div class="download-action-row">
-					<a href={windowsUpdater.url} class="btn-primary">Download for Windows</a>
-					<a href={linuxUpdater.url} class="btn-primary">Download for Linux</a>
+					{updaters.map((file) => (
+						<a href={file.url} class="btn-primary">Download for {file.platform}</a>
+					))}
 				</div>
 				<p class="download-hint">
-					macOS is coming soon. Prefer the terminal? Use the <a href="#command-line" class="download-link">command-line installer</a>.
+					The macOS version needs an Apple Silicon Mac. Prefer the terminal? Use the <a href="#command-line" class="download-link">command-line installer</a>.
 				</p>
 			</div>
 		</div>
@@ -88,16 +92,27 @@ const cliPlatforms = withReleaseInfo('cli').map((file) => ({
 		</div>
 
 		<div class="download-platforms">
-			{[windowsUpdater, linuxUpdater].map((file) => (
+			{updaters.map((file) => (
 				<article class="card-glass download-platform" data-asset={file.name}>
 					<header>
 						<h3>{file.platform}</h3>
 						<p class="download-platform__file"><code>{file.name}</code></p>
 					</header>
 					<div class="download-platform__body">
-						{file.platform === 'Windows' ? (
-							<p>Run the downloaded file to open the Updater.</p>
-						) : (
+						{file.platform === 'Windows' && <p>Run the downloaded file to open the Updater.</p>}
+						{file.platform === 'macOS' && (
+							<>
+								<p>
+									Open the <code>.dmg</code> and drag KSP2 Redux into Applications. For Apple Silicon Macs, and it needs
+									Rosetta 2.
+								</p>
+								<p>
+									It isn't signed by Apple yet, so the first time you open it, go to System Settings, Privacy &amp;
+									Security and click <strong>Open Anyway</strong>.
+								</p>
+							</>
+						)}
+						{file.platform === 'Linux' && (
 							<>
 								<p>Make the file executable, then run it:</p>
 								<pre class="download-code"><code>chmod +x {file.name}{'\n'}./{file.name}</code></pre>
@@ -117,25 +132,13 @@ const cliPlatforms = withReleaseInfo('cli').map((file) => ({
 					<a href={file.url} class="btn-primary download-platform__button">Download for {file.platform}</a>
 				</article>
 			))}
-			<article class="card-glass download-platform download-platform--soon">
-				<header>
-					<h3>macOS</h3>
-					<p class="download-platform__file">In development</p>
-				</header>
-				<div class="download-platform__body">
-					<p>
-						A macOS version is in the works. Follow the{' '}
-						<a href="/blog/" class="download-link">blog</a> or join the{' '}
-						<a href="https://discord.gg/ksp2redux" class="download-link">Discord</a> to hear when it's ready.
-					</p>
-				</div>
-				<span class="btn-primary download-platform__button" aria-disabled="true">Coming soon</span>
-			</article>
 		</div>
 
 		<p class="download-note">
 			Downloaded it? The <a href="/guides/installation/" class="download-link">installation guide</a> walks you through
-			setting up the Updater and installing Redux. On Linux, the game runs through Proton, so also read{' '}
+			setting up the Updater and installing Redux. On a Mac, the Updater can download KSP2 from Steam for you and runs
+			it through its own Wine runtime, see the <a href="/blog/ksp2-on-mac-steam-integration/" class="download-link">KSP2 on Mac post</a>.
+			On Linux, the game runs through Proton, so also read{' '}
 			<a href="/guides/linux-support/" class="download-link">Linux support</a>.
 		</p>
 	</section>
@@ -170,7 +173,7 @@ const cliPlatforms = withReleaseInfo('cli').map((file) => ({
 		<div class="page-section-heading">
 			<h2>Command-line installer</h2>
 			<p>
-				<code>redux-launcher-cli</code> does the same install as the Updater from a terminal, on Windows and Linux.
+				<code>redux-launcher-cli</code> does the same install as the Updater from a terminal, on Windows, macOS and Linux.
 				It doesn't need administrator rights, keeps itself up to date, and is handy for scripting.
 			</p>
 		</div>
@@ -421,11 +424,6 @@ const cliPlatforms = withReleaseInfo('cli').map((file) => ({
 		text-align: center;
 	}
 
-	.download-platform--soon .download-platform__button {
-		opacity: 0.45;
-		cursor: not-allowed;
-	}
-
 	.download-note {
 		margin: 1.5rem 0 0;
 		color: #d1d5db;
@@ -579,7 +577,7 @@ const cliPlatforms = withReleaseInfo('cli').map((file) => ({
 		}
 
 		.download-cli__platforms {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
+			grid-template-columns: repeat(3, minmax(0, 1fr));
 		}
 	}
 </style>
