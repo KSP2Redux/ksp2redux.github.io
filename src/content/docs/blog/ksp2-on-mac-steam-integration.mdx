@@ -9,53 +9,51 @@ featured: false
 draft: false
 ---
 
-Hey! I'm Ewy from the Redux team. I mostly work on the infrastructure and boring stuff, like the launcher, the command line tool, the release pipeline and this website you're reading right now. I don't make any of the flashy cool stuff you see in the game, that's all the other people on the team. But every once in a while the boring stuff gets to be a bit exciting too, and this is one of those times.
+Hey! I'm Ewy from the Redux team. I mostly do the infrastructure and boring stuff: the launcher, the command line tool, the release pipeline and this website. None of the flashy stuff you see in the game is mine, that's all the other people on the team. But once in a while the boring stuff gets to have its moment, and this is it.
 
-Launcher 0.6.0 is out, and it's a big one. The short version: KSP2 now runs on a Mac, you can sign in to Steam and download the game straight from the launcher, and the command line tool can finally do everything the launcher can.
+Launcher 0.6.0 is out and it's a big one. KSP2 runs on a Mac now, the launcher can sign in to Steam and download the game for you, and the CLI finally does everything the launcher does.
 
 ## KSP2 on a Mac
 
-KSP2 never came out for the Mac. There is no macOS build of the game, and Steam won't even let you download it on one.
+KSP2 never came out for the Mac. There's no macOS build of the game, and Steam won't even let you download it on one.
 
 I've been working on this for quite a while, trying to make the whole setup as simple as possible so KSP2 with Redux just works on a Mac. The macOS launcher brings its own Wine runtime and runs the Windows version of the game, so there's no CrossOver or anything else to set up yourself.
 
 ![The KSP2 Redux launcher open on a macOS desktop, with the Snapshot 26w39b build selected and the Launch button ready](../../../assets/blog/launcher-0-6-0/mac-desktop-launcher.png)
 
-A bit more detail for the curious: Wine runs the Windows game, and DXMT translates the game's Direct3D 11 calls to Metal, which is what the GPU in your Mac actually speaks. The runtime is built from CodeWeavers' open source release of CrossOver 26.3 and bundled inside the app. If you already have CrossOver installed the launcher can use that too.
+The nerdy bit: Wine runs the Windows game, and DXMT translates its Direct3D 11 calls to Metal, which is what the GPU in your Mac actually speaks. The runtime is built from CodeWeavers' open source release of CrossOver 26.3 and bundled inside the app. If you already have CrossOver installed the launcher can use that too.
 
-It's Apple Silicon only for now, and it needs Rosetta 2 since the game and Wine are x86_64. If Rosetta is missing the launcher tells you how to install it instead of just falling over.
+It's Apple Silicon only for now, and you need Rosetta 2 since the game and Wine are x86_64. If you don't have Rosetta the launcher tells you how to get it, instead of just falling over.
 
 ![KSP2 Redux running in a window on macOS, with a rocket on the launch pad at the KSC and the macOS menu bar and Dock visible](../../../assets/blog/launcher-0-6-0/mac-game.png)
 
-Yes, that's KSP2 Redux sitting on the launch pad in a window on a Mac. It still feels a bit weird every time I see it.
+That's KSP2 Redux sitting on the launch pad in a window, on a Mac. The Dock calls it "wine", which is honestly fair. I've looked at this screen a lot by now and it still looks wrong to me, in a good way.
 
-Once everything is set up it's one click to play, you just press Launch like on any other platform. The first time takes a few more steps though:
+Once it's set up it's one click to play, same as on Windows and Linux. The first time has a few extra steps though:
 
 1. Open the `.dmg` and drag KSP2 Redux into Applications
-2. Approve the app the first time you open it. It isn't signed by Apple yet so macOS will complain about it, the launcher walks you through it (Privacy & Security, then Open Anyway)
+2. Approve the app the first time you open it. It isn't signed by Apple yet, so macOS will act like it's a virus. It's not, promise. The launcher shows you where to click (Privacy & Security, then Open Anyway)
 3. Sign in to Steam
 4. Download KSP2
 5. Install Redux and hit Launch
 
 ## Signing in to Steam
 
-This is the part that makes the Mac version possible in the first place. Since Steam won't download KSP2 on a Mac, the launcher now talks to Steam itself (using SteamKit2) and downloads the Windows version of the game from your own account. This works on Windows and Linux too, so you don't need the Steam client at all if you don't want it.
+This is the bit that makes the Mac version possible at all. Steam won't download KSP2 on a Mac, so the launcher just does it itself. It talks to Steam directly (using SteamKit2) and downloads the Windows version of the game from your own account. That works on Windows and Linux too, so if you'd rather not have the Steam client installed, you don't need it.
 
-You can sign in by scanning a QR code with the Steam Mobile App, or with your password and Steam Guard.
+You can sign in with the QR code in the Steam Mobile App, or with your password and Steam Guard.
 
 ![The Sign in with Steam dialog in the launcher, with a QR code for the Steam Mobile App on the left and account name and password fields on the right](../../../assets/blog/launcher-0-6-0/steam-sign-in.png)
 
-Downloads can be stopped and picked up again later, and it can only download a copy you actually own. So no, this is not a way to get the game for free. There's also a little Steam indicator in the bottom right corner that shows if you're connected, and clicking it lets you sign in, download or sign out.
+It can only download a copy you actually own, so sorry, no free KSP2 here. Downloads can be stopped and picked up again later, which is nice because the whole game is about 31 GB. There's also a small Steam icon in the bottom right corner that shows if you're connected, and clicking it lets you sign in, download or sign out.
 
 ![The launcher downloading Kerbal Space Program 2 from Steam, at 29.5 of 31.0 GB with 4284 of 4287 files done](../../../assets/blog/launcher-0-6-0/steam-download.png)
 
-The whole game is about 31 GB, so it's nice that you don't have to start over if your Wi-Fi drops halfway through.
-
-A quick note on security, since you're giving the launcher your Steam login. Your password is never saved. What gets saved is the sign-in token, and that's kept in Windows data protection on Windows, the keychain on macOS, and a file only your user can read on Linux. Signing out also revokes it on Steam's side, not just on your computer, and your Steam login name isn't written to the launcher log anymore.
+Since you're handing the launcher your Steam login, a quick word on security. Your password is never saved, I don't want it. The only thing that's kept is the sign-in token, and that goes in Windows data protection on Windows, the keychain on macOS, and a file only your user can read on Linux. Signing out revokes it on Steam's side too, not just on your computer, and your Steam login name doesn't end up in the launcher log anymore.
 
 ## The CLI caught up
 
-The command line tool, `redux-launcher-cli`, has been a bit behind the launcher for a while. Not anymore. It has a macOS build now, and it launches and stops the game through the same Wine runtime and prefix as the launcher, so your saves are shared between the two.
+The command line tool, `redux-launcher-cli`, has kind of been the launcher's forgotten little sibling. This update finally gives it some attention. It has a macOS build now, and it launches and stops the game through the same Wine runtime and prefix as the launcher, so your saves are shared between the two.
 
 New stuff:
 
@@ -65,32 +63,32 @@ New stuff:
 - `open` for the install, logs, game data and storage folders
 - `news` for the latest posts from this blog (hi)
 
-`doctor` got some love too. It lines up its values now and reports the Wine runtime, Rosetta and whether you're signed in to Steam, which makes it a lot easier to help people when something goes wrong.
+`doctor` got a glow up as well. It lines up its values now and tells you about the Wine runtime, Rosetta and whether you're signed in to Steam. Which means that when you come to us with a problem, the first thing we'll ask for is the output of `doctor`. You've been warned.
 
-This is what you get if you just run it with no arguments. Yes, it has a pixel art logo.
+Run it without any arguments and you get this. Yes, it has a pixel art logo. No, I will not be taking questions.
 
 ![The redux-launcher-cli help screen in a macOS terminal, with a pixel art KSP2 Redux logo and the full list of commands](../../../assets/blog/launcher-0-6-0/cli-help.png)
 
-So you can now go from nothing to playing KSP2 Redux without opening a single window. Not sure who needs that, but it's there. Okay, I need that.
+So you can now go from nothing to playing KSP2 Redux without opening a single window. Great for the terminal people. I'm terminal people.
 
 ## Everything else
 
-The Settings tab got reworked around install profiles, so you can keep several KSP2 installs side by side, like a clean one and one for mods, and switch between them. The pencil next to the dropdown renames them.
+The Settings tab got reworked around install profiles, so you can keep a few KSP2 installs side by side, like a clean one and one full of mods, and switch between them. The pencil next to the dropdown renames them.
 
 ![The launcher's Settings tab with the install profile dropdown open, showing a KSP2 with Mods profile and a KSP2 Steam download profile](../../../assets/blog/launcher-0-6-0/settings-profiles.png)
 
-There's also a Browse button for the game executable, a Download KSP2 button right there in the profile, and an Uninstall KSP2 button that deletes the game but keeps your saves. If Steam manages that copy it just hands it back to Steam instead. The spacing is also finally even, which was bothering me way more than it should have.
+There's also a Browse button for the game executable, a Download KSP2 button right in the profile, and an Uninstall KSP2 button that deletes the game but keeps your saves. If it's a copy Steam manages, it hands it back to Steam instead. And the spacing is finally even, which bugged me way more than it should have.
 
 ![The reworked Settings tab, with the install profile, game executable with a Browse button, Uninstall Redux and Uninstall KSP2 buttons, and the advanced download settings](../../../assets/blog/launcher-0-6-0/settings.png)
 
-And a bunch of fixes. The launcher could get stuck on startup because a prompt opened behind the main window, and it could close without a word if it crashed while starting. Now it shows the error and writes it to `bootstrap.log` in the logs folder. If the launcher crashes or doesn't show up at all (mostly on Windows 10), try adding `--software-rendering` or `--no-composition` to the end of the shortcut's Target.
+Plus a bunch of fixes. The launcher could get stuck on startup because a prompt opened behind the main window, where nobody could see it. It could also just quietly close if it crashed while starting, which is the worst kind of bug to get a report about. Now it shows the error and writes it to `bootstrap.log` in the logs folder. If the launcher crashes or doesn't show up at all (mostly on Windows 10), try adding `--software-rendering` or `--no-composition` to the end of the shortcut's Target.
 
 The full changelog is on [GitHub](https://github.com/KSP2Redux/Updater/releases/tag/updater-v0.6.0.0).
 
 ## Download
 
-Get it from the [download page](/download/). On a Mac that's `KSP2-Redux-macOS-arm64.dmg`. If you already have the launcher, it should offer to update itself.
+Grab it from the [download page](/download/). On a Mac that's `KSP2-Redux-macOS-arm64.dmg`. If you already have the launcher it should offer to update itself.
 
-This is the first version of the Mac launcher so things will break. If something does, run `redux-launcher-cli doctor`, and send the output along with your report on the [Discord](https://discord.gg/ksp2redux) or on [GitHub](https://github.com/KSP2Redux/Updater/issues).
+This is the first version of the Mac launcher, so things will break. When they do, run `redux-launcher-cli doctor` (told you) and send the output along with your report on the [Discord](https://discord.gg/ksp2redux) or on [GitHub](https://github.com/KSP2Redux/Updater/issues).
 
-Have fun!
+Have fun, and see you in orbit!
