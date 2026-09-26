@@ -15,13 +15,13 @@ We are currently in the beta testing phase. Please keep in mind that some things
 
 - **KSP2 Version:** You must have stock KSP2 v0.2.2.0 installed (the latest official version)
 - **Disk Space:** At least 4 GB of free space for new assets
-- **Operating System:** Windows or Linux (x64). macOS is coming soon.
+- **Operating System:** Windows or Linux (x64), or macOS on an Apple Silicon Mac with Rosetta 2
 
 ## Installation Steps
 
 ### 1. Download the Updater
 
-Get the Redux Updater for your system from the [download page](/download/): `Ksp2Redux-win-x64.exe` on Windows or `Ksp2Redux-linux-x64` on Linux. It always has the newest version.
+Get the Redux Updater for your system from the [download page](/download/): `Ksp2Redux-win-x64.exe` on Windows, `KSP2-Redux-macOS-arm64.dmg` on macOS or `Ksp2Redux-linux-x64` on Linux. It always has the newest version.
 
 On Linux, mark it executable before running it:
 
@@ -29,6 +29,17 @@ On Linux, mark it executable before running it:
 chmod +x Ksp2Redux-linux-x64
 ./Ksp2Redux-linux-x64
 ```
+
+<Aside type="note" title="On macOS">
+Open the `.dmg` and drag **KSP2 Redux** into **Applications**. The Updater isn't signed by Apple yet, so the
+first time you open it macOS says it could not verify the app. Click **Done**, then go to **System Settings**,
+**Privacy & Security**, click **Open Anyway** next to the message about KSP2 Redux and confirm with your password
+or Touch ID.
+
+KSP2 never shipped for the Mac and Steam won't download it there, so sign in to Steam in the Updater and use
+**Download KSP2** in the settings tab to get your copy. The Updater runs the game through its own bundled Wine
+runtime, no CrossOver needed.
+</Aside>
 
 ### 2. Run the Updater
 
@@ -64,9 +75,9 @@ for Proton versions, launch options and known working setups. You will also want
 
 There is also a CLI, `redux-launcher-cli`, that does the same install as the Updater window from a
 terminal. It reads and writes the same config, so you can move between the two freely. It works on
-Windows and Linux and does not need administrator rights.
+Windows, macOS and Linux and does not need administrator rights.
 
-Install it with one line, or download `redux-cli-x64.exe` (Windows) or `redux-cli-x64` (Linux) manually from the [download page](/download/#command-line):
+Install it with one line, or download `redux-cli-x64.exe` (Windows), `redux-cli-macos-arm64` (macOS) or `redux-cli-x64` (Linux) manually from the [download page](/download/#command-line). On a Mac, use the same `curl` line as on Linux:
 
 ```powershell
 irm https://raw.githubusercontent.com/KSP2Redux/Updater/main/scripts/install-cli.ps1 | iex

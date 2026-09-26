@@ -5,14 +5,16 @@ export const updaterReleaseApiUrl = `https://api.github.com/repos/${updaterRepo}
 export interface UpdaterAsset {
 	name: string;
 	label: string;
-	platform: 'Windows' | 'Linux';
+	platform: 'Windows' | 'macOS' | 'Linux';
 	kind: 'app' | 'cli';
 }
 
 export const updaterAssets: UpdaterAsset[] = [
 	{ name: 'Ksp2Redux-win-x64.exe', label: 'Updater for Windows', platform: 'Windows', kind: 'app' },
+	{ name: 'KSP2-Redux-macOS-arm64.dmg', label: 'Updater for macOS', platform: 'macOS', kind: 'app' },
 	{ name: 'Ksp2Redux-linux-x64', label: 'Updater for Linux', platform: 'Linux', kind: 'app' },
 	{ name: 'redux-cli-x64.exe', label: 'Command-line installer for Windows', platform: 'Windows', kind: 'cli' },
+	{ name: 'redux-cli-macos-arm64', label: 'Command-line installer for macOS', platform: 'macOS', kind: 'cli' },
 	{ name: 'redux-cli-x64', label: 'Command-line installer for Linux', platform: 'Linux', kind: 'cli' },
 ];
 
