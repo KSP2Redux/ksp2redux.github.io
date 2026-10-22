@@ -2,7 +2,7 @@ backend:
   name: github
   repo: KSP2Redux/ksp2redux.github.io
   branch: main
-  base_url: https://cms-auth.rendezvous.dev
+  base_url: https://cms-auth.ksp2redux.org
   auth_endpoint: auth
   use_graphql: true
 
