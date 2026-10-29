@@ -15,10 +15,7 @@ export const localeLangs = {
 	ko: 'ko',
 	pl: 'pl',
 	'pt-br': 'pt-BR',
-	ro: 'ro',
 	ru: 'ru',
-	sr: 'sr',
-	sv: 'sv',
 	'zh-hans': 'zh-Hans',
 	'zh-hant': 'zh-Hant',
 } as const;
