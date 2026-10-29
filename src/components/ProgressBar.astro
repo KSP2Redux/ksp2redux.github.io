@@ -1,4 +1,6 @@
 ---
+import { getLocale, t } from '../i18n';
+
 interface Props {
 	min: number;
 	max: number;
@@ -14,7 +16,7 @@ const {
 	value,
 	animated = true,
 	class: className = '',
-	ariaLabel = 'Progress',
+	ariaLabel = t(getLocale(Astro.url.pathname), 'common.progress'),
 } = Astro.props;
 
 const range = Math.max(max - min, 1);

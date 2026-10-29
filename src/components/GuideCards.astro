@@ -1,0 +1,35 @@
+---
+// A Starlight card grid whose text comes from the site catalog, so Weblate can translate it
+// (it does not translate text inside components in the MDX files). See `src/data/guideCards.ts`.
+import type { ComponentProps } from 'astro/types';
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import { guideCards, type GuideCardSet } from '../data/guideCards';
+import { getLocale, localizePath, rich, t, type MessageKey } from '../i18n';
+
+interface Props {
+	set: GuideCardSet;
+}
+
+type CardIcon = ComponentProps<typeof Card>['icon'];
+
+const { set } = Astro.props;
+const locale = getLocale(Astro.url.pathname);
+
+const cards = guideCards[set].map((card: { id: string; icon?: string; href?: string }) => {
+	const key = `guideCards.${set}.${card.id}`;
+	const href = card.href && localizePath(card.href, locale);
+	return {
+		icon: card.icon as CardIcon,
+		title: t(locale, `${key}.title` as MessageKey),
+		body: rich(locale, `${key}.body` as MessageKey, { link: { tag: 'a', attrs: { href } } }),
+	};
+});
+---
+
+<CardGrid>
+	{cards.map((card) => (
+		<Card title={card.title} icon={card.icon}>
+			<p set:html={card.body} />
+		</Card>
+	))}
+</CardGrid>

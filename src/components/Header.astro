@@ -1,15 +1,21 @@
 ---
 // Unified header component for all pages (custom + Starlight docs)
-const { pathname } = Astro.url;
+import LanguageSelect from '@astrojs/starlight/components/LanguageSelect.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { basePath, getLocale, localizePath, t } from '../i18n';
+
+const locale = getLocale(Astro.url.pathname);
+// Match against the path without its locale prefix, so the same checks work in every language.
+const pathname = basePath(Astro.url.pathname);
 
 const navItems = [
-	{ href: '/', label: 'Home' },
-	{ href: '/guides/installation', label: 'Installation' },
-	{ href: '/roadmap', label: 'Roadmap' },
-	{ href: '/guides', label: 'Documentation' },
-	{ href: '/blog', label: 'Blog' },
-	{ href: '/faq', label: 'FAQ' },
-	{ href: '/contact', label: 'Contact' },
+	{ href: '/', label: t(locale, 'nav.home') },
+	{ href: '/guides/installation', label: t(locale, 'nav.installation') },
+	{ href: '/roadmap', label: t(locale, 'nav.roadmap') },
+	{ href: '/guides', label: t(locale, 'nav.documentation') },
+	{ href: '/blog', label: t(locale, 'nav.blog') },
+	{ href: '/faq', label: t(locale, 'nav.faq') },
+	{ href: '/contact', label: t(locale, 'nav.contact') },
 ];
 
 // Detect if we're on a Starlight page
@@ -24,7 +30,7 @@ const isStarlight = (() => {
 
 // Desktop nav path checking
 const withSlash = (href: string) =>
-	href.startsWith('/') && !href.endsWith('/') ? `${href}/` : href;
+	localizePath(href.startsWith('/') && !href.endsWith('/') ? `${href}/` : href, locale);
 
 const isActive = (href: string) => {
 	if (href === '/') return pathname === '/';
@@ -38,10 +44,10 @@ const isActive = (href: string) => {
 	<nav class="section-container">
 		<div class="flex items-center justify-between h-16">
 			<!-- Logo -->
-			<a href="/" class="flex items-center space-x-3 group">
-				<img 
-					src="/logo.png" 
-					alt="KSP2 Redux Logo" 
+			<a href={localizePath('/', locale)} class="flex items-center space-x-3 group">
+				<img
+					src="/logo.png"
+					alt={t(locale, 'common.logoAlt')}
 					class="h-10 w-10 transition-transform duration-300 group-hover:scale-110"
 				/>
 				<span class="text-xl font-logo font-bold text-white">
@@ -76,12 +82,15 @@ const isActive = (href: string) => {
 					</svg>
 				</a>
 
+				{/* Starlight's own select on docs pages, the page list elsewhere */}
+				{isStarlight ? <LanguageSelect /> : <LanguageSwitcher />}
+
 				<!-- Download CTA -->
-				<a 
-					href="/download/"
+				<a
+					href={localizePath('/download/', locale)}
 					class="btn-primary text-sm"
 				>
-					Download
+					{t(locale, 'nav.download')}
 				</a>
 			</div>
 
@@ -89,7 +98,7 @@ const isActive = (href: string) => {
 			<button 
 				id="mobile-menu-button"
 				class="lg:hidden text-gray-300 hover:text-white focus:outline-none"
-				aria-label="Toggle menu"
+				aria-label={t(locale, 'nav.toggleMenu')}
 				aria-controls="mobile-menu"
 				aria-expanded="false"
 			>
@@ -115,7 +124,8 @@ const isActive = (href: string) => {
 					{item.label}
 				</a>
 			))}
-			<a href="/download/" class="btn-primary text-sm text-center">Download</a>
+			{isStarlight ? <LanguageSelect /> : <LanguageSwitcher variant="mobile" />}
+			<a href={localizePath('/download/', locale)} class="btn-primary text-sm text-center">{t(locale, 'nav.download')}</a>
 		</div>
 	</div>
 </header>

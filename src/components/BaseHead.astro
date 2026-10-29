@@ -1,4 +1,6 @@
 ---
+import { alternateLinks, getLocale, isMultilingual, localizePath, locales, ogLocale } from '../i18n';
+
 interface Props {
 	title: string;
 	description: string;
@@ -10,6 +12,9 @@ const { title, description, image = '/og-image.png', noindex = false } = Astro.p
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const socialImage = new URL(image, Astro.site);
+const locale = getLocale(Astro.url.pathname);
+const alternates = isMultilingual ? alternateLinks(Astro.url.pathname, Astro.site!) : [];
+const defaultAlternate = alternates.find((alternate) => alternate.locale === 'en');
 ---
 
 <meta charset="UTF-8" />
@@ -18,6 +23,8 @@ const socialImage = new URL(image, Astro.site);
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
+{alternates.map((alternate) => <link rel="alternate" hreflang={alternate.lang} href={alternate.href} />)}
+{defaultAlternate && <link rel="alternate" hreflang="x-default" href={defaultAlternate.href} />}
 {noindex && <meta name="robots" content="noindex, follow" />}
 
 <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin.woff2" crossorigin />
@@ -29,7 +36,7 @@ const socialImage = new URL(image, Astro.site);
 	rel="alternate"
 	type="application/rss+xml"
 	title="KSP2 Redux DEV BLOG"
-	href={new URL('/blog/rss.xml', Astro.site)}
+	href={new URL(localizePath('/blog/rss.xml', locale), Astro.site)}
 />
 
 <meta property="og:title" content={title} />
@@ -37,7 +44,10 @@ const socialImage = new URL(image, Astro.site);
 <meta property="og:url" content={canonical} />
 <meta property="og:site_name" content="KSP2 Redux" />
 <meta property="og:type" content="website" />
-<meta property="og:locale" content="en" />
+<meta property="og:locale" content={ogLocale(locale)} />
+{alternates.filter((alternate) => alternate.locale !== locale).map((alternate) => (
+	<meta property="og:locale:alternate" content={ogLocale(alternate.locale)} />
+))}
 <meta property="og:image" content={socialImage} />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />

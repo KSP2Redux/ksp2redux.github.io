@@ -1,0 +1,156 @@
+---
+import BaseHead from '../BaseHead.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import '../../styles/global.css';
+import { getLocale, langOf, localizePath, rich, t, type MessageKey, type RichSlot } from '../../i18n';
+
+const locale = getLocale(Astro.url.pathname);
+const lang = langOf(locale);
+
+const linkClass = 'text-ksp-red-text underline underline-offset-2';
+const linkTo = (href: string, external = false): RichSlot => ({
+	tag: 'a',
+	attrs: { href: localizePath(href, locale), class: linkClass, ...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {}) },
+});
+const strong: RichSlot = { tag: 'strong' };
+
+interface FaqItem {
+	id: string;
+	/** Renders the answer inside a <div> even when it is a single paragraph, as the page always did for this item. */
+	wrapped?: boolean;
+	/** Paragraphs of the answer, as `[message key suffix, slots]`. A single paragraph is rendered without a wrapper. */
+	paragraphs: [string, Record<string, RichSlot>?][];
+	/** Message key suffixes whose results are joined with line breaks inside the first paragraph. */
+	lines?: string[];
+}
+
+const items: FaqItem[] = [
+	{ id: 'whatIsRedux', paragraphs: [['answer']] },
+	{ id: 'saves', paragraphs: [['answer']] },
+	{ id: 'performance', paragraphs: [['answer']] },
+	{ id: 'legal', paragraphs: [['answer']], wrapped: true },
+	{ id: 'affiliation', paragraphs: [['answer']] },
+	{ id: 'mods', paragraphs: [['answer1'], ['answer2']] },
+	{
+		id: 'install',
+		paragraphs: [
+			['answer1', { githubLink: linkTo('https://github.com/KSP2Redux/Updater/releases/latest', true) }],
+			['answer2', { installationLink: linkTo('/guides/installation/') }],
+			['answer3'],
+		],
+	},
+	{
+		id: 'features',
+		paragraphs: [
+			['answerCurrent', { strong, featuresLink: linkTo('/guides/implemented-features-and-fixes/') }],
+			['answerPlanned', { strong, roadmapLink: linkTo('/roadmap/') }],
+		],
+	},
+	{ id: 'modes', paragraphs: [['answer', { guideLink: linkTo('/guides/frontier-and-exploration/') }]] },
+	{
+		id: 'bugs',
+		paragraphs: [
+			['answerInGame', { strong }],
+			['answerDiscord', { strong, discordLink: linkTo('https://discord.gg/ksp2redux') }],
+		],
+	},
+	{
+		id: 'contribute',
+		paragraphs: [['', { strong }], ['guide', { guideLink: linkTo('/guides/contributing/') }]],
+		lines: ['players', 'artists', 'developers', 'translators', 'modders'],
+	},
+];
+
+const renderParagraph = (item: FaqItem, suffix: string, slots: Record<string, RichSlot> = {}) =>
+	rich(locale, `faq.${item.id}.${suffix}` as MessageKey, slots);
+
+const answers = items.map((item) => ({
+	id: item.id,
+	question: t(locale, `faq.${item.id}.question` as MessageKey),
+	// Both answer shapes in the source are kept: a bare <p>, or a <div> holding one or more <p>.
+	wrapped: item.paragraphs.length > 1 || item.wrapped === true,
+	paragraphs: item.paragraphs.map(([suffix, slots], index) =>
+		index === 0 && item.lines
+			? item.lines.map((line) => renderParagraph(item, line, slots)).join('<br>')
+			: renderParagraph(item, suffix, slots),
+	),
+}));
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+	<BaseHead
+		title={t(locale, 'faq.meta.title')}
+		description={t(locale, 'faq.meta.description')}
+	/>
+</head>
+<body class="bg-space-black text-white min-h-screen">
+	<Header />
+
+	<main class="page-main">
+
+	<section class="page-hero pt-32 pb-16">
+		<div class="absolute inset-0 z-0" style="background-image: url('/background.webp'); background-size: cover; background-position: center;"></div>
+		<div class="absolute inset-0 z-0 bg-gradient-to-r from-space-black via-space-black/80 to-space-black/20"></div>
+		<div class="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-space-black/25 to-space-black"></div>
+
+		<div class="section-container relative z-10">
+			<div class="max-w-4xl">
+				<h1 class="page-title">
+					{t(locale, 'faq.hero.titleLead')}{' '}
+					<span>{t(locale, 'faq.hero.titleAccent')}</span>
+				</h1>
+				<p class="page-intro">
+					{t(locale, 'faq.hero.intro')}
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="section-container py-20">
+		<div class="max-w-3xl mx-auto space-y-4">
+			{answers.map((answer) => (
+				<details class="card-glass group">
+					<summary class="font-semibold text-lg cursor-pointer list-none flex items-center justify-between">
+						{answer.question}
+						<svg class="w-5 h-5 text-gray-400 group-open:rotate-180 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+						</svg>
+					</summary>
+					{answer.wrapped ? (
+						<div class="text-gray-400 mt-4 space-y-2">
+							{answer.paragraphs.map((paragraph) => <p set:html={paragraph} />)}
+						</div>
+					) : (
+						<p class="text-gray-400 mt-4" set:html={answer.paragraphs[0]} />
+					)}
+				</details>
+			))}
+		</div>
+	</section>
+
+	<section class="section-container py-20">
+		<div class="card-glass text-center py-12">
+			<h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">
+				{t(locale, 'faq.notFound.heading')}
+			</h2>
+			<p
+				class="text-gray-400 mb-6 max-w-xl mx-auto"
+				set:html={rich(locale, 'faq.notFound.description', { contactLink: linkTo('/contact/') })}
+			/>
+			<a href="https://discord.gg/ksp2redux" target="_blank" rel="noopener noreferrer" class="btn-primary text-lg">
+				<svg class="w-5 h-5 inline-block mr-2" fill="currentColor" viewBox="0 0 24 24">
+					<path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+				</svg>
+				{t(locale, 'faq.notFound.discordButton')}
+			</a>
+		</div>
+	</section>
+
+	</main>
+
+	<Footer />
+</body>
+</html>

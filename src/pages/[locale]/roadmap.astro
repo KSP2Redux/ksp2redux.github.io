@@ -1,0 +1,10 @@
+---
+import RoadmapPage from '../../components/pages/RoadmapPage.astro';
+import { localeStaticPaths } from '../../i18n';
+
+export function getStaticPaths() {
+	return localeStaticPaths();
+}
+---
+
+<RoadmapPage />

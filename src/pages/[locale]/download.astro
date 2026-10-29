@@ -1,0 +1,10 @@
+---
+import DownloadPage from '../../components/pages/DownloadPage.astro';
+import { localeStaticPaths } from '../../i18n';
+
+export function getStaticPaths() {
+	return localeStaticPaths();
+}
+---
+
+<DownloadPage />

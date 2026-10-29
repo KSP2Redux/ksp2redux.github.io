@@ -1,0 +1,394 @@
+---
+import BaseHead from '../BaseHead.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import '../../styles/global.css';
+import { getCollection } from 'astro:content';
+import { getEntryAuthors } from '../../../node_modules/starlight-blog/libs/authors';
+import { getBlogConfig } from '../../../node_modules/starlight-blog/libs/page';
+import { latestVersion } from '../../data/data';
+import { getLocale, hasBlog, langOf, localizePath, rich, t, type MessageKey } from '../../i18n';
+
+const locale = getLocale(Astro.url.pathname);
+const lang = langOf(locale);
+const link = (path: string) => localizePath(path, locale);
+const blogLink = { blogLink: { tag: 'a', attrs: { href: link('/blog/'), class: 'home-heading-link' } } } as const;
+
+const communityLinks = [
+	{ id: 'discord', name: 'Discord', href: 'https://discord.gg/ksp2redux' },
+	{ id: 'github', name: 'GitHub', href: 'https://github.com/KSP2Redux/Redux' },
+	{ id: 'forum', name: 'KSP Forums', href: 'https://forum.kerbalspaceprogram.com/topic/231578-ksp2-redux-v0285/' },
+	{ id: 'reddit', name: 'Reddit', href: 'https://reddit.com/r/KSP2Redux' },
+	{ id: 'youtube', name: 'YouTube', href: 'https://www.youtube.com/@KSP2Redux' },
+	{ id: 'tiktok', name: 'TikTok', href: 'https://www.tiktok.com/@ksp2redux' },
+].map(({ id, ...link }) => ({
+	...link,
+	description: t(locale, `home.links.${id}.description` as MessageKey),
+	action: t(locale, `home.links.${id}.action` as MessageKey),
+}));
+
+const blogConfig = getBlogConfig('blog');
+
+// A language with translated posts lists those, every other language lists the English posts.
+const blogFolder = hasBlog(locale) ? `${locale}/blog/` : 'blog/';
+const latestBlogPosts = (await getCollection('docs'))
+	.filter((entry) => entry.id.startsWith(blogFolder) && entry.data.draft !== true && entry.data.date)
+	.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf())
+	.slice(0, 3);
+
+const blogDateFormatter = new Intl.DateTimeFormat(lang, {
+	month: 'short',
+	day: 'numeric',
+	year: 'numeric',
+});
+
+
+const siteUrl = Astro.site!.href.replace(/\/$/, '');
+const structuredData = {
+	'@context': 'https://schema.org',
+	'@graph': [
+		{
+			'@type': 'Organization',
+			'@id': `${siteUrl}/#organization`,
+			name: 'KSP2 Redux',
+			alternateName: ['Kerbal Space Program 2 Redux', 'Redux'],
+			url: `${siteUrl}/`,
+			logo: `${siteUrl}/logo.png`,
+			description: t(locale, 'home.jsonLd.organizationDescription'),
+			sameAs: [
+				'https://github.com/KSP2Redux/Redux',
+				'https://reddit.com/r/KSP2Redux',
+				'https://discord.gg/ksp2redux',
+				'https://www.youtube.com/@KSP2Redux',
+				'https://www.tiktok.com/@ksp2redux',
+				'https://forum.kerbalspaceprogram.com/topic/231578-ksp2-redux-v0285/',
+				'https://www.wikidata.org/wiki/Q141514614',
+			],
+		},
+		{
+			'@type': 'WebSite',
+			'@id': `${siteUrl}/#website`,
+			name: 'KSP2 Redux',
+			alternateName: ['KSP2Redux', 'KSP 2 Redux', 'Kerbal Space Program 2 Redux'],
+			url: `${siteUrl}/`,
+			publisher: { '@id': `${siteUrl}/#organization` },
+			inLanguage: lang,
+		},
+		{
+			'@type': 'SoftwareApplication',
+			name: 'KSP2 Redux',
+			applicationCategory: 'GameApplication',
+			operatingSystem: 'Windows, macOS, Linux',
+			softwareVersion: latestVersion,
+			url: `${siteUrl}/`,
+			downloadUrl: 'https://github.com/KSP2Redux/Updater/releases/latest',
+			publisher: { '@id': `${siteUrl}/#organization` },
+			description: t(locale, 'home.jsonLd.applicationDescription'),
+			offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+		},
+	],
+};
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+	<BaseHead
+		title={t(locale, 'home.meta.title')}
+		description={t(locale, 'home.meta.description')}
+	/>
+	<script type="application/ld+json" set:html={JSON.stringify(structuredData)} is:inline />
+</head>
+<body class="bg-space-black text-white">
+	<Header />
+
+	<main class="page-main">
+
+	<section class="page-hero page-hero--simple pt-24 pb-10">
+		<div class="absolute inset-0 z-0" style="background-image: url('/background.webp'); background-size: cover; background-position: center;"></div>
+		<div class="absolute inset-0 z-0 bg-gradient-to-r from-space-black via-space-black/80 to-space-black/30"></div>
+		<div class="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-transparent to-space-black"></div>
+
+		<div class="section-container relative z-10">
+			<div class="home-hero-copy">
+				<h1 class="page-title">
+					KSP2{' '}
+					<span>Redux</span>
+				</h1>
+
+				<p class="home-version">{latestVersion}</p>
+
+				<p class="page-intro">
+					{t(locale, 'home.hero.intro')}
+				</p>
+
+				<div class="home-action-row">
+					<a href={link('/download/')} class="btn-primary">
+						{t(locale, 'home.hero.downloadButton')}
+					</a>
+					<a href={link('/guides/installation/')} class="btn-secondary">
+						{t(locale, 'home.hero.installationButton')}
+					</a>
+					<a href={link('/blog/')} class="btn-secondary">
+						{t(locale, 'home.hero.blogButton')}
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<section class="section-container py-8">
+		<div class="home-summary">
+			<div class="page-section-heading">
+				<h2>{t(locale, 'home.about.heading')}</h2>
+			</div>
+			<div class="home-summary__body">
+				<p>
+					{t(locale, 'home.about.paragraph1')}
+				</p>
+				<p>
+					{t(locale, 'home.about.paragraph2')}
+				</p>
+			</div>
+		</div>
+	</section>
+
+	<section class="section-container py-8">
+		<div class="page-section-heading">
+			<h2>{t(locale, 'home.start.heading')}</h2>
+			<p>
+				{t(locale, 'home.start.intro')}
+			</p>
+		</div>
+
+		<div class="home-entry-grid">
+			<a href={link('/guides/installation/')} class="card-glass home-entry-card">
+				<h3>{t(locale, 'home.start.installation.title')}</h3>
+				<p>{t(locale, 'home.start.installation.description')}</p>
+			</a>
+			<a href={link('/guides/implemented-features-and-fixes/')} class="card-glass home-entry-card">
+				<h3>{t(locale, 'home.start.features.title')}</h3>
+				<p>{t(locale, 'home.start.features.description')}</p>
+			</a>
+			<a href={link('/roadmap/')} class="card-glass home-entry-card">
+				<h3>{t(locale, 'home.start.roadmap.title')}</h3>
+				<p>{t(locale, 'home.start.roadmap.description')}</p>
+			</a>
+		</div>
+	</section>
+
+	<section class="section-container py-8">
+		<div class="home-summary">
+			<div class="page-section-heading">
+				<h2>{t(locale, 'home.snapshots.heading')}</h2>
+			</div>
+			<div class="home-summary__body">
+				<p>
+					{t(locale, 'home.snapshots.paragraph1')}
+				</p>
+				<p set:html={rich(locale, 'home.snapshots.paragraph2', blogLink)} />
+			</div>
+		</div>
+	</section>
+
+	<section class="section-container py-8">
+		<div class="page-section-heading">
+			<h2 set:html={rich(locale, 'home.latest.heading', blogLink)} />
+			<p>
+				{t(locale, 'home.latest.intro')}
+			</p>
+		</div>
+
+		<div class="home-blog-grid">
+			{latestBlogPosts.map((post) => (
+				<a href={`/${post.id}/`} class="card-glass home-blog-card">
+					<p class="home-blog-card__meta">
+						<time datetime={new Date(post.data.date).toISOString()}>
+							{blogDateFormatter.format(new Date(post.data.date))}
+						</time>
+						<span>{getEntryAuthors(blogConfig, post).map((author) => author.name).join(', ')}</span>
+					</p>
+					<h3>{post.data.title}</h3>
+					<p>{post.data.description}</p>
+					<span class="home-blog-card__textlink">{t(locale, 'home.latest.readPost')}</span>
+				</a>
+			))}
+		</div>
+	</section>
+
+	<section class="section-container py-8">
+		<div class="page-section-heading">
+			<h2>{t(locale, 'home.links.heading')}</h2>
+			<p>
+				{t(locale, 'home.links.intro')}
+			</p>
+		</div>
+
+		<div class="home-community-grid">
+			{communityLinks.map((community) => (
+				<a href={community.href} target="_blank" rel="noopener noreferrer" class="card-glass home-community-card">
+					<h3>{community.name}</h3>
+					<p>{community.description}</p>
+					<span class="home-community-card__textlink">{community.action}</span>
+				</a>
+			))}
+		</div>
+	</section>
+
+	</main>
+
+	<Footer />
+</body>
+</html>
+
+<style>
+	.home-action-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.85rem;
+		margin-top: 1.75rem;
+	}
+
+	.home-hero-copy {
+		max-width: 46rem;
+	}
+
+	.home-version {
+		margin: 0.85rem 0 0;
+		color: #9ca3af;
+		font-family: var(--font-family-heading);
+		font-size: 1rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+	}
+
+	.home-context {
+		max-width: 40rem;
+		margin: 1.2rem 0 0;
+		color: #9ca3af;
+		line-height: 1.75;
+	}
+
+	.home-heading-link {
+		color: #ff7f6b;
+		text-decoration: underline;
+		text-underline-offset: 0.18em;
+	}
+
+	.home-heading-link:hover,
+	.home-heading-link:focus-visible {
+		text-decoration: underline;
+		text-underline-offset: 0.18em;
+	}
+
+	.home-entry-grid,
+	.home-blog-grid,
+	.home-community-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+
+	.home-entry-card,
+	.home-blog-card,
+	.home-community-card {
+		display: block;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.home-entry-card h3,
+	.home-blog-card h3,
+	.home-community-card h3 {
+		margin: 0;
+		font-family: var(--font-family-heading);
+		font-size: 1.5rem;
+		line-height: 1.15;
+	}
+
+	.home-entry-card p:last-child,
+	.home-blog-card p,
+	.home-community-card p {
+		margin: 0.85rem 0 0;
+		color: #d1d5db;
+		line-height: 1.75;
+	}
+
+	.home-blog-card {
+		display: flex;
+		flex-direction: column;
+		min-height: 100%;
+	}
+
+	.home-blog-card__meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+		margin: 0 0 0.8rem !important;
+		color: #9ca3af !important;
+		font-size: 0.85rem;
+		font-weight: 700;
+		line-height: 1.4 !important;
+		text-transform: uppercase;
+	}
+
+	.home-blog-card__meta span::before {
+		content: "/";
+		margin-right: 0.6rem;
+		color: rgba(156, 163, 175, 0.65);
+	}
+
+	.home-blog-card__textlink {
+		display: inline-block;
+		margin-top: auto;
+		padding-top: 1rem;
+		color: #ff7f6b;
+		font-weight: 700;
+	}
+
+	.home-summary {
+		display: grid;
+		gap: 1rem;
+	}
+
+	.home-summary__body {
+		color: #d1d5db;
+		line-height: 1.75;
+	}
+
+	.home-summary__body p {
+		margin: 0;
+	}
+
+	.home-summary__body p + p {
+		margin-top: 1rem;
+	}
+
+	.home-community-card__textlink {
+		display: inline-block;
+		margin-top: 1rem;
+		color: #ff7f6b;
+		font-weight: 700;
+	}
+
+	@media (min-width: 900px) {
+		.home-entry-grid,
+		.home-blog-grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+
+		.home-community-grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 639px) {
+		.home-action-row {
+			flex-direction: column;
+		}
+
+		.home-action-row a {
+			width: 100%;
+		}
+	}
+</style>

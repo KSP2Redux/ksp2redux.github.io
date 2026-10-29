@@ -2,7 +2,9 @@
 // Unified footer component for all pages (custom + Starlight docs)
 import { Mail } from '@lucide/astro';
 import forumIcon from '../assets/links-forums.png';
+import { getLocale, localizePath, t } from '../i18n';
 
+const locale = getLocale(Astro.url.pathname);
 const currentYear = new Date().getFullYear();
 
 const socialLinks = [
@@ -37,32 +39,32 @@ const socialLinks = [
 		icon: 'forums'
 	},
 	{
-		name: 'Email',
+		name: t(locale, 'footer.social.email'),
 		url: 'mailto:contact@ksp2redux.org',
 		icon: 'email'
 	}
 ];
 
 const quickLinks = [
-	{ href: '/', label: 'Home' },
-	{ href: '/download', label: 'Download' },
-	{ href: '/guides/installation', label: 'Installation' },
-	{ href: '/roadmap', label: 'Roadmap' },
-	{ href: '/guides', label: 'Documentation' },
-	{ href: '/blog', label: 'Blog' },
-	{ href: '/faq', label: 'FAQ' },
-	{ href: '/contact', label: 'Contact' },
+	{ href: '/', label: t(locale, 'nav.home') },
+	{ href: '/download', label: t(locale, 'nav.download') },
+	{ href: '/guides/installation', label: t(locale, 'nav.installation') },
+	{ href: '/roadmap', label: t(locale, 'nav.roadmap') },
+	{ href: '/guides', label: t(locale, 'nav.documentation') },
+	{ href: '/blog', label: t(locale, 'nav.blog') },
+	{ href: '/faq', label: t(locale, 'nav.faq') },
+	{ href: '/contact', label: t(locale, 'nav.contact') },
 ];
 
 const resourceLinks = [
-	{ href: '/privacy-policy', label: 'Privacy Policy' },
-	{ href: '/terms-of-service', label: 'Terms of Service' },
-	{ href: 'mailto:contact@ksp2redux.org', label: 'Contact Email' },
-	{ href: 'https://github.com/KSP2Redux/Redux/issues', label: 'Report Issue', external: true },
+	{ href: '/privacy-policy', label: t(locale, 'footer.links.privacy') },
+	{ href: '/terms-of-service', label: t(locale, 'footer.links.terms') },
+	{ href: 'mailto:contact@ksp2redux.org', label: t(locale, 'footer.links.contactEmail') },
+	{ href: 'https://github.com/KSP2Redux/Redux/issues', label: t(locale, 'footer.links.reportIssue'), external: true },
 ];
 
 const withSlash = (href: string) =>
-	href.startsWith('/') && !href.endsWith('/') ? `${href}/` : href;
+	localizePath(href.startsWith('/') && !href.endsWith('/') ? `${href}/` : href, locale);
 
 
 // SVG icons for social media
@@ -83,7 +85,7 @@ const icons: Record<string, string> = {
 				<div class="flex items-center space-x-3 mb-4">
 					<img 
 						src="/logo.png" 
-						alt="KSP2 Redux Logo" 
+						alt={t(locale, 'common.logoAlt')}
 						class="h-10 w-10"
 					/>
 					<span class="text-xl font-logo font-bold text-white">
@@ -91,7 +93,7 @@ const icons: Record<string, string> = {
 					</span>
 				</div>
 				<p class="text-gray-400 text-sm max-w-md mb-4">
-					A fan-made continuation patch for Kerbal Space Program 2, focused on bug fixing, performance work, UI cleanup, and the larger systems still planned on the roadmap.
+					{t(locale, 'footer.description')}
 				</p>
 				<div class="footer-social-links">
 					{socialLinks.map(link => (
@@ -119,7 +121,7 @@ const icons: Record<string, string> = {
 
 			<!-- Quick Links -->
 			<div>
-				<h3 class="text-white font-heading font-semibold mb-4">Quick Links</h3>
+				<h3 class="text-white font-heading font-semibold mb-4">{t(locale, 'footer.quickLinks')}</h3>
 				<ul class="space-y-2">
 					{quickLinks.map(link => (
 						<li><a href={withSlash(link.href)} class="text-gray-400 hover:text-ksp-red-text transition-colors text-sm">{link.label}</a></li>
@@ -129,7 +131,7 @@ const icons: Record<string, string> = {
 
 			<!-- Resources -->
 			<div>
-				<h3 class="text-white font-heading font-semibold mb-4">Resources</h3>
+				<h3 class="text-white font-heading font-semibold mb-4">{t(locale, 'footer.resources')}</h3>
 				<ul class="space-y-2">
 					{resourceLinks.map(link => (
 						<li>
@@ -149,10 +151,10 @@ const icons: Record<string, string> = {
 		<!-- Footer Bottom -->
 		<div class="border-t border-white/10 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
 			<p class="text-gray-400 text-sm">
-				© {currentYear} KSP2 Redux. Independent fan project.
+				{t(locale, 'footer.copyright', { year: currentYear })}
 			</p>
 			<p class="text-gray-400 text-sm mt-4 md:mt-0">
-				Kerbal Space Program is a trademark of Private Division, LLC.
+				{t(locale, 'footer.trademark')}
 			</p>
 		</div>
 	</div>

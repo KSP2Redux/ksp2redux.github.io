@@ -1,0 +1,97 @@
+---
+// Language list for the custom pages. Starlight pages use Starlight's own language select instead.
+import { getLocale, isMultilingual, languageOptions, t } from '../i18n';
+
+interface Props {
+	variant?: 'desktop' | 'mobile';
+}
+
+const { variant = 'desktop' } = Astro.props;
+const { pathname } = Astro.url;
+const locale = getLocale(pathname);
+const options = isMultilingual ? languageOptions(pathname, locale) : [];
+const current = options.find((option) => option.current);
+---
+
+{
+	options.length > 1 && (
+		<details class:list={['language-switcher', `language-switcher--${variant}`]}>
+			<summary
+				class="flex cursor-pointer list-none items-center gap-2 text-sm font-medium text-gray-300 transition-colors duration-200 hover:text-white"
+				aria-label={t(locale, 'language.label')}
+			>
+				<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12a9 9 0 1018 0 9 9 0 00-18 0zm0 0h18M12 3c2.5 2.5 3.75 5.5 3.75 9S14.5 18.5 12 21m0-18C9.5 5.5 8.25 8.5 8.25 12S9.5 18.5 12 21" />
+				</svg>
+				<span lang={current?.lang}>{current?.name}</span>
+			</summary>
+			<ul class="language-switcher__list">
+				{options.map((option) => (
+					<li>
+						<a
+							href={option.href}
+							lang={option.lang}
+							hreflang={option.lang}
+							class:list={['language-switcher__link', option.current && 'language-switcher__link--current']}
+							aria-current={option.current ? 'true' : undefined}
+						>
+							{option.name}
+						</a>
+					</li>
+				))}
+			</ul>
+		</details>
+	)
+}
+
+<style>
+	.language-switcher {
+		position: relative;
+	}
+
+	.language-switcher summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.language-switcher__list {
+		margin: 0;
+		padding: 0.35rem;
+		list-style: none;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 0.5rem;
+		background: rgba(10, 10, 10, 0.97);
+	}
+
+	.language-switcher--desktop .language-switcher__list {
+		position: absolute;
+		right: 0;
+		top: calc(100% + 0.75rem);
+		z-index: 60;
+		min-width: 11rem;
+		max-height: 70vh;
+		overflow-y: auto;
+	}
+
+	.language-switcher--mobile .language-switcher__list {
+		margin-top: 0.5rem;
+	}
+
+	.language-switcher__link {
+		display: block;
+		padding: 0.45rem 0.75rem;
+		border-radius: 0.35rem;
+		color: #d1d5db;
+		font-size: 0.9rem;
+		text-decoration: none;
+	}
+
+	.language-switcher__link:hover,
+	.language-switcher__link:focus-visible {
+		background: rgba(255, 255, 255, 0.08);
+		color: #ffffff;
+	}
+
+	.language-switcher__link--current {
+		color: #ff7f6b;
+	}
+</style>
