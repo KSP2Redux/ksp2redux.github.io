@@ -14,38 +14,13 @@ hero:
       variant: secondary
 ---
 
-import { Card, CardGrid } from '@astrojs/starlight/components';
+import GuideCards from '../../../components/GuideCards.astro';
 
 ## Start here
 
 Use this page if you are installing Redux, checking compatibility, looking for the roadmap, or trying to find the right support link.
 
-<CardGrid>
-	<Card title="Installation Guide" icon="rocket">
-		Install Redux on Steam, Epic Games Store, or a portable copy of the game. [Open guide →](/guides/installation/)
-	</Card>
-	<Card title="Roadmap" icon="star">
-		Check the current stage, completed work, and later milestones. [Open roadmap →](/roadmap/)
-	</Card>
-	<Card title="Frontier and Exploration Modes" icon="rocket">
-		Understand how the planned progression modes handle resources, colonies, and supply routes. [Read guide →](/guides/frontier-and-exploration/)
-	</Card>
-	<Card title="Implemented Features and Fixes" icon="check-circle">
-		Read about the features, improvements, and bug fixes in Redux. [Open summary →](/guides/implemented-features-and-fixes/)
-	</Card>
-	<Card title="Mod Compatibility" icon="puzzle">
-		See what kind of mods can work as-is and what usually needs a port. [Read more →](/guides/mod-compatibility/)
-	</Card>
-	<Card title="KSP1 Part Mods" icon="puzzle">
-		Install KSP1 part mods for Redux's experimental Project Shakespeare importer. [Read guide →](/guides/ksp1-part-mods/)
-	</Card>
-	<Card title="Custom Flags" icon="star">
-		Add custom agency flags and sticker flag images from files in the mods folder. [Read guide →](/guides/custom-flags/)
-	</Card>
-	<Card title="Contributing" icon="heart">
-		Information for contributors, testers, translators, artists, and modders. [Open guide →](/guides/contributing/)
-	</Card>
-</CardGrid>
+<GuideCards set={'index'} />
 
 ## First steps
 

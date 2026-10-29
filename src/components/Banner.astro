@@ -1,0 +1,40 @@
+---
+// Starlight's banner (front matter `banner`) plus the notice on machine translated posts.
+import StarlightBanner from '@astrojs/starlight/components/Banner.astro';
+import { basePath, getLocale, rich } from '../i18n';
+
+const { pathname } = Astro.url;
+const locale = getLocale(pathname);
+const { machineTranslated } = Astro.locals.starlightRoute.entry.data;
+// The English post has the same path without the locale prefix.
+const originalLink = { link: { tag: 'a', attrs: { href: basePath(pathname), hreflang: 'en' } } } as const;
+---
+
+<StarlightBanner />
+{
+	machineTranslated && (
+		<div class="machine-translated-notice" role="note" data-pagefind-ignore>
+			<p set:html={rich(locale, 'blog.machineTranslated.notice', originalLink)} />
+		</div>
+	)
+}
+
+<style>
+	@layer starlight.core {
+		.machine-translated-notice {
+			padding: var(--sl-nav-pad-y) var(--sl-nav-pad-x);
+			background-color: var(--sl-color-bg-accent);
+			color: var(--sl-color-text-invert);
+			line-height: var(--sl-line-height-headings);
+			text-align: center;
+			text-wrap: balance;
+			box-shadow: var(--sl-shadow-sm);
+		}
+		.machine-translated-notice p {
+			margin: 0;
+		}
+		.machine-translated-notice :global(a) {
+			color: inherit;
+		}
+	}
+</style>

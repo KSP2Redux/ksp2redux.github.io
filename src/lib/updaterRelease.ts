@@ -38,12 +38,18 @@ export function latestDownloadUrl(assetName: string): string {
 	return `${updaterReleasesUrl}/download/${assetName}`;
 }
 
-export function formatSize(bytes: number): string {
-	return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+export function formatSize(bytes: number, lang = 'en'): string {
+	return new Intl.NumberFormat(lang, {
+		style: 'unit',
+		unit: 'megabyte',
+		unitDisplay: 'short',
+		minimumFractionDigits: 1,
+		maximumFractionDigits: 1,
+	}).format(bytes / 1024 / 1024);
 }
 
-export function formatReleaseDate(isoDate: string): string {
-	return new Date(isoDate).toLocaleDateString('en-US', {
+export function formatReleaseDate(isoDate: string, lang = 'en-US'): string {
+	return new Date(isoDate).toLocaleDateString(lang, {
 		year: 'numeric',
 		month: 'short',
 		day: 'numeric',

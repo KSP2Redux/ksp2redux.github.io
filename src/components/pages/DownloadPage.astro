@@ -1,0 +1,603 @@
+---
+import { Image } from 'astro:assets';
+import BaseHead from '../BaseHead.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import { latestVersion } from '../../data/data';
+import {
+	fetchLatestUpdaterRelease,
+	formatReleaseDate,
+	formatSize,
+	latestDownloadUrl,
+	updaterAssets,
+	updaterReleasesUrl,
+	updaterVersion,
+} from '../../lib/updaterRelease';
+import { getLocale, langOf, localizePath, rich, t } from '../../i18n';
+import updaterScreenshot from '../../assets/updater/updater-settings.png';
+import '../../styles/global.css';
+
+const locale = getLocale(Astro.url.pathname);
+const lang = langOf(locale);
+const link = (path: string) => localizePath(path, locale);
+const linkTo = (href: string) => ({ tag: 'a', attrs: { href, class: 'download-link' } }) as const;
+
+const release = await fetchLatestUpdaterRelease(process.env.GITHUB_TOKEN);
+const releaseSummary = release
+	? t(locale, 'download.updater.releaseSummary', {
+			version: updaterVersion(release.tag),
+			date: formatReleaseDate(release.publishedAt, lang),
+		})
+	: t(locale, 'download.updater.releaseSummaryFallback');
+
+const withReleaseInfo = (kind: 'app' | 'cli') =>
+	updaterAssets
+		.filter((asset) => asset.kind === kind)
+		.map((asset) => ({ ...asset, url: latestDownloadUrl(asset.name), info: release?.assets[asset.name] }));
+
+const updaters = withReleaseInfo('app');
+const updaterFor = (platform: string) => updaters.find((file) => file.platform === platform)!;
+const installCliUnix = 'curl -fsSL https://raw.githubusercontent.com/KSP2Redux/Updater/main/scripts/install-cli.sh | bash';
+const cliInstallCommands = {
+	Windows: 'irm https://raw.githubusercontent.com/KSP2Redux/Updater/main/scripts/install-cli.ps1 | iex',
+	macOS: installCliUnix,
+	Linux: installCliUnix,
+};
+const cliPlatforms = withReleaseInfo('cli').map((file) => ({
+	label: file.platform === 'Windows' ? t(locale, 'download.cli.platformPowerShell', { platform: file.platform }) : file.platform,
+	command: cliInstallCommands[file.platform],
+	file,
+}));
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+<head>
+	<BaseHead
+		title={t(locale, 'download.meta.title')}
+		description={t(locale, 'download.meta.description')}
+	/>
+</head>
+<body class="bg-space-black text-white min-h-screen">
+	<Header />
+
+	<main class="page-main">
+
+	<section class="page-hero pt-32 pb-16">
+		<div class="absolute inset-0 z-0" style="background-image: url('/background.webp'); background-size: cover; background-position: center;"></div>
+		<div class="absolute inset-0 z-0 bg-gradient-to-r from-space-black via-space-black/80 to-space-black/20"></div>
+		<div class="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-space-black/25 to-space-black"></div>
+
+		<div class="section-container relative z-10">
+			<div class="max-w-4xl">
+				<h1 class="page-title">
+					{t(locale, 'download.hero.titleLead')}{' '}
+					<span>{t(locale, 'download.hero.titleAccent')}</span>
+				</h1>
+				<p class="download-version">{t(locale, 'download.hero.latestRelease', { version: latestVersion })}</p>
+				<p class="page-intro">
+					{t(locale, 'download.hero.intro')}
+				</p>
+				<div class="download-action-row">
+					{updaters.map((file) => (
+						<a href={file.url} class="btn-primary">{t(locale, 'download.downloadFor', { platform: file.platform })}</a>
+					))}
+				</div>
+				<p class="download-hint" set:html={rich(locale, 'download.hero.hint', { cliLink: linkTo('#command-line') })} />
+			</div>
+		</div>
+	</section>
+
+	<section class="section-container py-8" id="updater">
+		<div class="page-section-heading">
+			<h2>{t(locale, 'download.updater.heading')}</h2>
+			<p
+				set:html={rich(
+					locale,
+					'download.updater.intro',
+					{
+						summary: {
+							tag: 'span',
+							attrs: { 'data-updater-summary': '', 'data-template': t(locale, 'download.updater.releaseSummary', { version: '{version}', date: '{date}' }) },
+						},
+					},
+					{ releaseSummary },
+				)}
+			/>
+		</div>
+
+		<div class="download-platforms">
+			{updaters.map((file) => (
+				<article class="card-glass download-platform" data-asset={file.name}>
+					<header>
+						<h3>{file.platform}</h3>
+						<p class="download-platform__file"><code>{file.name}</code></p>
+					</header>
+					<div class="download-platform__body">
+						{file.platform === 'Windows' && <p>{t(locale, 'download.updater.windows')}</p>}
+						{file.platform === 'macOS' && (
+							<>
+								<p set:html={rich(locale, 'download.updater.macos.install', { code: { tag: 'code' } })} />
+								<p set:html={rich(locale, 'download.updater.macos.unsigned', { strong: { tag: 'strong' } })} />
+							</>
+						)}
+						{file.platform === 'Linux' && (
+							<>
+								<p>{t(locale, 'download.updater.linux')}</p>
+								<pre class="download-code"><code>chmod +x {file.name}{'\n'}./{file.name}</code></pre>
+							</>
+						)}
+					</div>
+					<dl class="download-meta">
+						<div>
+							<dt>{t(locale, 'download.updater.size')}</dt>
+							<dd data-field="size">{file.info ? formatSize(file.info.size, lang) : '–'}</dd>
+						</div>
+						<div data-field="hash" hidden={!file.info?.sha256}>
+							<dt>{t(locale, 'download.updater.sha256')}</dt>
+							<dd><code data-field="sha256">{file.info?.sha256}</code></dd>
+						</div>
+					</dl>
+					<a href={file.url} class="btn-primary download-platform__button">{t(locale, 'download.downloadFor', { platform: file.platform })}</a>
+				</article>
+			))}
+		</div>
+
+		<p
+			class="download-note"
+			set:html={rich(locale, 'download.updater.after', {
+				installationLink: linkTo(link('/guides/installation/')),
+				macPostLink: linkTo('/blog/ksp2-on-mac-steam-integration/'),
+				linuxLink: linkTo(link('/guides/linux-support/')),
+			})}
+		/>
+	</section>
+
+	<section class="section-container py-12">
+		<div class="download-showcase">
+			<div>
+				<div class="page-section-heading">
+					<h2>{t(locale, 'download.showcase.heading')}</h2>
+				</div>
+				<ul class="download-list">
+					<li>{t(locale, 'download.showcase.item.install')}</li>
+					<li>{t(locale, 'download.showcase.item.update')}</li>
+					<li>{t(locale, 'download.showcase.item.channels')}</li>
+					<li>{t(locale, 'download.showcase.item.launch')}</li>
+					<li>{t(locale, 'download.showcase.item.uninstall')}</li>
+				</ul>
+			</div>
+			<figure class="download-screenshot">
+				<Image
+					src={updaterScreenshot}
+					alt={t(locale, 'download.showcase.screenshotAlt')}
+					widths={[640, 960, 1291]}
+					sizes="(min-width: 1024px) 60vw, 100vw"
+				/>
+				<figcaption>{t(locale, 'download.showcase.screenshotCaption')}</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<section class="section-container py-8" id="command-line">
+		<div class="page-section-heading">
+			<h2>{t(locale, 'download.cli.heading')}</h2>
+			<p set:html={rich(locale, 'download.cli.intro', { code: { tag: 'code' } })} />
+		</div>
+
+		<div class="card-glass download-cli">
+			<div class="download-cli__intro">
+				<h3>{t(locale, 'download.cli.oneCommand.title')}</h3>
+				<p
+					set:html={rich(locale, 'download.cli.oneCommand.description', {
+						code: { tag: 'code' },
+						installationLink: linkTo(link('/guides/installation/#installing-from-the-command-line')),
+					})}
+				/>
+			</div>
+
+			<div class="download-cli__platforms">
+				{cliPlatforms.map(({ label, command, file }) => (
+					<div class="download-cli__platform" data-asset={file.name}>
+						<div class="download-cli__label">
+							<span>{label}</span>
+							<button
+								type="button"
+								class="download-copy"
+								data-copy={command}
+								data-label-copy={t(locale, 'download.cli.copy')}
+								data-label-copied={t(locale, 'download.cli.copied')}
+								data-label-failed={t(locale, 'download.cli.copyFailed')}
+								aria-label={t(locale, 'download.cli.copyAria', { label })}
+							>
+								{t(locale, 'download.cli.copy')}
+							</button>
+						</div>
+						<pre class="download-code"><code>{command}</code></pre>
+						<p class="download-cli__manual">
+							<Fragment set:html={rich(locale, 'download.cli.manual', { fileLink: linkTo(file.url) }, { file: file.name })} />
+							<span data-field="size" data-prefix=" · ">{file.info ? ` · ${formatSize(file.info.size, lang)}` : ''}</span>
+						</p>
+						<p class="download-hash" data-field="hash" hidden={!file.info?.sha256}>
+							{t(locale, 'download.updater.sha256')} <code data-field="sha256">{file.info?.sha256}</code>
+						</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="section-container py-8">
+		<div class="page-section-heading">
+			<h2>{t(locale, 'download.channels.heading')}</h2>
+			<p>{t(locale, 'download.channels.intro')}</p>
+		</div>
+
+		<div class="download-grid">
+			<div class="card-glass download-card">
+				<h3>{t(locale, 'download.channels.stable.title')}</h3>
+				<p>
+					{t(locale, 'download.channels.stable.description', { version: latestVersion })}
+				</p>
+			</div>
+			<div class="card-glass download-card">
+				<h3>{t(locale, 'download.channels.snapshots.title')}</h3>
+				<p set:html={rich(locale, 'download.channels.snapshots.description', { blogLink: linkTo(link('/blog/')) })} />
+			</div>
+		</div>
+	</section>
+
+	<section class="section-container py-8 pb-20">
+		<div class="page-section-heading">
+			<h2>{t(locale, 'download.before.heading')}</h2>
+		</div>
+		<div class="download-body">
+			<p
+				set:html={rich(locale, 'download.before.requirements', {
+					installationLink: linkTo(link('/guides/installation/#requirements')),
+				})}
+			/>
+			<p
+				set:html={rich(
+					locale,
+					'download.before.verify',
+					{
+						code: { tag: 'code' },
+						githubLink: { tag: 'a', attrs: { href: updaterReleasesUrl, target: '_blank', rel: 'noopener noreferrer', class: 'download-link' } },
+					},
+					{ windowsCommand: 'Get-FileHash .\\Ksp2Redux-win-x64.exe', linuxCommand: 'sha256sum Ksp2Redux-linux-x64' },
+				)}
+			/>
+		</div>
+	</section>
+
+	</main>
+
+	<Footer />
+</body>
+</html>
+
+<script>
+	import { fetchLatestUpdaterRelease, formatReleaseDate, formatSize, updaterVersion } from '../../lib/updaterRelease';
+	import { interpolate } from '../../i18n/format';
+
+	const lang = document.documentElement.lang || 'en';
+
+	document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((button) => {
+		button.addEventListener('click', async () => {
+			try {
+				await navigator.clipboard.writeText(button.dataset.copy ?? '');
+				button.textContent = button.dataset.labelCopied ?? '';
+			} catch {
+				button.textContent = button.dataset.labelFailed ?? '';
+			}
+			setTimeout(() => (button.textContent = button.dataset.labelCopy ?? ''), 2000);
+		});
+	});
+
+	// The page is static, so refresh the details in case a newer Updater was released after the last build.
+	fetchLatestUpdaterRelease().then((release) => {
+		if (!release) return;
+
+		const summary = document.querySelector<HTMLElement>('[data-updater-summary]');
+		if (summary?.dataset.template) {
+			summary.textContent = interpolate(summary.dataset.template, {
+				version: updaterVersion(release.tag),
+				date: formatReleaseDate(release.publishedAt, lang),
+			});
+		}
+
+		document.querySelectorAll<HTMLElement>('[data-asset]').forEach((element) => {
+			const info = release.assets[element.dataset.asset ?? ''];
+			if (!info) return;
+
+			const size = element.querySelector('[data-field="size"]');
+			const hash = element.querySelector<HTMLElement>('[data-field="hash"]');
+			const sha256 = element.querySelector('[data-field="sha256"]');
+			if (size instanceof HTMLElement) size.textContent = `${size.dataset.prefix ?? ''}${formatSize(info.size, lang)}`;
+			if (hash && sha256) {
+				sha256.textContent = info.sha256 ?? '';
+				hash.hidden = !info.sha256;
+			}
+		});
+	});
+</script>
+
+<style>
+	.download-version {
+		margin: 0.85rem 0 0;
+		color: #9ca3af;
+		font-family: var(--font-family-heading);
+		font-size: 1rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+	}
+
+	.download-action-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.85rem;
+		margin-top: 1.75rem;
+	}
+
+	.download-hint {
+		margin: 1rem 0 0;
+		color: #9ca3af;
+		font-size: 0.9rem;
+	}
+
+	.download-link {
+		color: #ff7f6b;
+		text-decoration: underline;
+		text-underline-offset: 0.18em;
+	}
+
+	.page-section-heading code,
+	.download-platform code,
+	.download-cli code,
+	.download-body code {
+		padding: 0.1rem 0.35rem;
+		border-radius: 0.25rem;
+		background: rgba(255, 255, 255, 0.08);
+		font-size: 0.9em;
+	}
+
+	.download-code {
+		margin: 0.75rem 0 0;
+		padding: 0.85rem 1rem;
+		overflow-x: auto;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 0.5rem;
+		background: rgba(0, 0, 0, 0.35);
+		color: #e5e7eb;
+		font-size: 0.85rem;
+		line-height: 1.6;
+	}
+
+	.download-code code {
+		padding: 0;
+		background: none;
+		white-space: pre;
+	}
+
+	.download-platforms {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+
+	.download-platform {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+
+	.download-platform h3,
+	.download-cli h3,
+	.download-card h3 {
+		margin: 0;
+		font-family: var(--font-family-heading);
+		font-size: 1.5rem;
+		line-height: 1.15;
+	}
+
+	.download-platform__file {
+		margin: 0.5rem 0 0;
+		color: #9ca3af;
+	}
+
+	.download-platform__body {
+		flex-grow: 1;
+	}
+
+	.download-platform__body p,
+	.download-cli p,
+	.download-card p {
+		margin: 0.75rem 0 0;
+		color: #d1d5db;
+		line-height: 1.75;
+	}
+
+	.download-platform__body > p:first-child {
+		margin-top: 0;
+	}
+
+	.download-meta {
+		display: grid;
+		gap: 0.5rem;
+		margin: 0;
+		font-size: 0.8rem;
+	}
+
+	.download-meta dt {
+		color: #9ca3af;
+		font-weight: 600;
+	}
+
+	.download-meta dd {
+		margin: 0.15rem 0 0;
+		color: #d1d5db;
+	}
+
+	.download-platform__button {
+		align-self: stretch;
+		text-align: center;
+	}
+
+	.download-note {
+		margin: 1.5rem 0 0;
+		color: #d1d5db;
+		line-height: 1.75;
+	}
+
+	.download-showcase {
+		display: grid;
+		gap: 2rem;
+		align-items: center;
+	}
+
+	.download-list {
+		margin: 0;
+		padding-left: 1.25rem;
+		list-style: disc;
+		color: #d1d5db;
+		line-height: 1.75;
+	}
+
+	.download-list li + li {
+		margin-top: 0.5rem;
+	}
+
+	.download-screenshot {
+		margin: 0;
+	}
+
+	.download-screenshot img {
+		display: block;
+		width: 100%;
+		height: auto;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 0.75rem;
+		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+	}
+
+	.download-screenshot figcaption {
+		margin-top: 0.75rem;
+		color: #9ca3af;
+		font-size: 0.85rem;
+		text-align: center;
+	}
+
+	.download-cli {
+		display: grid;
+		gap: 1.5rem;
+	}
+
+	.download-cli__intro p {
+		max-width: 48rem;
+	}
+
+	.download-cli__intro code {
+		white-space: nowrap;
+	}
+
+	.download-cli__platforms {
+		display: grid;
+		gap: 1.5rem;
+	}
+
+	.download-cli__platform {
+		min-width: 0;
+	}
+
+	.download-cli__label {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		color: #9ca3af;
+		font-size: 0.85rem;
+		font-weight: 600;
+	}
+
+	.download-copy {
+		padding: 0.2rem 0.7rem;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: 999px;
+		background: transparent;
+		color: #d1d5db;
+		font-size: 0.8rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: border-color 0.2s, color 0.2s;
+	}
+
+	.download-copy:hover,
+	.download-copy:focus-visible {
+		border-color: #ff7f6b;
+		color: #ffffff;
+	}
+
+	.download-cli .download-cli__manual {
+		margin-top: 0.85rem;
+		font-size: 0.9rem;
+	}
+
+	.download-cli__manual a {
+		font-family: var(--sl-font-mono, monospace);
+	}
+
+	.download-hash {
+		margin: 0.35rem 0 0;
+		color: #9ca3af;
+		font-size: 0.8rem;
+	}
+
+	.download-meta code,
+	.download-hash code {
+		padding: 0;
+		background: none;
+		color: #d1d5db;
+		overflow-wrap: anywhere;
+	}
+
+	.download-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+
+	.download-body {
+		max-width: 48rem;
+	}
+
+	.download-body p {
+		margin: 0;
+		color: #d1d5db;
+		line-height: 1.75;
+	}
+
+	.download-body p + p {
+		margin-top: 1rem;
+	}
+
+	@media (min-width: 768px) {
+		.download-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+	}
+
+	@media (min-width: 1024px) {
+		.download-platforms {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+
+		.download-showcase {
+			grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+		}
+
+		.download-cli__platforms {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+</style>

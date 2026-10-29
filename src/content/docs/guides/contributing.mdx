@@ -3,39 +3,18 @@ title: Contributing to Redux
 description: Learn how you can contribute to KSP2 Redux as a 3D artist, developer, translator, designer, video editor, modder, or player.
 ---
 
-import { Aside, Card, CardGrid } from '@astrojs/starlight/components';
+import { Aside } from '@astrojs/starlight/components';
+import GuideCards from '../../../components/GuideCards.astro';
 
 We are always looking for contributors to help us bring KSP2 Redux to life! Whether you're a 3D artist, developer, translator, designer, video editor, modder, or player, there are many ways to get involved.
 
 ## Ways to Contribute
 
-<CardGrid>
-<Card title="🎨 3D Artists">
-Create 3D models, textures, celestial bodies, and visual assets for the game. [Go to section →](#for-3d-artists)
-</Card>
-
-<Card title="💻 Developers">
-Help build features, fix bugs, and improve performance with C# and Unity. [Go to section →](#for-developers)
-</Card>
-
-<Card title="🌍 Translators">
-Translate game content into French, German, Italian, Spanish, Japanese, Korean, Polish, Russian, Portuguese, and Chinese. [Go to section →](#for-translators)
-</Card>
-
-<Card title="🎬 Design & Media">
-Create graphics, animations, videos, web design, and other community-facing material. [Go to section →](#for-design-animation-and-video)
-</Card>
-
-<Card title="🧩 Modders">
-Port existing mods or build new Redux-native mods. [Go to section →](#for-modders)
-</Card>
-
-<Card title="🎮 Players">
-Test beta builds, report bugs, and provide feedback on features and gameplay. [Go to section →](#for-players)
-</Card>
-</CardGrid>
+<GuideCards set={'contributing'} />
 
 ---
+
+<a id="contribute-3d-artists"></a>
 
 ## For 3D Artists
 
@@ -69,6 +48,8 @@ If you are an artist with experience in these areas, we would greatly appreciate
 
 ---
 
+<a id="contribute-design-media"></a>
+
 ## For Design, Animation, and Video
 
 Redux also needs help with visual material outside of 3D game assets.
@@ -85,6 +66,8 @@ Redux also needs help with visual material outside of 3D game assets.
 Send **@.munix** or **@safarte** examples of your previous work on Discord. Useful examples include screenshots, renders, animation reels, design work, videos, writing samples, or links to a portfolio.
 
 ---
+
+<a id="contribute-developers"></a>
 
 ## For Developers
 
@@ -125,6 +108,8 @@ This helps us understand your skills and find the right area for you to contribu
 
 ---
 
+<a id="contribute-translators"></a>
+
 ## For Translators
 
 If you are comfortable in English, fluent in one of the languages listed below, and would like to contribute to KSP2 Redux, this is your lucky day!
@@ -158,6 +143,8 @@ Other languages may still be useful, including French, German, Polish, Russian, 
 
 ---
 
+<a id="contribute-modders"></a>
+
 ## For Modders
 
 ### Updating Existing Mods
@@ -187,21 +174,15 @@ Learn more in our [Modding SDK blog post](/blog/modding-tools-unity-editor/).
 
 ---
 
+<a id="contribute-players"></a>
+
 ## For Players
 
 Even if you're not creating content, there are still important ways you can help!
 
 ### Testing & Bug Reports
 
-<CardGrid>
-<Card title="Play Beta Builds" icon="rocket">
-Download and play the latest beta releases to help us find issues before stable releases.
-</Card>
-
-<Card title="Report Bugs" icon="warning">
-Use the in-game bug reporter (Ctrl+B) to report any issues you encounter with detailed information.
-</Card>
-</CardGrid>
+<GuideCards set={'testing'} />
 
 ### Providing Feedback
 
