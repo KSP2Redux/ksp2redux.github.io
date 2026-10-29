@@ -1,7 +1,7 @@
 import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod';
-import { docsLoader } from '@astrojs/starlight/loaders';
-import { docsSchema } from '@astrojs/starlight/schema';
+import { docsLoader, i18nLoader } from '@astrojs/starlight/loaders';
+import { docsSchema, i18nSchema } from '@astrojs/starlight/schema';
 import { blogSchema } from 'starlight-blog/schema';
 
 export const collections = {
@@ -16,4 +16,7 @@ export const collections = {
 			}),
 		}),
 	}),
+	// Starlight's own interface text. Its built-in lookup cannot match the script subtags of zh-Hans and
+	// zh-Hant, so those two get its zh-CN and zh-TW dictionaries from src/content/i18n.
+	i18n: defineCollection({ loader: i18nLoader(), schema: i18nSchema() }),
 };
