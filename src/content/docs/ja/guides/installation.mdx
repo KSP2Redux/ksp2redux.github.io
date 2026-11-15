@@ -8,9 +8,8 @@ import { Aside } from '@astrojs/starlight/components';
 このガイドでは、お使いのシステムにKSP2
 Reduxをインストールする手順を説明します。ファイルのみが必要な場合は、[ダウンロードページ](/download/)へどうぞ。
 
-<Aside type="caution" title="Beta Software">
-We are currently in the beta testing phase. Please keep in mind that some things
-may be broken.
+<Aside type="caution" title="ベータ版ソフトウェア">
+現在、ベータテストの段階です。一部に不具合が含まれている可能性があることをあらかじめご了承ください。
 </Aside>
 
 ## 要件
@@ -34,17 +33,12 @@ chmod +x Ksp2Redux-linux-x64
 ./Ksp2Redux-linux-x64
 ```
 
-<Aside type="note" title="On macOS">
-Open the `.dmg` and drag **KSP2 Redux** into **Applications**. The Updater isn't
-signed by Apple yet, so the first time you open it macOS says it could not
-verify the app. Click **Done**, then go to **System Settings**, **Privacy &
-Security**, click **Open Anyway** next to the message about KSP2 Redux and
-confirm with your password or Touch ID.
+<Aside type="note" title="macOSでは">
+`.dmg`ファイルを開き、**KSP2
+Redux**を**アプリケーション**フォルダにドラッグしてください。このアップデーターにはまだAppleの署名が付与されていないため、初回起動時に「アプリを確認できません」という警告が表示されます。**「完了」**をクリックしてから、**「システム設定」**＞**「プライバシーとセキュリティ」**の順に進み、KSP2
+Reduxに関するメッセージの横にある**「このまま開く」**をクリックしてください。その後、パスワードまたはTouch IDで認証を行ってください。
 
-KSP2 never shipped for the Mac and Steam won't download it there, so sign in to
-Steam in the Updater and use **Download KSP2** in the settings tab to get your
-copy. The Updater runs the game through its own bundled Wine runtime, no
-CrossOver needed.
+KSP2はMac向けにはリリースされておらず、Steamから直接ダウンロードすることもできません。そのため、Updater上でSteamにサインインし、設定タブにある**KSP2をダウンロード**を使用して入手してください。Updaterは独自のWineランタイムを内蔵しており、それを通じてゲームを起動するため、CrossOverは不要です。
 </Aside>
 
 ### 2. アップデーターを実行
@@ -72,11 +66,9 @@ Updaterの「設定」タブ。KSP2のインストールパス、リリースチ
 
 SteamやEpicからゲームを起動することもできますし、ゲームフォルダー内の`KSP2_x64.exe`を通常通り実行して起動することも可能です。
 
-<Aside type="tip" title="On Linux">
-The game itself runs through Proton. If you are on Linux, read [Linux
-Support](/guides/linux-support/) for Proton versions, launch options and known
-working setups. You will also want to enable **Launch through Steam** in the
-Updater's settings.
+<Aside type="tip" title="Linuxでは">
+ゲーム本体はProtonを通じて起動し動作します。Linux環境をご利用の場合は、Protonのバージョン、起動オプション、および動作が確認されている設定構成について、[Linuxサポート](/guides/linux-support/)
+の項目を参照してください。また、アップデーターの設定で **Steam経由で起動** を有効にしておくことをお勧めします。
 </Aside>
 
 ## コマンドラインからのインストール
