@@ -1,0 +1,22 @@
+---
+// The Noto Sans fonts for Chinese, Japanese and Korean pages. Fontsource splits each font into a few
+// hundred small unicode-range files, so a page only downloads the characters it shows. The @font-face
+// rules for those files are large, so a page only carries the ones for its own language, and global.css
+// names the font through --font-cjk.
+import japanese from '@fontsource-variable/noto-sans-jp/index.css?inline';
+import korean from '@fontsource-variable/noto-sans-kr/index.css?inline';
+import simplifiedChinese from '@fontsource-variable/noto-sans-sc/index.css?inline';
+import traditionalChinese from '@fontsource-variable/noto-sans-tc/index.css?inline';
+import { getLocale } from '../i18n';
+
+const fonts: Record<string, string> = {
+	ja: japanese,
+	ko: korean,
+	'zh-hans': simplifiedChinese,
+	'zh-hant': traditionalChinese,
+};
+
+const css = fonts[getLocale(Astro.url.pathname)];
+---
+
+{css && <style is:inline set:html={css} />}

@@ -4,8 +4,17 @@
 @reference "tailwindcss";
 
 /* Inter and Exo 2, self-hosted. Variable fonts, so one file covers every
-   weight. The latin-ext files only download if a page actually uses a glyph
-   from that range. */
+   weight. The latin-ext and cyrillic files only download if a page actually
+   uses a glyph from that range. */
+@font-face {
+	font-family: 'Exo 2';
+	font-style: normal;
+	font-weight: 600 800;
+	font-display: swap;
+	src: url('/fonts/exo2-cyrillic.woff2') format('woff2');
+	unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
 @font-face {
 	font-family: 'Exo 2';
 	font-style: normal;
@@ -22,6 +31,15 @@
 	font-display: swap;
 	src: url('/fonts/exo2-latin.woff2') format('woff2');
 	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 300 700;
+	font-display: swap;
+	src: url('/fonts/inter-cyrillic.woff2') format('woff2');
+	unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 
 @font-face {
@@ -63,10 +81,10 @@
 	--color-success-green: #10B981;
 	--color-space-black: #0a0a0a;
 	
-	/* Font Families */
+	/* Font Families. --font-cjk is only set on Chinese, Japanese and Korean pages. */
 	--font-family-sans: Inter, system-ui, "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
-	--font-family-heading: "Exo 2", system-ui, sans-serif;
-	--font-family-logo: Nasalization, "Exo 2", system-ui, sans-serif;
+	--font-family-heading: "Exo 2", var(--font-cjk, system-ui), system-ui, sans-serif;
+	--font-family-logo: Nasalization, "Exo 2", var(--font-cjk, system-ui), system-ui, sans-serif;
 	
 	/* Custom Animations */
 	--animate-pulse-slow: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -105,7 +123,9 @@
 	--sl-color-black: #0a0a0a;
 	
 	/* Typography */
-	--sl-font-sans: Inter, system-ui, "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+	/* Starlight reads --sl-font and Tailwind's preflight reads --default-font-family; both pages use Inter. */
+	--sl-font: Inter, var(--font-cjk, system-ui), system-ui, "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+	--default-font-family: var(--sl-font);
 	--sl-font-mono: 'Courier New', monospace;
 	
 	/* Content width - match custom pages */
@@ -115,6 +135,14 @@
 	--sl-color-bg-sidebar: #0a0a0a;
 	--sl-color-text-accent: #ff3b24;
 }
+
+/* Chinese and Japanese share code points but draw them differently, so each
+   language names its own font. Inter and Exo 2 come first in the font lists
+   and keep drawing the Latin text. */
+:root:lang(ja) { --font-cjk: "Noto Sans JP Variable"; }
+:root:lang(ko) { --font-cjk: "Noto Sans KR Variable"; }
+:root:lang(zh-Hans) { --font-cjk: "Noto Sans SC Variable"; }
+:root:lang(zh-Hant) { --font-cjk: "Noto Sans TC Variable"; }
 
 @media (forced-colors: none) and (prefers-contrast: no-preference) {
 	html {
@@ -215,7 +243,7 @@
 	.blog-post-title {
 		color: #ffffff !important;
 		font-size: 2.5rem !important;
-		font-family: "Exo 2", system-ui, sans-serif !important;
+		font-family: var(--font-family-heading) !important;
 		margin-bottom: 1.5rem !important;
 		line-height: 1.2;
 	}
@@ -312,7 +340,7 @@
 	.blog-post-entry-title {
 		color: #ffffff;
 		font-size: 1.5rem;
-		font-family: "Exo 2", system-ui, sans-serif;
+		font-family: var(--font-family-heading);
 		margin-bottom: 0.5rem;
 		transition: color 0.2s;
 	}
@@ -380,7 +408,7 @@ html {
 
 /* Font utility classes */
 .font-logo {
-	font-family: Nasalization, "Exo 2", system-ui, sans-serif;
+	font-family: var(--font-family-logo);
 	letter-spacing: 0.05em;
 	text-transform: uppercase;
 }
@@ -1440,7 +1468,7 @@ main.page-main {
 }
 
 .sl-markdown-content h1 {
-	font-family: "Exo 2", system-ui, sans-serif;
+	font-family: var(--font-family-heading);
 	color: #ffffff !important;
 	font-size: 2.5rem;
 	margin-top: 2rem;
@@ -1448,7 +1476,7 @@ main.page-main {
 }
 
 .sl-markdown-content h2 {
-	font-family: "Exo 2", system-ui, sans-serif;
+	font-family: var(--font-family-heading);
 	color: #ffffff !important;
 	font-size: 2rem;
 	margin-top: 1.5rem;
@@ -1456,7 +1484,7 @@ main.page-main {
 }
 
 .sl-markdown-content h3 {
-	font-family: "Exo 2", system-ui, sans-serif;
+	font-family: var(--font-family-heading);
 	color: #ffffff !important;
 	font-size: 1.5rem;
 	margin-top: 1.25rem;
@@ -1466,7 +1494,7 @@ main.page-main {
 .sl-markdown-content h4,
 .sl-markdown-content h5,
 .sl-markdown-content h6 {
-	font-family: "Exo 2", system-ui, sans-serif;
+	font-family: var(--font-family-heading);
 	color: #ffffff !important;
 }
 
@@ -1697,7 +1725,7 @@ pre {
 	text-align: left;
 	color: #ff3b24;
 	font-weight: 600;
-	font-family: "Exo 2", system-ui, sans-serif;
+	font-family: var(--font-family-heading);
 }
 
 .sl-markdown-content table td {

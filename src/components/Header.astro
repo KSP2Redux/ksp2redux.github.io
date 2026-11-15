@@ -2,6 +2,7 @@
 // Unified header component for all pages (custom + Starlight docs)
 import LanguageSelect from '@astrojs/starlight/components/LanguageSelect.astro';
 import LanguageSwitcher from './LanguageSwitcher.astro';
+import CjkFonts from './CjkFonts.astro';
 import { basePath, getLocale, localizePath, t } from '../i18n';
 
 const locale = getLocale(Astro.url.pathname);
@@ -40,6 +41,7 @@ const isActive = (href: string) => {
 };
 ---
 
+<CjkFonts />
 <header class:list={["fixed top-0 left-0 right-0 z-50 bg-ksp-dark/95 backdrop-blur-md border-b border-white/10", isStarlight && "starlight-header"]}>
 	<nav class="section-container">
 		<div class="flex items-center justify-between h-16">
