@@ -15,12 +15,12 @@ type CardIcon = ComponentProps<typeof Card>['icon'];
 const { set } = Astro.props;
 const locale = getLocale(Astro.url.pathname);
 
-const cards = guideCards[set].map((card: { id: string; icon?: string; href?: string }) => {
+const cards = guideCards[set].map((card: { id: string; titleKey?: string; icon?: string; href?: string }) => {
 	const key = `guideCards.${set}.${card.id}`;
 	const href = card.href && localizePath(card.href, locale);
 	return {
 		icon: card.icon as CardIcon,
-		title: t(locale, `${key}.title` as MessageKey),
+		title: t(locale, (card.titleKey ?? `${key}.title`) as MessageKey),
 		body: rich(locale, `${key}.body` as MessageKey, { link: { tag: 'a', attrs: { href } } }),
 	};
 });

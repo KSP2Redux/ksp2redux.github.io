@@ -10,7 +10,7 @@ const rootDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const english = JSON.parse(await readFile(path.join(rootDir, 'src', 'i18n', 'en.json'), 'utf8'))
 
 const cardKeys = Object.entries(guideCards).flatMap(([set, cards]) =>
-  cards.flatMap((card) => [`guideCards.${set}.${card.id}.title`, `guideCards.${set}.${card.id}.body`])
+  cards.flatMap((card) => [card.titleKey ?? `guideCards.${set}.${card.id}.title`, `guideCards.${set}.${card.id}.body`])
 )
 
 test('every guide card has a title and a body in en.json', () => {

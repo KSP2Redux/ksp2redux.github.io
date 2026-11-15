@@ -17,7 +17,7 @@ const current = options.find((option) => option.current);
 	options.length > 1 && (
 		<details class:list={['language-switcher', `language-switcher--${variant}`]}>
 			<summary
-				class="flex cursor-pointer list-none items-center gap-2 text-sm font-medium text-gray-300 transition-colors duration-200 hover:text-white"
+				class="flex cursor-pointer list-none items-center gap-2 whitespace-nowrap text-sm font-medium text-gray-300 transition-colors duration-200 hover:text-white"
 				aria-label={t(locale, 'language.label')}
 			>
 				<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

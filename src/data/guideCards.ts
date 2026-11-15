@@ -1,9 +1,11 @@
 // Structure of the card grids in the guides. The text of every card lives in `src/i18n/en.json`
 // under `guideCards.<set>.<id>.title` and `guideCards.<set>.<id>.body`; a body with a link ends in
-// `{link}...{/link}`, and `href` is where that link goes.
+// `{link}...{/link}`, and `href` is where that link goes. A card whose title is already in the catalog
+// under another key names that key in `titleKey`, so translators see the text once.
 
 export interface GuideCard {
 	id: string;
+	titleKey?: string;
 	icon?: string;
 	/** Site-relative path, `#anchor` or external URL. Cards without one have no link in their body. */
 	href?: string;
@@ -12,7 +14,7 @@ export interface GuideCard {
 export const guideCards = {
 	index: [
 		{ id: 'installation', icon: 'rocket', href: '/guides/installation/' },
-		{ id: 'roadmap', icon: 'star', href: '/roadmap/' },
+		{ id: 'roadmap', titleKey: 'common.roadmap', icon: 'star', href: '/roadmap/' },
 		{ id: 'frontier', icon: 'rocket', href: '/guides/frontier-and-exploration/' },
 		{ id: 'implemented', icon: 'check-circle', href: '/guides/implemented-features-and-fixes/' },
 		{ id: 'compatibility', icon: 'puzzle', href: '/guides/mod-compatibility/' },
