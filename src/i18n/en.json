@@ -10,6 +10,10 @@
 
 	"language.label": "Language",
 
+	"aside.note": "Note",
+	"aside.tip": "Tip",
+	"aside.caution": "Caution",
+
 	"nav.home": "Home",
 	"nav.download": "Download",
 	"nav.installation": "Installation",
