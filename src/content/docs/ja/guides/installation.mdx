@@ -1,0 +1,154 @@
+---
+title: "インストールガイド"
+description: "Steam版、Epic Games Store版、またはポータブル版にKSP2 Reduxをインストールするための手順ガイド。"
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+このガイドでは、お使いのシステムにKSP2
+Reduxをインストールする手順を説明します。ファイルのみが必要な場合は、[ダウンロードページ](/download/)へどうぞ。
+
+<Aside type="caution" title="Beta Software">
+We are currently in the beta testing phase. Please keep in mind that some things
+may be broken.
+</Aside>
+
+## 要件
+
+- **KSP2のバージョン:** KSP2 v0.2.2.0（最新の公式バージョン）がインストールされている必要があります
+- **ディスク容量:** 新しいアセットのために4GB以上の空き容量
+- **オペレーティングシステム:** WindowsまたはLinux (x64)、あるいはAppleシリコン搭載Mac上のmacOS（Rosetta
+  2を使用）
+
+## インストール手順
+
+### 1. アップデーターをダウンロード
+
+[ダウンロードページ](/download/)から、お使いのシステムに対応したRedux
+Updaterをインストールしてください。Windowsの場合は`Ksp2Redux-win-x64.exe`、macOSの場合は`Ksp2Redux-macos-arm64.dmg`、Linuxの場合は`Ksp2Redux-linux-x64`となります。そこでは常に最新バージョンが用意されています。
+
+Linuxでは、実行する前に実行可能に設定してください：
+
+```sh
+chmod +x Ksp2Redux-linux-x64
+./Ksp2Redux-linux-x64
+```
+
+<Aside type="note" title="On macOS">
+Open the `.dmg` and drag **KSP2 Redux** into **Applications**. The Updater isn't
+signed by Apple yet, so the first time you open it macOS says it could not
+verify the app. Click **Done**, then go to **System Settings**, **Privacy &
+Security**, click **Open Anyway** next to the message about KSP2 Redux and
+confirm with your password or Touch ID.
+
+KSP2 never shipped for the Mac and Steam won't download it there, so sign in to
+Steam in the Updater and use **Download KSP2** in the settings tab to get your
+copy. The Updater runs the game through its own bundled Wine runtime, no
+CrossOver needed.
+</Aside>
+
+### 2. アップデーターを実行
+
+1. ダウンロードしたアップデーターを実行してください
+2. 設定タブでKSP2のインストール先を指定してください（自動検出されなかった場合）
+3. 設定タブ内のリリースチャンネルが、意図したものになっているか確認してください（通常はデフォルトで設定されています）
+4. ホームタブに戻ってください
+
+![Redux
+Updaterの「設定」タブ。KSP2のインストールパス、リリースチャンネル、起動オプションが表示されています](../../../../assets/updater/updater-settings.png)
+
+### 3. インストールするバージョンを選択
+
+ホームタブのドロップダウンから、インストールしたいバージョンを選択してください
+
+### 4. インストール
+
+1. **インストール**をクリックしてください
+2. プログレスバーが消えるまでしばらく待ってください
+
+### 5. ゲームを起動する
+
+「ゲーム起動」をクリックしてください
+
+SteamやEpicからゲームを起動することもできますし、ゲームフォルダー内の`KSP2_x64.exe`を通常通り実行して起動することも可能です。
+
+<Aside type="tip" title="On Linux">
+The game itself runs through Proton. If you are on Linux, read [Linux
+Support](/guides/linux-support/) for Proton versions, launch options and known
+working setups. You will also want to enable **Launch through Steam** in the
+Updater's settings.
+</Aside>
+
+## コマンドラインからのインストール
+
+ターミナルから利用できるCLIツール`redux-launcher-cli`もあり、これを使えばUpdaterウィンドウと同様のインストール作業を行えます。同じ設定ファイルを読み書きするため、両者を自由に切り替えて使用可能です。Windows、macOS、Linuxに対応しており、アドミン権限も必要ありません。
+
+1行のコマンドでインストールするか、[ダウンロードページ](/download/#command-line)から
+`redux-cli-x64.exe`（Windows用）、`redux-cli-macos-arm64`（macOS用）、または
+`redux-cli-x64`（Linux用）をダウンロードしてください。Macの場合は、Linuxと同様の `curl` コマンドを使用します:
+
+```powershell
+irm https://raw.githubusercontent.com/KSP2Redux/Updater/main/scripts/install-cli.ps1 | iex
+```
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/KSP2Redux/Updater/main/scripts/install-cli.sh | bash
+```
+
+これにより、バイナリがWindowsでは `%LOCALAPPDATA%\Programs\redux-launcher-cli` に、Linuxでは
+`~/.local/bin` に配置され、PATHに追加されます。インストーラーを再度実行すると、既存のバイナリがアップグレードされます。
+
+その後の一般的な流れは、以下の通り:
+
+```sh
+redux-launcher-cli --help # 全コマンドと使用例を表示
+redux-launcher-cli detect # Updaterと同様の方法でKSP2のインストール先を検出
+redux-launcher-cli installs add # 検出されたインストール先を設定に追加
+redux-launcher-cli update # 選択中のチャンネル内の最新ビルドをインストール
+redux-launcher-cli launch # ゲームを起動
+```
+
+`redux-launcher-cli self-update` を実行することで、ツールは常に最新の状態を自動的に保つことができます。また、`version
+--check`
+を使えば、より新しいビルドがリリースされているかどうかを確認できます。使用中には1日1回、新しいリリースに関する通知が表示されますが、`--no-update-check`
+オプションを実行すれば、この通知を無効にできます。`self-uninstall` を実行するとバイナリは削除されますが、設定ファイルはそのまま残ります。
+
+スクリプト作成の用途において、`--json` オプションはドキュメントを stdout に、それ以外の情報を stderr
+に出力します。終了コードは安定しており、`completion pwsh|bash` コマンドを実行すると、シェル補完スクリプトが出力されます。
+
+## インストールの確認
+
+ゲームを起動すると、Redux固有の機能やUI要素が表示されるはずです。メインメニューで、Reduxのバージョン情報を確認してみてください。
+
+## トラブルシューティング
+
+### インストールに時間がかかりすぎている
+- インストール中にウイルス対策ソフトがファイルをスキャンしていないことを確認してください
+- 十分なディスク容量があることを確認してください
+
+### ゲームが起動しない
+- KSP2の元のインストールがv0.2.2.0であることを確認してください
+- Windowsでは、KSP2のインストール先パスが長すぎていないかどうか確認してください（理想的には200文字以内です。Windowsでは、パスが非常に長く、階層が深い場合に問題が生じることがあります）
+
+### ファイルが見つからないエラー
+- SteamまたはEpicを通じて、KSP2のインストール状態の整合性が保たれているかどうかを確認してください
+
+## アンインストール
+
+KSP2 Reduxをアンインストールするには、Updaterの設定タブを開き、「アンインストール」をクリックしてください
+
+## バグの報告
+
+バグに遭遇した場合は、ゲーム内のバグレポーター機能をご利用ください:
+- **Ctrl+B**を押すか、
+- **Escape**キーを押す → **バグを報告する**
+
+これで、バグの再現に役立つスクリーンショット、ログ、セーブファイルといった有用な情報が自動的に添付されます。
+
+または、[KSP2 Redux Discordサーバー](https://discord.gg/ksp2redux)の **#🟡redux-chat**
+（**#🟡redux-bugs** の方は閉鎖済み）チャンネルでバグを報告してください。
+
+## 次のステップ
+
+- [MODの互換性](/guides/mod-compatibility/)について学ぶ
+- [チェンジログ](https://github.com/KSP2Redux/Redux/releases)を読む

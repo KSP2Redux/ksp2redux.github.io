@@ -1,6 +1,6 @@
 ---
-title: Frontier and Exploration Modes
-description: How the planned Frontier and Exploration modes differ, especially around colonies, resources, and logistics.
+title: "フロンティアモードと探索モード"
+description: "計画されている「フロンティアモード」と「探索モード」の違いについて、特にコロニー、資源、ロジスティクスの観点から解説します。"
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -11,108 +11,75 @@ planned for later. Details may change as the colony and resource systems are
 built.
 </Aside>
 
-Redux plans to support two progression modes with different levels of resource
-management. Exploration mode is planned to arrive before Frontier mode.
+Reduxは、リソース管理の難易度レベルが異なる2つの進行モードがサポートされる予定です。「フロンティアモード」に先駆けて、「探索モード」が実装される計画となっています。
 
-**Exploration mode** is the lighter progression path. It keeps the focus on
-missions, science, discovery, and unlocking new capabilities. Resources still
-matter, but mostly as unlock requirements.
+**探索モード**は、より気軽にゲームを進められるモードです。ミッション、サイエンス、発見、そして新たな機能のアンロックに重点が置かれています。リソースも引き続き重要ですが、その主な役割は、新たな要素をアンロックするための条件として機能することです。
 
-**Frontier mode** is the deeper resource-management path. It treats parts,
-colonies, fuels, and building materials as things that must be produced, stored,
-moved, and spent.
+**フロンティアモード**は、より奥深いリソース管理が求められるプレイ形式です。ここでは、パーツ、コロニー、燃料、建築資材といった要素を、生産・保管・輸送・消費すべき対象として扱います。
 
-You can think of them as rough successors to KSP1's Science and Career modes:
+これらは、KSP1の「サイエンス」モードや「キャリア」モードの、おおまかな後継にあたるものだと考えてもよいです:
 
-| Mode        | Closest KSP1 comparison | Main focus                                                              |
-| ----------- | ----------------------- | ----------------------------------------------------------------------- |
-| Exploration | Science                 | Explore, run experiments, complete missions, unlock resources and parts |
-| Frontier    | Career                  | Build an economy of colonies, factories, stockpiles, and supply routes  |
+| モード    | KSP1との最も近い比較対象 | メインフォーカス                           |
+| ------ | -------------- | ---------------------------------- |
+| 探索     | サイエンス          | 探索し、実験を行い、ミッションを完了し、リソースやパーツをアンロック |
+| フロンティア | キャリア           | コロニー、工場、備蓄、補給路からなる経済を構築            |
 
-## Quick Comparison
+## 簡易な比較
 
-| Question                                         | Exploration mode                                                                   | Frontier mode                                                                  |
-| ------------------------------------------------ | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| Do parts consume materials when built?           | No. A part can be built once its required resources are unlocked.                  | Yes. Parts cost materials and fuels that must be available.                    |
-| Do resource amounts and production rates matter? | Mostly no. Resource access is treated as an unlock.                                | Yes. Mining, processing, stockpiles, and flow rates are central.               |
-| What are colonies for?                           | Unlocking and sharing resource access across the colony network.                   | Producing materials, fuels, colony parts, and vessels.                         |
-| Are supply routes required?                      | No. The goal is to avoid routine logistics management.                             | Yes, planned supply routes are a major part of connecting colonies.            |
-| Who is it for?                                   | Players who want colonies to support exploration without heavy economy management. | Players who want colony placement, production chains, and logistics to matter. |
+| 質問                    | 探索モード                                         | フロンティアモード                                 |
+| --------------------- | --------------------------------------------- | ----------------------------------------- |
+| パーツを製作する際、資源は消費されますか？ | いいえ。必要なリソースがアンロックされれば、パーツをいくらでも製造できるようになります。  | はい。パーツを製造するには材料や燃料といったコストがかかります。          |
+| 資源の量や生産速度は重要ですが？      | 基本的には違います。資源へのアクセスはアンロックとして扱われます。             | はい。採掘、処理、備蓄、そして流量が中心となります。                |
+| コロニーは何のためのものか？        | コロニーネットワーク全体で資源へのアクセスをアンロックし、共有するため。          | 資材、燃料、コロニーパーツ、および機体を生産するため。               |
+| 補給ルートは必要ですか？          | いいえ。目的は、物流管理をくり返し行うのを防ぐことです。                  | はい、計画された補給ルートは、コロニー同士をつなぐ上で重要な要素です。       |
+| どういうプレイヤー向けですか？       | 複雑な経済管理を必要とせず、探検を支えるための目的としてのコロニーを求めているプレイヤー。 | コロニーの配置、生産チェーン、そして物流が重要な意味を持つことを求めるプレイヤー。 |
 
-## Exploration Mode
+## 探索モード
 
-Exploration mode uses resources as a progression and exploration system.
+探索モードでは、資源が進行および探索のシステムとして機能します。
 
-Instead of continuously mining and spending resource quantities, you unlock
-access to a resource at a colony. The unlock might require a specific colony
-facility, a mission, a science experiment, a location, or some other
-requirement.
+資源を絶えず採掘して消費し続けるのではなく、コロニーにおいて特定の資源を利用できるように「アンロック」する仕組みとなっています。このアンロックには、コロニー内の特定の施設、ミッション、実験、特定の場所、あるいはその他の何らかの条件が必要となる場合があります。
 
-Once the requirement is met, that resource is considered available for that
-colony. If a vessel or colony part requires that resource, you can build it
-there without tracking stockpile amounts or production rates.
+条件が満たされると、その資源はそのコロニーにおいて利用可能なものとみなされます。機体やコロニーの構成要素がその資源を必要とする場合、備蓄量や生産率を把握することなく、その場所で製造することができます。
 
-### Orbital Colonies in Exploration
+### 探査モードにおける軌道型コロニー
 
-Orbital colonies are planned to act as resource links between celestial bodies.
+軌道型コロニーは、天体間における資源の結節点として機能するよう計画されています。
 
-If two celestial bodies both have an active orbital colony, their unlocked
-resources can be shared through that network. For example, if Duna and Kerbin
-both have orbital colonies, resources unlocked around Duna can become available
-to colonies connected through Kerbin's orbital network, and the other way
-around.
+2つの天体それぞれに稼働中の軌道型コロニーが存在する場合、それらのネットワークを通じて、アンロックされた資源を共有することが可能です。例えば、ドゥナ（Duna）とカービン（Kerbin）の両方に軌道型コロニーがある場合、ドゥナ周辺でアンロックされた資源を、カービンの軌道ネットワークに接続されたコロニーで利用できるようになります。その逆も同様です。
 
-The intent is to make orbital colonies useful without asking every player to
-manage cargo routes and storage limits.
+その目的は、すべてのプレイヤーに貨物ルートの管理や保管容量の制限への対処を求めることなく、軌道型コロニーを有用なものにすることです。
 
-## Frontier Mode
+## フロンティアモード
 
-Frontier mode uses resources as a production and logistics system.
+フロンティアモードでは、資源が生産および物流システムとして機能します。
 
-In this mode, vessel and colony parts cost materials. To build those parts, you
-need the required materials available where the construction is happening. Those
-materials come from raw resources gathered by mining facilities and processed by
-factories.
+このモードでは、機体やコロニーのパーツを建造・製造する際に資材が必要となります。パーツを建造・製造するには、その建造・製造する場所に必要な資材がそろっていなければなりません。これらの資材は、採掘施設で採取された未加工の資源を、工場で加工することで得られます。
 
-Production can depend on things like local resource density, colony conditions,
-power, heat, or other balancing factors. The exact list is not final.
+生産量は、現地の資源密度、コロニーの状態、電力、熱、あるいはその他のバランス調整要素といったものに左右される可能性があります。具体的な項目は、まだ確定したものではありません。
 
-KSC is planned to provide unlimited access to basic building resources and
-common fuels, so the early game does not start with a logistics bottleneck. More
-advanced parts, colony growth, and exotic resources are expected to require
-off-world colonies.
+KSCでは、基本的な製造・建築資材や一般的な燃料を無制限に利用できるようにする計画です。これにより、ゲーム序盤において物流上のボトルネックに直面することはありません。一方、より高度なパーツの入手やコロニーの拡大、特殊な資源の確保には、カービン外のコロニーが必要となる見込みです。
 
-### Colonies in Frontier
+### フロンティアモードにおけるコロニー
 
-Frontier colonies are production hubs.
+フロンティアモードにおけるコロニーは、生産拠点です。
 
-To found or grow a new colony, you may need to move resources, materials, or
-construction hardware from Kerbin or another colony. Once a colony is
-established, it can mine local resources, process them into useful materials,
-produce fuel, and eventually support local vessel or colony construction.
+新たなコロニーを設立したり拡張したりする際には、カービンや他のコロニーから、資源、資材、あるいは建設用機材を輸送する必要があるかもしれません。コロニーが確立されれば、現地の資源を採掘して有用な資材に加工したり、燃料を生産したりできるようになり、最終的には、その場で機体やコロニー施設を建造することも可能になります。
 
-Later in the roadmap, supply routes are planned to reduce repeated manual cargo
-flights. A successful delivery from one colony to another could be recorded as a
-recurring route that transfers resources over time.
+ロードマップの後の段階では、繰り返される手動の貨物輸送を減らすための「補給ルート」が計画されています。あるコロニーから別のコロニーへの配送が成功した場合、それを定期的なルートとして登録して保存することで、時間をかけて継続的に資源を輸送できるようになります。
 
-## What Both Modes Share
+## 両モードに共通する点
 
-Both modes are planned to use colonies, resources, missions, science, and tech
-progression. The difference is not whether resources exist. The difference is
-how much resource bookkeeping the player is asked to do.
+どちらのモードも、コロニー、資源、ミッション、サイエンス、そして技術の発展といった要素を取り入れる予定です。モードの違いは、資源が存在するかどうかではありません。プレイヤーにどの程度の資源管理を求めるか、という点が異なります。
 
-In Exploration mode, resources answer the question: **Have you discovered and
-unlocked what this part needs?**
+探索モードにおいて、資源は **「このパーツが必要とするものを発見し、アンロック済みなのか？」** という問いに対する答えとなります。
 
-In Frontier mode, resources answer the question: **Can your colony network
-produce, store, and deliver what this part costs?**
+フロンティアモードにおいて、資源は **「あなたのコロニーネットワークは、このパーツのコスト分を生産・貯蔵し、供給することができるか？」**
+という問いに対する答えとなります。
 
-## Current Status
+## 現在のステータス
 
-Redux is currently in **Stage 0: Foundation**. The public beta work is still
-focused on performance, bug fixes, UI cleanup, modding tools, heat, vessel ISRU
-groundwork, and tech tree requirements.
+Reduxは現在 **ステージ0：ファウンデーション**
+にあります。パブリックベータ版の開発は、まだパフォーマンス、バグ修正、UIの整理、モッディングツール、熱管理、機体ISRUの基礎作業、および技術ツリーの要件に重点を置いています。
 
-Exploration mode colony resource rules are planned before Frontier mode.
-Colonies, full resource networks, and both progression-mode updates are still
-later roadmap work.
+探索モードにおけるコロニーおよび資源に関するルールは、フロンティアモードの前に計画されています。コロニー、完全な資源ネットワーク、そして両モードのアップデートは、いずれもロードマップ上のより後の段階で予定されています。
