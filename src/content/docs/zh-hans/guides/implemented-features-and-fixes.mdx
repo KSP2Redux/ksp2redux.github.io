@@ -244,48 +244,41 @@ Redux仍处于Beta测试阶段。与Redux之前的原版KSP2相比，它增加�
 - 修复了部件副标题、油门文本、颜色管理器按钮、旗帜站点名称与描述、部件尺寸以及本地化UI中的文本溢出和可读性问题。
 - 修复了Redux与原生版UI中常见的加载状态和UI生命周期错误。
 
-### Graphics, FX, Audio, and Environments
+### 图形、特效、音频与环境
 
-- Fixed other moons not being visible while inside a moon's SOI.
-- Fixed Dres' rings rendering behind the planet.
-- Fixed mission control shader display color.
-- Fixed VAB lighting and part color darkening.
-- Fixed ring particles duplicating when switching camera modes.
-- Fixed FX behavior when teleporting.
-- Fixed countdown timing and countdown-on-load behavior.
-- Fixed Mission Control lighting issues.
+- 修复了在卫星的引力范围内时，其他卫星不可见的问题。
+- 修复了Dres环带被行星遮挡而显示在行星之后的问题。
+- 修复了任务控制中心的着色器显示颜色问题。
+- 修复了组装大楼的光照以及部件颜色变暗的问题。
+- 修复了切换相机模式时环粒子重复显示的问题。
+- 修复了传送时的特效行为。
+- 修复了倒计时时序以及加载后倒计时的行为问题。
+- 修复了任务控制中心的照明问题。
 
-### Modding and SDK
+### 模组与SDK
 
-- Fixed configuration callbacks firing before new values were applied.
-- Fixed mod localization override behavior.
-- Fixed Patch Manager caching, sole-selector patches, parser error counting, and
-  editor invalidation.
-- Reduced Patch Manager performance and allocation overhead.
-- Fixed runtime prefab changes carrying back to prefab files on disk in the
-  editor.
-- Fixed V-SwiFT variant resets, attach-node integration, and Patch Manager
-  integration.
-- Fixed flight-state transform activation for imported parts.
+- 修复了配置回调在新值应用之前就触发的问题。
+- 修复了模组本地化覆盖的行为问题。
+- 修复了Patch Manager的缓存、单选选择器补丁、解析器错误计数以及编辑器失效的问题。
+- 降低了Patch Manager的性能开销与内存分配开销。
+- 修复了编辑器中运行时预制体改动被回写到磁盘上预制体文件的问题。
+- 修复了V-SwiFT的变体重置、附着节点集成以及Patch Manager集成的问题。
+- 修复了导入部件在飞行状态下的变换激活问题。
 
-### Performance and Stability
+### 性能与稳定性
 
-- Enabled Unity multithreaded rendering settings.
-- Reduced general transform synchronization overhead and refactored code that
-  depended on automatic transform syncing.
-- Improved CollisionManager scalability for large vessels and moved more
-  collision callback work to multithreaded APIs.
-- Used ECS and Burst for TransformModel calculations.
-- Reduced map-view allocation pressure and RelativeOrbitSolver overhead.
-- Reduced allocation pressure in background part systems, thermal code, solar
-  panels, RCS, wheels, engines, resources, drag, the message center, sessions,
-  and data contexts.
-- Cached expensive ownership and getter lookups in frequently used code.
-- Removed unused IMGUI event processing.
-- Reduced save UI hierarchy and layout overhead.
-- Improved orphaned part scanning.
-- Improved DeltaV stage timing calculations.
-- Fixed memory leaks and unnecessary rebuilds in thermal code.
-- Reduced overhead for vessels orbiting Kerbol.
-- Improved VAB performance and part placement responsiveness.
-- Reduced DirectStorage-enabled loading overhead where supported.
+- 启用了Unity多线程渲染设置。
+- 降低了整体变换同步开销，并重构了依赖自动变换同步的代码。
+- 提升了CollisionManager对大型航天器的可扩展性，并将更多碰撞回调工作移至多线程API上。
+- 使用ECS和Burst进行TransformModel计算。
+- 降低了地图视图的内存分配压力以及RelativeOrbitSolver的开销。
+- 降低了背景部件系统、热控代码、太阳能板、RCS、车轮、引擎、资源、阻力、消息中心、会话及数据上下文中的内存分配压力。
+- 在频繁使用的代码中缓存了开销较大的归属关系和获取器查找结果。
+- 移除了未使用的IMGUI事件处理。
+- 降低了存档UI的层级结构与布局开销。
+- 改进了孤立部件扫描。
+- 改进了Δv分级时长计算。
+- 修复了热控代码中的内存泄漏和不必要的重建问题。
+- 降低了Kerbol轨道上航天器的开销。
+- 提升了组装大楼的性能与部件放置的响应速度。
+- 在支持的情况下，降低了启用DirectStorage后的加载开销。
