@@ -5,53 +5,48 @@ description: "在Linux上运行KSP2 Redux的提示。"
 
 import { Aside } from '@astrojs/starlight/components';
 
-KSP2 Redux can run on Linux through Proton. This page focuses on launching and
-troubleshooting the game itself.
+KSP2 Redux可以通过Proton在Linux上运行。本页重点介绍游戏本身的启动与故障排除。
 
-<Aside type="tip" title="Steam Launch Required">
-If you are using the Linux version of the Updater, open **Settings** and enable
-**Launch through Steam** if you want to be able to launch the game from the
-Updater.
+<Aside type="tip" title="需要通过Steam启动">
+如果你使用的是Linux版更新程序，并且希望能从更新程序启动游戏，请打开**设置**并启用**通过Steam启动**。
 </Aside>
 
-## Recommended Setup
+## 推荐配置
 
-- Add or launch Redux through Steam.
-- Force a Proton compatibility setup for the game.
-- If the game is unstable at startup, start with windowed launch options first.
+- 通过Steam添加或启动Redux。
+- 为游戏强制启用Proton兼容性设置。
+- 如果游戏在启动时不稳定，请先以窗口化启动选项启动。
 
-Reported working Proton versions include:
+据报告可用的Proton版本包括：
 
 - `GE-Proton`
 - `GE-Proton 10-27`
 - `Proton Experimental`
 - `Proton 10`
 
-If one Proton version gives video or startup issues, try `GE-Proton` first.
+如果某个Proton版本出现画面或启动问题，请先尝试`GE-Proton`。
 
-## Launch Options That Help
+## 有帮助的启动项
 
-Some Linux users reported better stability when forcing windowed startup.
+一些Linux用户报告，强制窗口化启动能获得更好的稳定性。
 
-Recommended launch arguments to try:
+建议尝试的启动参数：
 
 ```text
 -popupwindow
 ```
 
-Other reported working options:
+其他据报告可用的选项：
 
 ```text
 -window-mode exclusive -screen-fullscreen 0
 ```
 
-Notes:
+备注：
 
-- `-popupwindow` was reported to reduce startup crashes on some systems.
-- Some users needed the game to start windowed first, even if it later switched
-  into fullscreen successfully.
-- If the game crashes immediately or opens to a black screen, test one of the
-  options above before changing anything else.
+- 据报告，`-popupwindow`能在某些系统上减少启动崩溃。
+- 有些用户需要先让游戏以窗口化方式启动，即使之后能成功切换到全屏。
+- 如果游戏一启动就崩溃，或打开后只有黑屏，请先试一个上面的选项，再做其他改动。
 
 ## Known Working Reports
 
