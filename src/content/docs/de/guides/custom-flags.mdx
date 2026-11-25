@@ -1,0 +1,61 @@
+---
+title: "Eigene Flaggen"
+description: "Wie man eigene Agentur- und Sticker-Flaggen zu KSP2 Redux hinzufügt."
+---
+
+## Installationsort
+
+Bei einer Spielerinstallation durchsucht Redux die Ordner „flags“ in den
+Mod-Ordnern nach benutzerdefinierten Flags:
+
+```text
+<KSP2 Redux Installation>/mods/<Dein Ordner>/flags/
+```
+
+Zum Beispiel:
+
+```text
+mods/
+  MyFlags/
+    flags/
+      mission-patch.png
+      agencies/
+        blue-program.jpg
+```
+
+Der zusätzliche Ordner unter „mods“ ist erforderlich. Dateien, die direkt in
+„mods/flags“ abgelegt werden, werden vom aktuellen Loader nicht gescannt.
+
+## Unterstützte Dateiformate
+
+Redux lädt benutzerdefinierte Flags von:
+
+- `.png`
+- `.jpg`
+- `.jpeg`
+
+Unterordner innerhalb von `flags` werden durchsucht. Der im Spiel angezeigte
+Name entspricht dem Dateinamen der Bilddatei ohne Dateiendung.
+
+## Im Spiel verwenden
+
+Starte Redux nach dem Hinzufügen von Flaggen neu. Benutzerdefinierte Flaggen
+werden bei der ersten Initialisierung des Flag-Katalogs geladen, daher ist ein
+Neustart der zuverlässigste Weg, um neu hinzugefügte Dateien verfügbar zu
+machen.
+
+Benutzerdefinierte Flaggen werden neben den integrierten Agentur-Flaggen in der
+Flaggenauswahl bei der Kampagnenerstellung angezeigt. Sie sind außerdem in der
+Redux-Flaggenauswahl verfügbar, die von der Option „Agentur-Flagge“ in den
+Spieleinstellungen sowie bei der Auswahl von Sticker-Flaggen verwendet wird.
+
+Wenn man die aktuelle Agenturflagge in den Einstellungen ändert, wird die ab
+diesem Zeitpunkt verwendete Agenturflagge aktualisiert. Bei bereits platzierten
+Flaggen und Aufklebern bleibt das Flaggenbild auf diesen Objekten erhalten und
+ändert sich nicht automatisch bei jeder Änderung der Agenturflagge.
+
+## Notizen
+
+Im Loader gibt es keine vorgeschriebene Bildgröße. Verwende ein normales,
+fahnenförmiges Bild, wenn Sie möchten, dass die Vorschaubilder und die Flächen
+der Fahnen vorhersehbar aussehen.

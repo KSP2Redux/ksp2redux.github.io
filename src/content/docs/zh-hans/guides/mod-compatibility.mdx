@@ -7,68 +7,61 @@ import { Aside } from '@astrojs/starlight/components';
 
 ## 当前状态
 
-<Aside type="caution" title="Mods Require Updates">
-Due to the transition from BepInEx to an integrated mod loader, as well as
-improvements to the modding API, current mods will need to be updated to work
-with Redux.
+<Aside type="caution" title="模组需要更新">
+由于从BepInEx迁移到了集成式模组加载器，并且模组制作API也得到了改进，现有的模组都需要更新后才能与Redux配合使用。
 </Aside>
 
-## Asset-Only Mods
+## 纯资源类模组
 
-Some asset-only mods (particularly part mods) may work out of the box with
-Redux, but we do not guarantee compatibility at this time.
+部分纯资源类模组（尤其是部件模组）可能无需改动即可在Redux上运行，但我们目前不保证兼容性。
 
-**What are asset-only mods?**
-- Part mods that only add models, textures, and configs
-- Visual mods that replace textures or models
-- Mods without code/plugins
+**什么是纯资源类模组？**
+- 仅添加模型、纹理和配置的部件模组
+- 替换纹理或模型的视觉类模组
+- 不含代码或插件的模组
 
-## Code Mods
+## 代码类模组
 
-Most code-based mods will require updates to work with Redux:
+大多数基于代码的模组需要更新后才能与Redux配合使用：
 
-### What Changed?
-1. **Mod Loader:** Transition from BepInEx to integrated mod loader
-2. **Modding API:** Improvements and changes to the modding API
-3. **Core Systems:** Some game systems have been rewritten (e.g.,
-   TransformFrame)
+### 有哪些变化？
+1. **模组加载器：**从BepInEx迁移到集成式模组加载器
+2. **模组制作API：**模组制作API的改进与变更
+3. **核心系统：**部分游戏系统已被重写（例如TransformFrame）
 
-### For Mod Users
+### 对于模组使用者
 
-Be patient as mod developers update their mods for Redux compatibility. Check
-the mod's page or contact the developer for Redux compatibility status.
+请耐心等待模组开发者更新其模组以兼容Redux。可查看模组页面或联系开发者，了解Redux兼容性状态。
 
-### For Mod Developers
+### 对于模组开发者
 
-We are actively working on:
-- **Modding Documentation:** Comprehensive guides for Redux modding
-- **Migration Assistance:** Helping modders update their mods
-- **Unmaintained Mods:** Updating popular unmaintained mods ourselves
+我们正在积极处理：
+- **模组制作文档：**Redux模组制作的完整指南
+- **迁移协助：**帮助模组作者更新其模组
+- **无人维护的模组：**我们自行更新热门的无人维护模组
 
 <Aside type="tip">
-If you're a modder interested in migrating your mods to Redux, reach out in the
-**#🟡redux-chat** channel on the [KSP2 Redux
-Discord](https://discord.gg/ksp2redux) or DM @safarte.
+如果你是模组作者并且有意将模组迁移到Redux，欢迎在[KSP2 Redux
+Discord](https://discord.gg/ksp2redux)的**#🟡redux-chat**频道中联系我们，或私信@safarte。
 </Aside>
 
-## Redux Modding SDK
+## Redux模组制作SDK
 
-Redux introduces a revolutionary modding experience:
+Redux带来了革命性的模组制作体验：
 
-### Unity Editor Integration
-- Test mods by running KSP2 directly in Unity Editor
-- Iterate in seconds instead of minutes
-- Access Unity's full debugging and development tools
-- Use custom inspectors and Unity package libraries
+### Unity编辑器集成
+- 在Unity编辑器中直接运行KSP2来测试模组
+- 几秒完成迭代，而非几分钟
+- 使用Unity完整的调试与开发工具
+- 使用自定义检视面板和Unity包库
 
-### Benefits for Modders
-1. **Rapid Iteration:** Changes can be tested immediately
-2. **Better Debugging:** Full Unity debugging tools at your disposal
-3. **Easier Development:** No compile-test-restart cycle
-4. **Better APIs:** Improved and more comprehensive modding endpoints
+### 对模组作者的好处
+1. **快速迭代：**可以立即测试改动
+2. **更好的调试体验：**可随时使用Unity的完整调试工具
+3. **更轻松的开发：**无需编译—测试—重启的循环
+4. **更好的API：**更完善、更全面的模组制作接口
 
-See our [blog post on Unity Editor
-integration](/blog/modding-tools-unity-editor/) for more details.
+更多详情请参阅我们[关于Unity编辑器集成的博客文章](/blog/modding-tools-unity-editor/)。
 
 ## Checking Mod Compatibility
 

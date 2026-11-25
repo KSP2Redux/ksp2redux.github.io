@@ -48,39 +48,37 @@ KSP2 Redux可以通过Proton在Linux上运行。本页重点介绍游戏本身�
 - 有些用户需要先让游戏以窗口化方式启动，即使之后能成功切换到全屏。
 - 如果游戏一启动就崩溃，或打开后只有黑屏，请先试一个上面的选项，再做其他改动。
 
-## Known Working Reports
+## 已知工作报告
 
-The following Linux environments were reported to work by community members:
+社区成员报告称以下Linux环境可以正常使用：
 
-- Arch Linux with Hyprland using GE-Proton
-- Nobara using GE-Proton
-- Bazzite / Fedora Atomic using Proton
-- Linux Mint 22.3 using GE-Proton 10-27
-- Pop!_OS 24 using Proton 10
+- 使用GE-Proton的Hyprland桌面环境下的Arch Linux
+- 使用GE-Proton的Nobara
+- 使用Proton的Bazzite / Fedora Atomic
+- 使用GE-Proton 10-27的Linux Mint 22.3
+- 使用Proton 10的Pop!_OS 24
 
 ## 故障排除
 
-### Startup Crashes
+### 启动崩溃
 
-Try these steps in order:
+请按顺序尝试以下步骤：
 
-1. Force `GE-Proton`, for example `GE-Proton 10-27`.
-2. Add `-popupwindow` to launch options.
-3. If that does not help, try `-window-mode exclusive -screen-fullscreen 0`.
+1. 强制使用`GE-Proton`，例如`GE-Proton 10-27`。
+2. 在启动选项中添加`-popupwindow`。
+3. 如果这没有帮助，请尝试`-window-mode exclusive -screen-fullscreen 0`。
 
-### Videos or Intro Playback Issues
+### 视频或开场动画播放问题
 
-Some Linux users reported that default Proton builds had trouble with videos,
-while `GE-Proton` worked correctly. If the game launches poorly or hangs early,
-switch Proton versions before deeper troubleshooting.
+一些Linux用户报告，默认的Proton构建在播放视频时存在问题，而`GE-Proton`可以正常工作。如果游戏启动异常或很早就卡住，请先切换Proton版本，再进行更深入的排查。
 
-## Reporting Linux Issues
+## 报告Linux相关问题
 
-When reporting a Linux-specific problem, include:
+报告Linux相关问题时，请包含以下内容：
 
-- your distro
-- desktop environment or window manager
-- kernel version
-- GPU and driver version
-- Proton version
-- launch options used
+- 你的发行版
+- 桌面环境或窗口管理器
+- 内核版本
+- GPU和驱动版本
+- Proton版本
+- 使用的启动选项
