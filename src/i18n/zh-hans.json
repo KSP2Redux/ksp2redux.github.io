@@ -41,5 +41,20 @@
 	"home.jsonLd.applicationDescription": "一个社区自制的坎巴拉太空计划2延续补丁，用于修复BUG、提升性能，并实现未完成的系统。",
 	"home.hero.intro": "KSP2 Redux是一个社区项目，致力于修复坎巴拉太空计划2、提升性能，并补全那些被搁置未完成的系统。",
 	"home.hero.downloadButton": "下载最新版本",
-	"home.hero.blogButton": "发布说明与博客"
+	"home.hero.blogButton": "发布说明与博客",
+	"home.about.paragraph1": "KSP2 Redux是坎巴拉太空计划2的社区自制延续项目。目标是做出游戏原本应有的那些主要系统：殖民地、资源管理、星际旅行、多人游戏，以及这些系统所依赖的较小功能。",
+	"home.about.paragraph2": "KSP2 Redux是坎巴拉太空计划2的社区自制延续项目。目标是构建出游戏原本应有的那些主要系统：殖民地、资源管理、星际旅行、多人游戏，以及这些系统所依赖的较小功能。",
+	"home.start.intro": "如果你是Redux的新用户，这些页面最值得先看。",
+	"home.start.installation.description": "如何安装Redux、支持哪些版本，以及从哪里开始排查问题。",
+	"home.start.features.title": "已实现的功能",
+	"home.start.features.description": "Redux中已经具备的主要功能、改进和BUG修复。",
+	"home.start.roadmap.description": "当前的优先事项、已加入的内容，以及仍在计划中的更大系统。",
+	"home.snapshots.heading": "通常每周都会发布快照",
+	"home.snapshots.paragraph1": "除了稳定版之外，Redux大多数周都会发布快照。这些快照是团队手头正在开发的内容的构建版本，内容一旦完成就发布，而不会压上几个月。自8月发布第一个快照以来，他们已经新增了两颗卫星、可开采的铀、对接口旋转和分级回收系统。",
+	"home.snapshots.paragraph2": "快照位于更新程序的beta渠道中，你可以在设置里切换到该渠道。稳定渠道保留的是经过测试的发布版本，因此如果你不想应付各种毛刺，就继续留在稳定渠道。快照正处于密集开发阶段，出问题是必然的。一旦出问题，请用Ctrl+B报告，或按Esc键后选择报告Redux错误。每个快照都会在{blogLink}博客{/blogLink}上详细说明，并附有完整的更新日志。",
+	"home.latest.heading": "最新{blogLink}博客{/blogLink}文章",
+	"home.latest.intro": "近期的发布说明、预览和开发动态。",
+	"home.latest.readPost": "阅读文章",
+	"home.links.heading": "链接",
+	"home.links.intro": "Discord是大部分支持与测试讨论发生的地方。GitHub用于发布、源码和问题跟踪。论坛、Reddit、YouTube和TikTok则适合发布公开更新和社区帖子。"
 }
