@@ -6,6 +6,7 @@ import CjkFonts from './CjkFonts.astro';
 import { basePath, getLocale, localizePath, t } from '../i18n';
 
 const locale = getLocale(Astro.url.pathname);
+const githubUrl = 'https://github.com/KSP2Redux/Redux';
 // Match against the path without its locale prefix, so the same checks work in every language.
 const pathname = basePath(Astro.url.pathname);
 
@@ -44,9 +45,9 @@ const isActive = (href: string) => {
 <CjkFonts />
 <header class:list={["fixed top-0 left-0 right-0 z-50 bg-ksp-dark/95 backdrop-blur-md border-b border-white/10", isStarlight && "starlight-header"]}>
 	<nav class="section-container">
-		<div class="flex items-center justify-between h-16">
+		<div class="grid h-16 grid-cols-[auto_minmax(0,1fr)] items-center gap-5">
 			<!-- Logo -->
-			<a href={localizePath('/', locale)} class="flex items-center space-x-3 group">
+			<a href={localizePath('/', locale)} class="flex items-center gap-3 group">
 				<img
 					src="/logo.png"
 					alt={t(locale, 'common.logoAlt')}
@@ -57,69 +58,72 @@ const isActive = (href: string) => {
 				</span>
 			</a>
 
-			<!-- Desktop Navigation -->
-			<!-- From xl: translated labels and the language menu do not fit next to the logo at lg -->
-			<div class="hidden xl:flex items-center gap-5 2xl:gap-8">
-				{navItems.map(item => (
-					<a 
-						href={withSlash(item.href)}
-						class:list={[
-							"text-sm font-medium whitespace-nowrap transition-colors duration-200",
-							isActive(item.href) ? "text-ksp-red-text" : "text-gray-300 hover:text-white"
-						]}
+			<div data-nav-space class="grid min-w-0 grid-cols-[minmax(0,1fr)] items-center justify-items-end">
+				<!-- Desktop Navigation -->
+				<div data-inline-nav class="col-start-1 row-start-1 flex w-max items-center gap-4">
+					{navItems.map(item => (
+						<a
+							href={withSlash(item.href)}
+							aria-current={isActive(item.href) ? 'page' : undefined}
+							class:list={[
+								"text-sm font-medium whitespace-nowrap transition-colors duration-200",
+								isActive(item.href) ? "text-ksp-red-text" : "text-gray-300 hover:text-white"
+							]}
+						>
+							{item.label}
+						</a>
+					))}
+
+					<!-- GitHub Link -->
+					<a
+						href={githubUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="text-gray-300 hover:text-white transition-colors duration-200"
+						aria-label="GitHub"
 					>
-						{item.label}
+						<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+							<path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+						</svg>
 					</a>
-				))}
-				
-				<!-- GitHub Link -->
-				<a 
-					href="https://github.com/KSP2Redux/Redux" 
-					target="_blank"
-					rel="noopener noreferrer"
-					class="text-gray-300 hover:text-white transition-colors duration-200"
-					aria-label="GitHub"
+
+					{/* Starlight's own select on docs pages, the page list elsewhere */}
+					{isStarlight ? <LanguageSelect /> : <LanguageSwitcher />}
+
+					<!-- Download CTA -->
+					<a
+						href={localizePath('/download/', locale)}
+						class="btn-primary text-sm whitespace-nowrap"
+					>
+						{t(locale, 'nav.download')}
+					</a>
+				</div>
+
+				<!-- Mobile Menu Button -->
+				<button
+					id="mobile-menu-button"
+					type="button"
+					class="col-start-1 row-start-1 text-gray-300 hover:text-white"
+					aria-label={t(locale, 'nav.toggleMenu')}
+					aria-controls="mobile-menu"
+					aria-expanded="false"
 				>
-					<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-						<path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
 					</svg>
-				</a>
-
-				{/* Starlight's own select on docs pages, the page list elsewhere */}
-				{isStarlight ? <LanguageSelect /> : <LanguageSwitcher />}
-
-				<!-- Download CTA -->
-				<a
-					href={localizePath('/download/', locale)}
-					class="btn-primary text-sm whitespace-nowrap"
-				>
-					{t(locale, 'nav.download')}
-				</a>
+				</button>
 			</div>
-
-			<!-- Mobile Menu Button -->
-			<button 
-				id="mobile-menu-button"
-				class="xl:hidden text-gray-300 hover:text-white focus:outline-none"
-				aria-label={t(locale, 'nav.toggleMenu')}
-				aria-controls="mobile-menu"
-				aria-expanded="false"
-			>
-				<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-				</svg>
-			</button>
 		</div>
 	</nav>
 
 	<!-- Mobile Navigation -->
-	<div id="mobile-menu" class="hidden xl:hidden pb-4 px-4 border-t border-white/10">
+	<div id="mobile-menu" class="hidden max-h-[calc(100dvh-4rem)] overflow-y-auto pb-4 px-4 border-t border-white/10">
 		<div class="flex flex-col space-y-3 pt-4">
 			{navItems.map(item => (
 				<a
 					href={withSlash(item.href)}
 					class:list={[
-						"transition-colors py-2 font-medium",
+						"transition-colors py-2 font-medium wrap-anywhere",
 						isActive(item.href) ? "text-ksp-red-text" : "text-gray-300 hover:text-white"
 					]}
 					aria-current={isActive(item.href) ? 'page' : undefined}
@@ -127,39 +131,65 @@ const isActive = (href: string) => {
 					{item.label}
 				</a>
 			))}
+			<a href={githubUrl} target="_blank" rel="noopener noreferrer" class="py-2 font-medium text-gray-300 hover:text-white">GitHub</a>
 			{isStarlight ? <LanguageSelect /> : <LanguageSwitcher variant="mobile" />}
-			<a href={localizePath('/download/', locale)} class="btn-primary text-sm text-center">{t(locale, 'nav.download')}</a>
+			<a href={localizePath('/download/', locale)} class="btn-primary text-sm text-center wrap-anywhere">{t(locale, 'nav.download')}</a>
 		</div>
 	</div>
 </header>
 
+<style>
+	@media (width < 50rem) {
+		/* Starlight positions its docs sidebar button separately from our header. */
+		:global([data-has-sidebar]) .starlight-header .section-container {
+			padding-inline-end: calc(var(--sl-nav-pad-x) + var(--sl-menu-button-size) + 0.75rem);
+		}
+	}
+
+	/* Keep the full row measurable while the compact menu is active. */
+	[data-nav-space]:not([data-links-fit]) [data-inline-nav] {
+		visibility: hidden;
+	}
+
+	[data-nav-space][data-links-fit] #mobile-menu-button {
+		display: none;
+	}
+</style>
+
 <script>
-	// Mobile menu toggle
+	const navSpace = document.querySelector<HTMLElement>('[data-nav-space]');
+	const inlineNav = navSpace?.querySelector<HTMLElement>('[data-inline-nav]');
 	const button = document.getElementById('mobile-menu-button');
 	const menu = document.getElementById('mobile-menu');
-	const menuLinks = menu?.querySelectorAll('a');
 
-	const setMenuExpanded = (expanded) => {
-		button?.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-	};
+	if (navSpace && inlineNav && button && menu) {
+		const setMenuExpanded = (expanded: boolean) => {
+			menu.classList.toggle('hidden', !expanded);
+			button.setAttribute('aria-expanded', String(expanded));
+		};
 
-	const closeMenu = () => {
-		menu?.classList.add('hidden');
-		setMenuExpanded(false);
-	};
-	
-	button?.addEventListener('click', () => {
-		const isHidden = menu?.classList.toggle('hidden');
-		setMenuExpanded(!isHidden);
-	});
+		const updateLayout = () => {
+			const linksFit = inlineNav.getBoundingClientRect().width <= navSpace.getBoundingClientRect().width;
+			navSpace.toggleAttribute('data-links-fit', linksFit);
+			if (linksFit) setMenuExpanded(false);
+		};
 
-	menuLinks?.forEach((link) => {
-		link.addEventListener('click', closeMenu);
-	});
+		// The width can change when the viewport resizes or a translated web font loads.
+		const resizeObserver = new ResizeObserver(updateLayout);
+		resizeObserver.observe(navSpace);
+		resizeObserver.observe(inlineNav);
+		updateLayout();
 
-	document.addEventListener('keydown', (event) => {
-		if (event.key === 'Escape') {
-			closeMenu();
-		}
-	});
+		button.addEventListener('click', () => setMenuExpanded(menu.classList.contains('hidden')));
+		menu.querySelectorAll('a').forEach((link) => {
+			link.addEventListener('click', () => setMenuExpanded(false));
+		});
+
+		document.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape' && !menu.classList.contains('hidden')) {
+				if (menu.contains(document.activeElement)) button.focus();
+				setMenuExpanded(false);
+			}
+		});
+	}
 </script>
