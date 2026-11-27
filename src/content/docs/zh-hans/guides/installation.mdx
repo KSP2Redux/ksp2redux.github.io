@@ -19,9 +19,9 @@ import { Aside } from '@astrojs/starlight/components';
 
 ## 安装步骤
 
-### 1. 下载更新程序
+### 1. 下载启动器
 
-请从[下载页面](/download/)获取适用于你的系统的Redux更新程序：Windows上为`Ksp2Redux-win-x64.exe`，macOS上为`Ksp2Redux-macos-arm64.dmg`，Linux上为`Ksp2Redux-linux-x64`。它始终是最新版本。
+请从[下载页面](/download/)获取适用于你的系统的Redux启动器：Windows上为`Ksp2Redux-win-x64.exe`，macOS上为`Ksp2Redux-macos-arm64.dmg`，Linux上为`Ksp2Redux-linux-x64`。它始终是最新版本。
 
 在Linux上，运行前请先将其标记为可执行文件：
 
@@ -32,20 +32,20 @@ chmod +x Ksp2Redux-linux-x64
 
 <Aside type="note" title="在macOS上">
 打开`.dmg`并将**KSP2
-Redux**拖入**Applications**（应用程序）文件夹。由于更新程序尚未获得Apple签名，首次打开时macOS会提示无法验证该应用。请点击**完成**，然后前往**系统设置**、**隐私与安全性**，在关于KSP2
+Redux**拖入**Applications**（应用程序）文件夹。由于启动器尚未获得Apple签名，首次打开时macOS会提示无法验证该应用。请点击**完成**，然后前往**系统设置**、**隐私与安全性**，在关于KSP2
 Redux的提示旁点击**仍要打开**，并使用密码或Touch ID确认。
 
-KSP2从未发布Mac版本，Steam也不会在Mac上下载它，因此请在更新程序中登录Steam，并使用设置标签页中的**下载KSP2**来获取你的副本。更新程序会通过其自带的Wine运行时来运行游戏，无需CrossOver。
+KSP2从未发布Mac版本，Steam也不会在Mac上下载它，因此请在启动器中登录Steam，并使用设置标签页中的**下载KSP2**来获取你的副本。启动器会通过其自带的Wine运行时来运行游戏，无需CrossOver。
 </Aside>
 
-### 2. 运行更新程序
+### 2. 运行启动器
 
-1. 运行已下载的更新程序
+1. 运行已下载的启动器
 2. 在“设置”标签页中设置你的KSP2主程序路径（如果未能自动检测到的话）
 3. 确保“设置”标签页中的发布渠道是你想要的（默认应该已设置好）
 4. 返回“首页”标签页
 
-![Redux更新程序的“设置”标签页，显示KSP2主程序路径、发布渠道和启动选项](../../../../assets/updater/updater-settings.png)
+![Redux启动器的“设置”标签页，显示KSP2主程序路径、发布渠道和启动选项](../../../../assets/updater/updater-settings.png)
 
 ### 3. 选择要安装的版本
 
@@ -63,12 +63,12 @@ KSP2从未发布Mac版本，Steam也不会在Mac上下载它，因此请在更�
 你也可以通过Steam/Epic启动游戏，或像平常一样运行游戏文件夹中的`KSP2_x64.exe`。
 
 <Aside type="tip" title="在Linux上">
-游戏本身通过Proton运行。如果你使用的是Linux，请阅读[Linux支持](/guides/linux-support/)，了解Proton版本、启动选项以及已知可用的配置。你还需要在更新程序的设置中启用**通过Steam启动**。
+游戏本身通过Proton运行。如果你使用的是Linux，请阅读[Linux支持](/guides/linux-support/)，了解Proton版本、启动选项以及已知可用的配置。你还需要在启动器的设置中启用**通过Steam启动**。
 </Aside>
 
 ## 从命令行安装
 
-此外还提供了命令行工具`redux-launcher-cli`，它可以在终端中完成与更新程序窗口相同的安装操作。它读写的是同一份配置，因此你可以在两者之间自由切换。它适用于Windows、macOS和Linux，且无需管理员权限。
+此外还提供了命令行工具`redux-launcher-cli`，它可以在终端中完成与启动器窗口相同的安装操作。它读写的是同一份配置，因此你可以在两者之间自由切换。它适用于Windows、macOS和Linux，且无需管理员权限。
 
 使用一行命令即可安装，或从[下载页面](/download/#command-line)手动下载`redux-cli-x64.exe`（Windows）、`redux-cli-macos-arm64`（macOS）或`redux-cli-x64`（Linux）。在Mac上，请使用与Linux相同的`curl`命令：
 
@@ -86,7 +86,7 @@ curl -fsSL https://raw.githubusercontent.com/KSP2Redux/Updater/main/scripts/inst
 
 ```sh
 redux-launcher-cli --help         # 所有命令及示例
-redux-launcher-cli detect         # 像更新程序那样查找KSP2
+redux-launcher-cli detect         # 像启动器那样查找KSP2
 redux-launcher-cli installs add   # 将找到的主程序添加到配置中
 redux-launcher-cli update         # 安装其渠道中的最新构建
 redux-launcher-cli launch         # 启动游戏
@@ -117,7 +117,7 @@ pwsh|bash`会打印shell补全脚本。
 
 ## 卸载
 
-要卸载KSP2 Redux，请进入更新程序的设置并点击卸载
+要卸载KSP2 Redux，请进入启动器的设置并点击卸载
 
 ## 报告问题
 
